@@ -2,9 +2,15 @@
 {
     public class HomeEndpoint
     {
-        public string Index()
+        public HomeModel Index()
         {
-            return "Hello, you've just built your first FubuMVC application";
+            // You'll probably want to do more than this...
+            return new HomeModel();
         } 
+    }
+
+    public class HomeModel
+    {
+        
     }
 }

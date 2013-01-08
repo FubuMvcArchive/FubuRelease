@@ -1,0 +1,6 @@
+﻿<viewdata model="FubuMVC.QuickStart.Spark.HomeModel" />
+
+<content:main>
+<h1>Home Page!</h1>
+
+</content:main>
