@@ -6,6 +6,7 @@ using System.Web.Security;
 using System.Web.SessionState;
 using FubuMVC.Core;
 using FubuMVC.StructureMap;
+using FubuPersistence.RavenDb;
 using StructureMap;
 using StructureMap.Configuration.DSL;
 
@@ -40,7 +41,7 @@ namespace FubuMVC.QuickStart.Spark
             // This is bootstrapping an application with all default FubuMVC conventions and
             // policies pulling actions from only this assembly for classes suffixed with
             // "Endpoint" or "Endpoints"
-            return FubuApplication.DefaultPolicies().StructureMap(new Container());
+            return FubuApplication.DefaultPolicies().StructureMap<MyStructureMapRegistry>();
 
 
 
@@ -59,6 +60,7 @@ namespace FubuMVC.QuickStart.Spark
         public MyStructureMapRegistry()
         {
             // StructureMap registration here
+            IncludeRegistry<RavenDbRegistry>();
         }
     }
 

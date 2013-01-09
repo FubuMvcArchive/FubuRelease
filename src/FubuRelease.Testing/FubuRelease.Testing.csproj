@@ -31,6 +31,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FubuMVC.Core">
+      <HintPath>..\packages\FubuMVC.Core.1.0.0.1401\lib\net40\FubuMVC.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuMVC.SelfHost">
+      <HintPath>..\packages\FubuMVC.SelfHost.1.0.0.1401\lib\net40\FubuMVC.SelfHost.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuMVC.TestingHarness">
+      <HintPath>..\packages\FubuMVC.TestingHarness.1.0.0.1401\lib\net40\FubuMVC.TestingHarness.dll</HintPath>
+    </Reference>
     <Reference Include="_">
       <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net45\_._</HintPath>
     </Reference>
@@ -42,15 +51,6 @@
     </Reference>
     <Reference Include="FubuLocalization">
       <HintPath>..\packages\FubuLocalization.0.9.5.124\lib\FubuLocalization.dll</HintPath>
-    </Reference>
-    <Reference Include="FubuMVC.Core">
-      <HintPath>..\packages\FubuMVC.Core.0.9.9.1400\lib\net40\FubuMVC.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="FubuMVC.SelfHost">
-      <HintPath>..\packages\FubuMVC.SelfHost.0.9.9.1400\lib\net40\FubuMVC.SelfHost.dll</HintPath>
-    </Reference>
-    <Reference Include="FubuMVC.TestingHarness">
-      <HintPath>..\packages\FubuMVC.TestingHarness.0.9.9.1400\lib\net40\FubuMVC.TestingHarness.dll</HintPath>
     </Reference>
     <Reference Include="FubuTestingSupport">
       <HintPath>..\packages\FubuTestingSupport.1.0.0.225\lib\FubuTestingSupport.dll</HintPath>

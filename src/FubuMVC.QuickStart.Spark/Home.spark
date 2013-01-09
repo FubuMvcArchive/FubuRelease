@@ -1,6 +1,8 @@
 ﻿<viewdata model="FubuMVC.QuickStart.Spark.HomeModel" />
 
 <content:main>
-<h1>Home Page!</h1>
+<h1>Albums</h1>
 
+  !{this.LinkTo<FubuMVC.QuickStart.Spark.Albums.CreateAlbum>().Text("Create New")}
+  
 </content:main>

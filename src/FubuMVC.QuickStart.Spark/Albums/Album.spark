@@ -1,0 +1,16 @@
+﻿<viewdata model="FubuMVC.QuickStart.Spark.Albums.Album" />
+
+<content:main>
+  !{this.FormFor<FubuMVC.QuickStart.Spark.Albums.Album>()}
+  <dl>
+    <Edit name="Artist" />
+    <Edit name="Name" />
+    <Edit name="ReleaseDate" />
+    <Edit name="Genre" />
+  </dl>
+
+    <input type="submit" value="Submit"/>
+  !{this.EndForm()}
+  
+  
+</content:main>

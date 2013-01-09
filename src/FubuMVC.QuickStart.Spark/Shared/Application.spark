@@ -3,14 +3,15 @@
     <head>
         <meta charset="utf-8"   />
         <Asset src="twitterbootstrap"/>
+        <Asset src="core.css" />
         <use content="head" />
         <Styles />
     </head>
     <body data-spy="scroll" data-target=".bs-docs-sidebar">
-        <div id="diagnostic-menu" class="navbar navbar-fixed-top">
+        <div id="top-menu" class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
-                    <a class="brand" href="#">This is home!</a>
+                    <a class="brand" href="#">Application Name</a>
 
                     <use content="navigation" />
                 </div>
