@@ -3,18 +3,20 @@
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <id>FubuMVC</id>
     <version>0.0.0</version>
-    <authors>Chad Myers, Jeremy D. Miller, Joshua Flanagan</authors>
+    <authors>Jeremy D. Miller, Joshua Arnold, Corey Kaylor</authors>
     <owners>Joshua Flanagan</owners>
     <licenseUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/license.txt</licenseUrl>
     <projectUrl>http://mvc.fubu-project.org/</projectUrl>
     <iconUrl>https://github.com/DarthFubuMVC/fubu-collateral/raw/master/Icons/FubuMvc_256.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>A compositional, convention-based framework for complex web applications.
-		This package allows you to quickly create a new FubuMVC web application. If you just want to reference
-		the FubuMVC libraries without the guidance, use the FubuMVC.Lib package instead.</description>
+    <description>A quickstart package to quickly setup a project as a simple FubuMVC application with StructureMap as the IoC container and Razor as the view engine</description>
     <tags>web framework mvc</tags>
     <dependencies>
-      <dependency id="FubuMVC.References"/>
+      <dependency id="FubuMVC.Core"/>
+      <dependency id="FubuMVC.StructureMap"/>
+      <dependency id="FubuMVC.Razor"/>
+      <dependency id="FubuMVC.Core.UI"/>
+      <dependency id="FubuMVC.Core.Assets"/>
       <dependency id="FubuMVC.Diagnostics"/>
       <dependency id="WebActivator" version="1.1" />
     </dependencies>

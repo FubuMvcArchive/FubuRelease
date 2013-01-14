@@ -5,4 +5,9 @@
 
   !{this.LinkTo<FubuMVC.QuickStart.Spark.Albums.CreateAlbum>().Text("Create New")}
   
+  <br></br>
+  <ul>
+    !{Model.Albums}
+  </ul>
+  
 </content:main>

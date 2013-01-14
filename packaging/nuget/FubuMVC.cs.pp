@@ -28,9 +28,6 @@ namespace $rootnamespace$.App_Start
                 // IoC container for the rest of your application
                 .StructureMap(new Container())
                 .Bootstrap();
-
-			// Ensure that no errors occurred during bootstrapping
-			PackageRegistry.AssertNoFailures();
         }
     }
 }

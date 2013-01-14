@@ -49,7 +49,8 @@ namespace FubuMVC.QuickStart.Spark.Albums
 
             _repository.Update(album);
 
-            return FubuContinuation.RedirectTo(album);
+            // TODO -- this needs to default to GET
+            return FubuContinuation.RedirectTo(album, "GET");
         }
 
         public Album get_album_Id(Album album)

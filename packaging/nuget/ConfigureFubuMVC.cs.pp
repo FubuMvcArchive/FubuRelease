@@ -6,22 +6,8 @@ namespace $rootnamespace$
     {
         public ConfigureFubuMVC()
         {
-            // This line turns on the basic diagnostics and request tracing
-            IncludeDiagnostics(true);
+            // As is, this will be using all the default conventions and policies
 
-            // All public methods from concrete classes ending in "Controller"
-            // in this assembly are assumed to be action methods
-            Actions.IncludeClassesSuffixedWithController();
-
-            // Policies
-            Routes
-                .IgnoreControllerNamesEntirely()
-                .IgnoreMethodSuffix("Html")
-                .RootAtAssemblyNamespace();
-
-            // Match views to action methods by matching
-            // on model type, view name, and namespace
-            Views.TryToAttachWithDefaultConventions();
         }
     }
 }
