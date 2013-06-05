@@ -4,8 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>
-    </ProductVersion>
+    <ProductVersion></ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{FA162169-5ADA-4F58-A5CA-348496F011A5}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
@@ -15,10 +14,8 @@
     <AssemblyName>FubuMVC.QuickStart.Spark</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <UseIISExpress>false</UseIISExpress>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
+    <FileUpgradeFlags></FileUpgradeFlags>
+    <UpgradeBackupLocation></UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -46,65 +43,98 @@
       <HintPath>..\packages\RavenDB.Client.2.0.2239-Unstable\lib\sl50\AsyncCtpLibrary_Silverlight5.dll</HintPath>
     </Reference>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.1.0.0.452\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles\lib\Bottles.dll</HintPath>
+    </Reference>
+    <Reference Include="Esent.Interop">
+      <HintPath>..\packages\RavenDB.Database\lib\net40\Esent.Interop.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
-      <HintPath>..\packages\FubuCore.1.0.2.232\lib\FubuCore.dll</HintPath>
+      <HintPath>..\packages\FubuCore\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuLocalization">
-      <HintPath>..\packages\FubuLocalization.0.9.5.130\lib\FubuLocalization.dll</HintPath>
+      <HintPath>..\packages\FubuLocalization\lib\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Core">
-      <HintPath>..\packages\FubuMVC.Core.1.0.1.1425\lib\net40\FubuMVC.Core.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Core\lib\net40\FubuMVC.Core.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Core.Assets">
-      <HintPath>..\packages\FubuMVC.Core.Assets.0.9.9.425\lib\net40\FubuMVC.Core.Assets.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Core.Assets\lib\net40\FubuMVC.Core.Assets.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Core.View">
-      <HintPath>..\packages\FubuMVC.Core.View.1.0.0.427\lib\net40\FubuMVC.Core.View.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Core.View\lib\net40\FubuMVC.Core.View.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Diagnostics">
-      <HintPath>..\packages\FubuMVC.Diagnostics.0.9.6.223\lib\net40\FubuMVC.Diagnostics.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Diagnostics\lib\net40\FubuMVC.Diagnostics.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.JQueryUI">
-      <HintPath>..\packages\FubuMVC.JQueryUI.0.5.0.232\lib\net40\FubuMVC.JQueryUI.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.JQueryUI\lib\net40\FubuMVC.JQueryUI.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Media">
-      <HintPath>..\packages\FubuMVC.Media.0.9.5.323\lib\net40\FubuMVC.Media.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Media\lib\net40\FubuMVC.Media.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Navigation">
-      <HintPath>..\packages\FubuMVC.Navigation.0.9.0.94\lib\net40\FubuMVC.Navigation.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Navigation\lib\net40\FubuMVC.Navigation.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.RavenDb">
-      <HintPath>..\packages\FubuMVC.RavenDb.0.1.0.45\lib\net40\FubuMVC.RavenDb.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.RavenDb\lib\net40\FubuMVC.RavenDb.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.SlickGrid">
-      <HintPath>..\packages\FubuMVC.SlickGrid.0.0.0.533\lib\net40\FubuMVC.SlickGrid.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.SlickGrid\lib\net40\FubuMVC.SlickGrid.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Spark">
-      <HintPath>..\packages\FubuMVC.Spark.1.0.0.427\lib\net40\FubuMVC.Spark.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Spark\lib\net40\FubuMVC.Spark.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.StructureMap">
-      <HintPath>..\packages\FubuMVC.StructureMap.1.0.1.1425\lib\net40\FubuMVC.StructureMap.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.StructureMap\lib\net40\FubuMVC.StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.TwitterBootstrap">
-      <HintPath>..\packages\FubuMVC.TwitterBootstrap.0.0.0.533\lib\net40\FubuMVC.TwitterBootstrap.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.TwitterBootstrap\lib\net40\FubuMVC.TwitterBootstrap.dll</HintPath>
     </Reference>
     <Reference Include="FubuPersistence">
-      <HintPath>..\packages\FubuPersistence.0.1.0.45\lib\net40\FubuPersistence.dll</HintPath>
+      <HintPath>..\packages\FubuPersistence\lib\net40\FubuPersistence.dll</HintPath>
+    </Reference>
+    <Reference Include="GeoAPI">
+      <HintPath>..\packages\RavenDB.Database\lib\net40\GeoAPI.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
-      <HintPath>..\packages\HtmlTags.1.2.0.150\lib\4.0\HtmlTags.dll</HintPath>
+      <HintPath>..\packages\HtmlTags\lib\4.0\HtmlTags.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.NRefactory">
+      <HintPath>..\packages\RavenDB.Database\lib\net40\ICSharpCode.NRefactory.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.NRefactory.CSharp">
+      <HintPath>..\packages\RavenDB.Database\lib\net40\ICSharpCode.NRefactory.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Jint.Raven">
+      <HintPath>..\packages\RavenDB.Database\lib\net40\Jint.Raven.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net">
+      <HintPath>..\packages\RavenDB.Database\lib\net40\Lucene.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.FastVectorHighlighter">
+      <HintPath>..\packages\RavenDB.Database\lib\net40\Lucene.Net.Contrib.FastVectorHighlighter.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Spatial.NTS">
+      <HintPath>..\packages\RavenDB.Database\lib\net40\Lucene.Net.Contrib.Spatial.NTS.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Mono.Cecil">
+      <HintPath>..\packages\RavenDB.Database\lib\net40\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="NetTopologySuite">
+      <HintPath>..\packages\RavenDB.Database\lib\net40\NetTopologySuite.dll</HintPath>
+    </Reference>
+    <Reference Include="PowerCollections">
+      <HintPath>..\packages\RavenDB.Database\lib\net40\PowerCollections.dll</HintPath>
+    </Reference>
     <Reference Include="Raven.Abstractions">
-      <HintPath>..\packages\RavenDB.Database.2.0.2239-Unstable\lib\net40\Raven.Abstractions.dll</HintPath>
+      <HintPath>..\packages\RavenDB.Database\lib\net40\Raven.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Client.Embedded">
-      <HintPath>..\packages\RavenDB.Embedded.2.0.2239-Unstable\lib\net40\Raven.Client.Embedded.dll</HintPath>
+      <HintPath>..\packages\RavenDB.Embedded\lib\net40\Raven.Client.Embedded.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Client.Lightweight">
-      <HintPath>..\packages\RavenDB.Client.2.0.2239-Unstable\lib\net40\Raven.Client.Lightweight.dll</HintPath>
+      <HintPath>..\packages\RavenDB.Client\lib\net40\Raven.Client.Lightweight.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Client.Silverlight">
       <HintPath>..\packages\RavenDB.Client.2.0.2239-Unstable\lib\sl50\Raven.Client.Silverlight.dll</HintPath>
@@ -113,13 +143,16 @@
       <HintPath>..\packages\RavenDB.Client.2.0.2239-Unstable\lib\sl40\Raven.Client.Silverlight-4.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Database">
-      <HintPath>..\packages\RavenDB.Database.2.0.2239-Unstable\lib\net40\Raven.Database.dll</HintPath>
+      <HintPath>..\packages\RavenDB.Database\lib\net40\Raven.Database.dll</HintPath>
     </Reference>
     <Reference Include="Spark">
-      <HintPath>..\packages\Spark.1.7.5.1\lib\NET40\Spark.dll</HintPath>
+      <HintPath>..\packages\Spark\lib\NET40\Spark.dll</HintPath>
+    </Reference>
+    <Reference Include="Spatial4n.Core.NTS">
+      <HintPath>..\packages\RavenDB.Database\lib\net40\Spatial4n.Core.NTS.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap">
-      <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
+      <HintPath>..\packages\structuremap\lib\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -161,7 +194,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="ripple.dependencies.config" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -194,12 +227,10 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>62951</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl></IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
+          <CustomServerUrl></CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
