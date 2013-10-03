@@ -1,0 +1,270 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>
+      FubuRake - FubuDocs Integration</title>
+    
+<meta charset="utf-8"/>
+<meta name="description" content="FubuDocs"/>
+<meta name="author" content="FubuDocs"/>
+
+
+
+
+<link href="/_content/styles/sons-of-obsidian.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr-responsive.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.core.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
+
+<link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+      
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
+      <a href="/fuburake" title="Rake the idiomatic Fubu way" class="project-logo"><span>FubuRake</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a href="http://github.com/DarthFubuMVC/FubuRake" class="ico-github"><img alt="Github" src="/_content/images/github-icon.png" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+      <div id="nav-follow" class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a href="/fuburake" data-key="index">FubuRake &#187;</a></li><li class="active"><a href="/fuburake/fubudocs" data-key="fubudocs">FubuDocs Integration &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fuburake/ripple" title="Ripple Integration">Previous</a></li><li><a href="/fuburake/custom" title="Custom Tasks">Next</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        
+        
+
+        <div class="row">
+          <div class="span3 sidebar">
+            
+            <h3 class="half-margin">Topics</h3>
+            <ul id="page-toc" class="nav nav-tabs nav-stacked affix">
+            </ul>
+            <br/>
+            <h3>
+              FubuRake v1.1.0.0
+            </h3>
+
+            <br/>
+            <h3 class="no-margin">Next</h3>
+<p><a href="/fuburake/custom" data-key="custom">Custom Tasks</a></p>
+<h3 class="no-margin">Previous</h3>
+<p><a href="/fuburake/ripple" data-key="ripple">Ripple Integration</a></p>
+          </div>
+          <div class="span9">
+
+              <h1 class="no-margin">FubuDocs Integration</h1>
+              <hr class="header-line topic-line"></hr>
+
+            <!--Title: FubuDocs Integration-->
+
+<section><h4 id="authoring" class="section-header">FubuDocs Authoring Tasks</h4>
+
+Enabling <a href="/fubudocs" title="Create technical documentation the idiomatic FubuMVC way">FubuDocs</a> integration is done by just marking the <code>fubudocs_enabled</code> accessor as true like this:
+<pre data-linenums="26" class="prettyprint lang-rb">
+solution = FubuRake::Solution.new do |sln|
+	sln.fubudocs_enabled = true
+end
+</pre>
+
+FubuDocs integration includes these tasks:
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Task</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>docs:bottle</td>
+      <td>"Bottles" up the content of any documentation projects.  This task will also create nuspec documents for the documentation projects if they do not already exist.  Runs before the <code>:compile</code> task.
+    </td>
+    </tr>
+    <tr>
+      <td>docs:run</td>
+      <td>Equivalent to <code>fubudocs run -o</code>
+    </td>
+    </tr>
+    <tr>
+      <td>docs:run_chrome</td>
+      <td>Equivalent to <code>fubudocs run --watched -b Chrome</code>
+    </td>
+    </tr>
+    <tr>
+      <td>docs:run_firefox</td>
+      <td>Equivalent to <code>fubudocs run --watched</code>
+    </td>
+    </tr>
+    <tr>
+      <td>docs:snippets</td>
+      <td>Rebuilds the code snippet files for a documentation project</td>
+    </tr>
+  </tbody>
+</table>
+</section>
+
+<section><h4 id="exporting" class="section-header">Exporting and publishing to gh-pages</h4>
+
+
+FubuRake includes some helpers to export and publish generated html documentation from
+FubuDocs projects to <a href="http://pages.github.com">GitHub Pages</a>.
+
+<div class="alert">
+  <strong>Heads up!</strong> These rake tasks will be running git commands from
+  the command line.  You'll need to have git installed and the default git
+  credentials on your box will have to have commit rights to the git repository
+</div>
+
+To enable these tasks, use the <code>export_docs</code> method as shown below:
+
+<pre data-linenums="150" class="prettyprint lang-rb">
+@solution = FubuRake::Solution.new do |sln|
+  sln.export_docs({
+    :repository =&gt; &#39;git@github.com:DarthFubuMVC/fuburake.git&#39;, 
+    :prefix =&gt; &#39;docs&#39;,
+    :branch =&gt; &#39;gh-pages&#39;,
+    :include =&gt; &#39;FubuRake&#39;,
+    :nested =&gt; true,
+    :dump =&gt; true,
+    :dir =&gt; &#39;fubudocs-export&#39;,
+    :host =&gt; &#39;src/SomeFolder&#39;
+  })
+end
+</pre>
+
+Which will generate two new tasks for you:
+
+<table class="table">
+  <tr>
+    <td>docs:export</td>
+	<td>Exports the generated html documentation from the FubuDocs projects and commits any changes and pushes to the specified git repository</td>
+  </tr>
+  <tr>
+    <td>docs:init_branch</td>
+	<td>One time use only, will create and push a new orphan branch (<code>gh-pages</code> is the default) to the git repository specified</td>
+  </tr>
+</table>
+
+The options to the <code>export_docs</code> method are:
+
+<table class="table">
+  <tbody>
+    <tr>
+	  <td>:repository</td>
+	  <td>The address of the git repository that stores the documentation</td>
+	</tr>
+    <tr>
+	  <td>:prefix</td>
+	  <td>Allows you to specify the prefix of the <code>*:init_branch</code> and <code>*:export</code> tasks.  The default is 'gh-pages'</td>
+	</tr>
+	<tr>
+	  <td>:branch</td>
+	  <td>The name of the git branch that stores the documentation.  The default is 'gh-pages'</td>
+	</tr>
+	<tr>
+	  <td>:include</td>
+	  <td>In a solution with more than one FubuDocs project, you can specify a single project to export.  Leave off the ".Docs" suffix of the assembly name to specify the project name.</td>
+	</tr>
+	<tr>
+	  <td>:nested</td>
+	  <td>If you want to publish to a Git Page where the content is going to be available at the project level with a Url like <i>http://darthfubumvc.github.io/fuburake</i>, you need to set the <code>:nested</code> option to true to force all the links in the html to relative links.  The default is false.</td>
+	</tr>
+	<tr>
+	  <td>:dump</td>
+	  <td>Use this option to make the html generation be done with links that are suitable for browsing the html content from the file system.  The default is false.  Do not use this option in conjunction with <code>:nested</code></td>
+	</tr>
+	<tr>
+	  <td>:dir</td>
+	  <td>Override the location where the html documentation is written.  The default is 'fubudocs-export'</td>
+	</tr>
+	<tr>
+	  <td>:host</td>
+	  <td>Optionally specify the FubuDocs 'host' directory for skinning</td>
+	</tr>
+  </tbody>
+</table>
+
+</section>
+
+<section><h4 id="dumping" class="section-header">Dumping Generated Html Documentation</h4>
+
+If you simply want to export the html in a form that's browseable from the
+file system, use this code somewhere in your rake file to create a task:
+
+<pre data-linenums="165" class="prettyprint lang-rb">
+@solution = FubuRake::Solution.new do |sln|
+
+end
+
+@solution.dump_html({
+  :prefix =&gt; &#39;docs&#39;,
+  :include =&gt; &#39;FubuRake&#39;,
+  :dir =&gt; &#39;fubudocs-export&#39;,
+  :host =&gt; &#39;src/SomeFolder&#39;
+  :nested =&gt; true,
+  :dump =&gt; true
+})
+</pre>
+
+In this case, the <code>dump-html</code> is overriding the <code>:dump</code> option to true for you.
+</section>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+
+<script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/bootstrap-prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
+<script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
+<script type="text/javascript" src="/_content/scripts/toastr.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
+<script type="text/javascript" src="/_content/scripts/topics.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuDocs">FubuDocs</a>.
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

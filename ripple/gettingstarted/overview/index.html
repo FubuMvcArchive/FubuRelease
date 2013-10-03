@@ -1,0 +1,137 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>
+      ripple - Overview</title>
+    
+<meta charset="utf-8"/>
+<meta name="description" content="FubuDocs"/>
+<meta name="author" content="FubuDocs"/>
+
+
+
+
+<link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr-responsive.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.core.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
+
+<link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+      
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
+      <a href="/ripple" title="Fubu-inspired dependency management" class="project-logo"><span>ripple</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#!forum/ripple-dev">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a href="https://github.com/DarthFubuMVC/ripple" class="ico-github"><img alt="Github" src="/_content/images/github-icon.png" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+      <div id="nav-follow" class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a href="/ripple/index" data-key="index">ripple &#187;</a></li><li><a href="/ripple/gettingstarted" data-key="index">Getting Started &#187;</a></li><li class="active"><a href="/ripple/gettingstarted/overview" data-key="Overview">Overview &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/ripple/gettingstarted" title="Getting Started">Previous</a></li><li><a href="/ripple/gettingstarted/concepts" title="Concepts">Next</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        
+        
+
+        <div class="row">
+          <div class="span3 sidebar">
+            
+            <h3 class="half-margin">Topics</h3>
+            <ul id="page-toc" class="nav nav-tabs nav-stacked affix">
+            </ul>
+            <br/>
+            <h3>
+              ripple v1.0.0.0
+            </h3>
+
+            <br/>
+            <h3 class="no-margin">Next</h3>
+<p><a href="/ripple/gettingstarted/concepts" data-key="Concepts">Concepts</a></p>
+<h3 class="no-margin">Previous</h3>
+<p><a href="/ripple/gettingstarted" data-key="index">Getting Started</a></p>
+          </div>
+          <div class="span9">
+
+              <h1 class="no-margin">Overview</h1>
+              <hr class="header-line topic-line"></hr>
+
+            <p><section><h4 id="introduction" class="section-header">Introduction</h4>
+    <p>Ripple is a new kind of package manager that was created out of heavy usage of the standard NuGet client. The feeds,
+    the protocol, and the packages are the same. Ripple just embodies differing opinions and provides a new way of consuming them that is friendlier for continuous integration.</p></section></p>
+
+<p><section><h4 id="init" class="section-header">Initializing a new solution</h4>
+    <p>To start using ripple in your solution, simply run <code>ripple init MySolution</code>. This will "ripple-ize" your solution and create the appropriate configuration files. After your solution has been initialized,
+    it is recommended that you add your <code>packages directory</code> (default is src/packages) to the ignore list of your source control.</p></section></p>
+
+<p><section><h4 id="internal-dependencies" class="section-header">Internal Dependencies</h4>
+    <p>The Fubu family of projects uses TeamCity for continuous integration and makes use of the built-in NuGet server support for managing internal dependencies. There are roughly 46 active projects publishing over 60 nugets.
+    Managing all of these libraries is not trivial -- especially when fixing a bug might expose a bug in more than one NuGet in your dependency tree. Ripple was originally created to help the Fubu team 
+    "ripple" changes through that tree without having to publish nugets to test out the changes.</p></section></p>
+
+<p><section><h4 id="edge" class="section-header">Staying on the edge</h4>
+    <p>With the vast number of dependencies that the Fubu team manages, it's easy to have libraries fall out of sync with their dependencies. This is one of the reasons
+    why we believe that each project should be built against the latest version of its <code>internal</code> dependencies.</p>
+    <p>Ripple introduces a concept that we call "floating" dependencies. This means that a restore <code>operation</code> will pull down the latest and greatest
+    version of a particular dependency. Floated dependencies can also specify a <code>minimum version</code> to ensure compatibility. The restore <code>operation</code> respects this minimum version and will update your local versions if the versions do not match.</p>
+    <p>Over time, we discovered that it would be much easier if dependencies could be configured at the Feed-level rather than specifying each dependency. Ripple 2.0 introduced
+    the concept of "floating" feeds. Any NuGet found in a floating feed is treated as Float unless it is explicitly configured as Fixed.</p></section></p>
+
+<p><section><h4 id="command-line" class="section-header">Command Line over Visual Studio</h4>
+    <p>With an eye on automation, Ripple was created strictly for command line usage and does <em>not</em> integrate directly with Visual Studio. All ripple 
+    <code>operations</code> can modify csproj files but do so through custom libraries rather than interoperating with Visual Studio.</p></section></p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+
+<script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
+<script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
+<script type="text/javascript" src="/_content/scripts/toastr.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
+<script type="text/javascript" src="/_content/scripts/topics.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuDocs">FubuDocs</a>.
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,193 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>
+      FubuRake - BottleServiceRunner and TopShelf</title>
+    
+<meta charset="utf-8"/>
+<meta name="description" content="FubuDocs"/>
+<meta name="author" content="FubuDocs"/>
+
+
+
+
+<link href="/_content/styles/sons-of-obsidian.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr-responsive.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.core.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
+
+<link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+      
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
+      <a href="/fuburake" title="Rake the idiomatic Fubu way" class="project-logo"><span>FubuRake</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a href="http://github.com/DarthFubuMVC/FubuRake" class="ico-github"><img alt="Github" src="/_content/images/github-icon.png" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+      <div id="nav-follow" class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a href="/fuburake" data-key="index">FubuRake &#187;</a></li><li class="active"><a href="/fuburake/services" data-key="services">BottleServiceRunner and TopShelf &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fuburake/bottles" title="Working with Bottles">Previous</a></li><li><a href="/fuburake/fubumvc" title="FubuMVC Applications">Next</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        
+        
+
+        <div class="row">
+          <div class="span3 sidebar">
+            
+            <h3 class="half-margin">Topics</h3>
+            <ul id="page-toc" class="nav nav-tabs nav-stacked affix">
+            </ul>
+            <br/>
+            <h3>
+              FubuRake v1.1.0.0
+            </h3>
+
+            <br/>
+            <h3 class="no-margin">Next</h3>
+<p><a href="/fuburake/fubumvc" data-key="fubu">FubuMVC Applications</a></p>
+<h3 class="no-margin">Previous</h3>
+<p><a href="/fuburake/bottles" data-key="bottles">Working with Bottles</a></p>
+          </div>
+          <div class="span9">
+
+              <h1 class="no-margin">BottleServiceRunner and TopShelf</h1>
+              <hr class="header-line topic-line"></hr>
+
+            <!-- Title: BottleServiceRunner and TopShelf -->
+<!-- Url: services -->
+<p>You can enable rake helpers for a project hosted by <a href="https://github.com/DarthFubuMVC/bottles">BottleServiceRunner</a> and <a href="http://topshelf-project.com">TopShelf v3.0</a> with the snippet below:</p>
+
+<pre data-linenums="181" class="prettyprint lang-rb">
+@solution = FubuRake::Solution.new do |sln|
+
+end
+
+FubuRake::BottleServices.new({
+  # Use this option to use a different prefix for the 
+  # generated tasks
+  :prefix =&gt; &quot;service&quot;, 
+
+  # This option needs to point at the directory of the build
+  # products of the service project
+  :dir =&gt; &quot;src/DiagnosticsHarness/bin/#{@solution.compilemode}&quot;, 
+  :name =&gt; &#39;ft-harness&#39;, 
+  :instance =&gt; &#39;something&#39;,
+  :user =&gt; &#39;user name&#39;,
+  :password =&gt; &#39;password&#39;,
+  :autostart =&gt; true,
+  :manual =&gt; true,
+  :disabled =&gt; true,
+  :delayed =&gt; true,
+  :local_service =&gt; true,
+  :network_service =&gt; true,
+  :interactive =&gt; true,
+  :description =&gt; &#39;something&#39;
+  :manual =&gt; true
+})
+</pre>
+
+<p>Which will give you these rake tasks, assuming the default prefix 'service':</p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Task</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>service:clean</td>
+      <td>Deletes any exploded bottle content in the directory</td>
+    </tr>
+    <tr>
+      <td>service:console</td>
+      <td>Starts a new command window and runs the service in a console</code>
+    </td>
+    </tr>
+    <tr>
+      <td>service:install</td>
+      <td>Installs the service locally</td>
+    </tr>
+    <tr>
+      <td>service:start</td>
+      <td>Attempts to start the named service if it is installed</code>
+    </td>
+    </tr>
+    <tr>
+      <td>service:stop</td>
+      <td>Attempts to stop the installed service</td>
+    </tr>
+    <tr>
+      <td>service:uninstall</td>
+      <td>Uninstalls the named service</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>See <a href="http://docs.topshelf-project.com/en/latest/overview/commandline.html">TopShelf Command Line reference</a> for more description about the rake task options and how they relate to Windows service installation."</p>
+
+<div class="alert alert-info">
+You will need to install the <a href="http://www.nuget.org/packages/BottleServiceRunner/">BottleServiceRunner nuget</a> on the project so that the <code>BottleServiceRunner.exe</code> is in the path of the project.
+</div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+
+<script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/bootstrap-prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
+<script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
+<script type="text/javascript" src="/_content/scripts/toastr.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
+<script type="text/javascript" src="/_content/scripts/topics.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuDocs">FubuDocs</a>.
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

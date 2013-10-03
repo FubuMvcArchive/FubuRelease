@@ -1,0 +1,136 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>
+      FubuDocs - Using a Host Project</title>
+    
+<meta charset="utf-8"/>
+<meta name="description" content="FubuDocs"/>
+<meta name="author" content="FubuDocs"/>
+
+
+
+
+<link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr-responsive.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.core.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
+
+<link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+      
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
+      <a href="/fubudocs" title="Frictionless documentation tooling" class="project-logo"><span>FubuDocs</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a href="http://twitter.com/fubumvc" class="ico-twitter"><img alt="Twitter" src="/_content/images/twitter-icon.png" /></a>
+<a href="https://github.com/DarthFubuMVC/FubuDocs" class="ico-github"><img alt="Github" src="/_content/images/github-icon.png" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+      <div id="nav-follow" class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a href="/fubudocs/index" data-key="index">Index &#187;</a></li><li class="active"><a href="/fubudocs/host" data-key="host">Using a Host Project &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubudocs/cli" title="Command Line Documentation">Previous</a></li><li><a href="/fubudocs/skinning" title="Skinning FubuDocs">Next</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        
+        
+
+        <div class="row">
+          <div class="span3 sidebar">
+            
+            <h3 class="half-margin">Topics</h3>
+            <ul id="page-toc" class="nav nav-tabs nav-stacked affix">
+            </ul>
+            <br/>
+            <h3>
+              FubuDocs v0.9.9.0
+            </h3>
+
+            <br/>
+            <h3 class="no-margin">Next</h3>
+<p><a href="/fubudocs/skinning" data-key="skinning">Skinning FubuDocs</a></p>
+<h3 class="no-margin">Previous</h3>
+<p><a href="/fubudocs/cli" data-key="cli">Command Line Documentation</a></p>
+          </div>
+          <div class="span9">
+
+              <h1 class="no-margin">Using a Host Project</h1>
+              <hr class="header-line topic-line"></hr>
+
+            <!--Title: Using a Host Project-->
+<!--Url: host-->
+<p>For the <a href="http://fubuworld.com">FubuWorld suite of projects</a>, we use a <em>host</em> project called <a href="https://github.com/DarthFubuMVC/FubuWorld">FubuWorld</a> to aggregate the various documentation packages into a single website.  </p>
+
+<p>To set up a project as a host, simply make a new VS.Net class library (yep, that's right, no need to use any kind of ASP.Net template) and install the nuget's for the upstream documentation projects you want to be included.  </p>
+
+<div class="alert alert-info"><i class="icon-info-sign"></i>If you're use the <code>fubudocs bottle</code> command against a FubuDocs project, it will take the necessary steps to bundle up the topic content into the assembly using the <a href="/bottles">Bottles</a> framework.  The <code>bottle</code> command will also create a nuspec file for you in the _packaging/nuget_ folder underneath the root of your code repository.</div>
+
+<p>You do need to at least add an <code>index.spark</code> file to act as the home page for the entire application.  Any text files with the <code>.spark</code> extension will be considered to be topic pages as well.</p>
+
+<p>If you just absolutely don't want to use a Visual Studio.Net assembly for your host, you can just use a directory structure like this:</p>
+
+<pre>
+index.spark
+/bin
+    /MyProject.Docs.dll
+    /MyOtherProject.Docs.dll
+</pre>
+
+
+One of the other advantages of using a _host_ is the ability to skin a FubuDocs website -- just in case you're one of the 6 billion folks out there with better CSS skills than me.  See <a href="/fubudocs/skinning" data-key="skinning">Skinning FubuDocs</a> for more information.
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+
+<script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
+<script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
+<script type="text/javascript" src="/_content/scripts/toastr.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
+<script type="text/javascript" src="/_content/scripts/topics.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuDocs">FubuDocs</a>.
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

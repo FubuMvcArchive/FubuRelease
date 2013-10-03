@@ -1,0 +1,151 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>
+      ripple - Directory Structure</title>
+    
+<meta charset="utf-8"/>
+<meta name="description" content="FubuDocs"/>
+<meta name="author" content="FubuDocs"/>
+
+
+
+
+<link href="/_content/styles/sons-of-obsidian.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr-responsive.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.core.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
+
+<link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+      
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
+      <a href="/ripple" title="Fubu-inspired dependency management" class="project-logo"><span>ripple</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#!forum/ripple-dev">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a href="https://github.com/DarthFubuMVC/ripple" class="ico-github"><img alt="Github" src="/_content/images/github-icon.png" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+      <div id="nav-follow" class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a href="/ripple/index" data-key="index">ripple &#187;</a></li><li><a href="/ripple/gettingstarted" data-key="index">Getting Started &#187;</a></li><li class="active"><a href="/ripple/gettingstarted/directorystructure" data-key="DirectoryStructure">Directory Structure &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/ripple/gettingstarted/feeds" title="Feeds">Previous</a></li><li><a href="/ripple/features" title="Features">Next</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        
+        
+
+        <div class="row">
+          <div class="span3 sidebar">
+            
+            <h3 class="half-margin">Topics</h3>
+            <ul id="page-toc" class="nav nav-tabs nav-stacked affix">
+            </ul>
+            <br/>
+            <h3>
+              ripple v1.0.0.0
+            </h3>
+
+            <br/>
+            <h3 class="no-margin">Next</h3>
+<p><a href="/ripple/features" data-key="index">Features</a></p>
+<h3 class="no-margin">Previous</h3>
+<p><a href="/ripple/gettingstarted/feeds" data-key="Feeds">Feeds</a></p>
+          </div>
+          <div class="span9">
+
+              <h1 class="no-margin">Directory Structure</h1>
+              <hr class="header-line topic-line"></hr>
+
+            <!--Title:Directory Structure--><p><section><h4 id="ripple-directory" class="section-header">The ripple directory</h4>
+    <p>The ripple.config file must exist in the root of your directory (repository). Ripple treats this as the root directory and will throw errors if it cannot locate a ripple.config in the parent tree.</p></section></p>
+
+<p><section><h4 id="code-directory" class="section-header">The code directory</h4>
+    <p>The parent directory of any given ripple solution is treated as the "code" directory. This means that ripple is capable of interrogating the sibling directories for other ripple solutions and providing various ripple commands.</p></section></p>
+
+<p><section><h4 id="source-directory" class="section-header">Source Directory</h4>
+    <p>The source directory can be configured in your ripple.config file. The default value is <code>src</code></p></section></p>
+
+  <pre data-linenums="1" class="prettyprint lang-config">
+&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;ripple xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
+  &lt;Name&gt;ripple&lt;/Name&gt;
+  &lt;NugetSpecFolder&gt;packaging/nuget&lt;/NugetSpecFolder&gt;
+  &lt;SourceFolder&gt;src&lt;/SourceFolder&gt;
+  &lt;BuildCommand&gt;rake&lt;/BuildCommand&gt;
+  &lt;FastBuildCommand&gt;rake compile&lt;/FastBuildCommand&gt;
+  &lt;Feeds&gt;
+    &lt;Feed Url=&quot;http://build.fubu-project.org/guestAuth/app/nuget/v1/FeedService.svc&quot; Mode=&quot;Float&quot; Stability=&quot;Anything&quot; /&gt;
+    &lt;Feed Url=&quot;http://nuget.org/api/v2&quot; Mode=&quot;Fixed&quot; Stability=&quot;ReleasedOnly&quot; /&gt;
+    &lt;Feed Url=&quot;file://C:/code/nugets&quot; Mode=&quot;Fixed&quot; Stability=&quot;ReleasedOnly&quot; /&gt;
+    &lt;Feed Url=&quot;file://C:/code/nugets/{branch}&quot; Mode=&quot;Fixed&quot; Stability=&quot;ReleasedOnly&quot; /&gt;
+  &lt;/Feeds&gt;
+  &lt;Nugets&gt;
+    &lt;Dependency Name=&quot;FubuCore&quot; Version=&quot;1.1.0.242&quot; Mode=&quot;Float&quot; /&gt;
+    &lt;Dependency Name=&quot;structuremap&quot; Version=&quot;2.6.3&quot; Mode=&quot;Fixed&quot; /&gt;
+  &lt;/Nugets&gt;
+  &lt;Groups&gt;
+    &lt;Group&gt;
+        &lt;Dependency Name=&quot;Dependency1&quot; /&gt;
+        &lt;Dependency Name=&quot;Dependency2&quot; /&gt;
+    &lt;/Group&gt;
+  &lt;/Groups&gt;
+&lt;/ripple&gt;
+</pre>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+
+<script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/bootstrap-prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
+<script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
+<script type="text/javascript" src="/_content/scripts/toastr.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
+<script type="text/javascript" src="/_content/scripts/topics.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuDocs">FubuDocs</a>.
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
