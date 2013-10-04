@@ -1,0 +1,213 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>
+      FubuRake - Storyteller2 Integration</title>
+    
+<meta charset="utf-8"/>
+<meta name="description" content="FubuDocs"/>
+<meta name="author" content="FubuDocs"/>
+
+
+
+
+<link href="/_content/styles/sons-of-obsidian.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr-responsive.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.core.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
+
+<link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+      
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
+      <a href="/fuburake" title="Rake the idiomatic Fubu way" class="project-logo"><span>FubuRake</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a href="http://github.com/DarthFubuMVC/FubuRake" class="ico-github"><img alt="Github" src="/_content/images/github-icon.png" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+      <div id="nav-follow" class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a href="/fuburake" data-key="index">FubuRake &#187;</a></li><li class="active"><a href="/fuburake/storyteller2-integration" data-key="storyteller2-integration">Storyteller2 Integration &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fuburake/fubumvc" title="FubuMVC Applications">Previous</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        
+        
+
+        <div class="row">
+          <div class="span3 sidebar">
+            
+            <h3 class="half-margin">Topics</h3>
+            <ul id="page-toc" class="nav nav-tabs nav-stacked affix">
+            </ul>
+            <br/>
+            <h3>
+              FubuRake v0.9.5.0
+            </h3>
+
+            <br/>
+            <h3 class="no-margin">Previous</h3>
+<p><a href="/fuburake/fubumvc" data-key="fubu">FubuMVC Applications</a></p>
+          </div>
+          <div class="span9">
+
+              <h1 class="no-margin">Storyteller2 Integration</h1>
+              <hr class="header-line topic-line"></hr>
+
+            <!--Title: Storyteller2 Integration-->
+<!--Url: storyteller2-integration-->
+<p>To enable <span>LINK TO PROJECT &#39;Storyteller&#39;</span> integration for a specific project folder, use the syntax shown below:</p>
+
+<pre data-linenums="215" class="prettyprint lang-rb">
+FubuRake::Storyteller.new({
+  :path =&gt; &#39;src/FubuRakeTarget&#39;,
+  :compilemode =&gt; solution.compilemode,
+  :suites =&gt; [&#39;Math&#39;]
+})
+</pre>
+
+<div class="alert alert-info"><i class="icon-info-sign"></i>You will need a reference to the Storyteller2 nuget in the testing project.  These tasks will not work with the original Storyteller 1.0.</div>
+
+<p>The snippet above will generate these tasks for you:</p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Task</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>st:open</td>
+      <td>Opens the Storyteller UI to the designated project</td>
+    </tr>
+    <tr>
+      <td>st:run</td>
+      <td>Runs the Storyteller tests for the designated project.  This is what you would typically use on your CI server.</code>
+    </td>
+    </tr>
+    <tr>
+      <td>st:run:math</td>
+      <td>In the example above, this task will run only the tests in the 'Math' suite for finer grained test runs.</td>
+    </tr>
+    <tr>
+      <td>st:specs</td>
+      <td>Dumps all the specifications in the Storyteller project to html for documentation purposes</code>
+    </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="alert alert-info"><i class="icon-info-sign"></i>You can use more than one set of Storyteller tasks as long as the </div>
+
+<p>The options for the <code>FubuRake::Storyteller</code> declaration are:</p>
+
+<table class="table">
+  <tbody>
+    <tr>
+      <td>:path</td>
+      <td>The relative path to the Storyteller2 testing project in your code tree</td>
+    </tr>
+    <tr>
+      <td>:compilemode</td>
+      <td>Specify the compilation target (debug/release/etc.) where Storyteller2 should look for the compiled binaries</td>
+    </tr>
+    <tr>
+      <td>:prefix</td>
+      <td>Prefix for all the related tasks.  The default is 'st'.  Please note that you can declare more than one set of Storyteller2 tasks as long as the prefix is different.</td>
+    </tr>
+    <tr>
+      <td>:src</td>
+      <td>Override where FubuRake looks for the source code.  The default is 'src'</td>
+    </tr>
+    <tr>
+      <td>:results</td>
+      <td>The file path where you want Storyteller result summaries written to.  The default is 'results.htm'</td>
+    </tr>
+    <tr>
+      <td>:st_path</td>
+      <td>The path to the directory containing the Storyteller2 executables.  The default is "[src]/packages/Storyteller2/tools", which is based on the Nuget installation assuming that you are using Ripple for dependency management.</td>
+    </tr>
+    <tr>
+      <td>:title</td>
+      <td>The title for the html dump of the specifications.  The default is a very unsexy 'Storyteller Specs'</td>
+    </tr>
+    <tr>
+      <td>:specs</td>
+      <td>The folder where you'd like the html dump of the specifications to be written.  The default is 'specs'</td>
+    </tr>
+    <tr>
+      <td>:suites</td>
+      <td>An array of suite names that you'd like to have a separate task for running one suite at a time.</td>
+    </tr>
+    <tr>
+      <td>:profile</td>
+      <td>Optionally, sets the --profile flag when opening or running Storyteller projects.  The best example is switching between Firefox, Chrome, or PhantomJS as the test browser when doing automated testing against a web browser.</td>
+    </tr>
+    <tr>
+        <td>:workspace</td>
+        <td>Optionally limits the test selection to a single root suite of the Storyteller project.  The default is empty.</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+
+<script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/bootstrap-prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
+<script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
+<script type="text/javascript" src="/_content/scripts/toastr.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
+<script type="text/javascript" src="/_content/scripts/topics.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuDocs">FubuDocs</a>.
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

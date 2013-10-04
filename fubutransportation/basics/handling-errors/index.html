@@ -12,6 +12,7 @@
 
 
 
+<link href="/_content/styles/sons-of-obsidian.css" rel="stylesheet" type="text/css" />
 <link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
 <link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
@@ -31,7 +32,7 @@
   <div class="span6">
     <p class="logo">
       <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
-      <a href="/fubutransportation" title="A member of the Fubu family of projects" class="project-logo"><span>FubuTransportation</span></a>
+      <a href="/fubutransportation" title="Low friction Service Bus using the best of the Fubu world" class="project-logo"><span>FubuTransportation</span></a>
     </p>
   </div>
   <div class="span6">
@@ -68,7 +69,7 @@
             </ul>
             <br/>
             <h3>
-              FubuTransportation v1.0.0.0
+              FubuTransportation v0.5.0.0
             </h3>
 
             <br/>
@@ -84,7 +85,57 @@
 
             <!--Title: Handling Errors-->
 <!--Url: handling-errors-->
-<p>TODO(Write some content!)</p>
+<p>Other service bus frameworks allow you to retry when an error occurs in your handlers.
+FubuTransportation allows you to specify an error policy for specific exception types and allow you to define
+the behavior you want. Retry can be nice, but typically you only want to retry on errors that <em>can</em> succeed if you try again.
+Here are some samples that show you the different ways you customize error handling behavior.</p>
+
+<p>This will also unwrap AggregateExceptions and apply the policy to the inner exceptions for async chains.</p>
+
+<pre data-linenums="8" class="prettyprint lang-cs">
+    public class ErrorHandlingPolicy : HandlerChainPolicy
+    {
+        public override void Configure(HandlerChain handlerChain)
+        {
+            //when retrying, do so a maximum of 5 times
+            handlerChain.MaximumAttempts = 5;
+
+            //retry now
+            handlerChain.OnException&lt;ConcurrencyException&gt;()
+                .Retry();
+
+            //retry again 5 seconds from now
+            handlerChain.OnException&lt;ConcurrencyException&gt;()
+                .RetryLater(TimeSpan.FromSeconds(5));
+
+            //immediately move the error and original message to
+            //the error queue
+            handlerChain.OnException&lt;FileNotFoundException&gt;()
+                .MoveToErrorQueue();
+
+            //retries, but puts at the end of the line allowing other
+            //messages to be processed
+            handlerChain.OnException&lt;Exception&gt;()
+                .Requeue();
+        }
+    }
+</pre>
+
+<p>Then just register your error handling policy in the FubuTransportRegistry.</p>
+
+<pre data-linenums="37" class="prettyprint lang-cs">
+    public class TransportRegistryWithErrorPolicy : FubuTransportRegistry
+    {
+        public TransportRegistryWithErrorPolicy()
+        {
+            //applies to all handler chains
+            Global.Policy&lt;ErrorHandlingPolicy&gt;();
+
+            //applies policy only to chains created from this registry
+            Local.Policy&lt;ErrorHandlingPolicy&gt;();
+        }
+    }
+</pre>
 
 
 
@@ -96,6 +147,8 @@
     
 
 <script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/bootstrap-prettify.js"></script>
 <script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
 <script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
 <script type="text/javascript" src="/_content/scripts/toastr.js"></script>
