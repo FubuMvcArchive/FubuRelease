@@ -1,0 +1,145 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>
+      FubuLocalization - Basic Implementations</title>
+    
+<meta charset="utf-8"/>
+<meta name="description" content="FubuDocs"/>
+<meta name="author" content="FubuDocs"/>
+
+
+
+
+<link href="/_content/styles/sons-of-obsidian.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr-responsive.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.core.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
+
+<link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+      
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
+      <a href="/fubulocalization" title="Localization the Fubu way" class="project-logo"><span>FubuLocalization</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a href="http://github.com/DarthFubuMVC/FubuLocalization" class="ico-github"><img alt="Github" src="/_content/images/github-icon.png" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+      <div id="nav-follow" class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a href="/fubulocalization" data-key="index">FubuLocalization &#187;</a></li><li class="active"><a href="/fubulocalization/basic" data-key="basic">Basic Implementations &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubulocalization/architecture" title="Architecture">Previous</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        
+        
+
+        <div class="row">
+          <div class="span3 sidebar">
+            
+            <h3 class="half-margin">Topics</h3>
+            <ul id="page-toc" class="nav nav-tabs nav-stacked affix">
+            </ul>
+            <br/>
+            <h3>
+              FubuLocalization v1.0.0.0
+            </h3>
+
+            <br/>
+            <h3 class="no-margin">Previous</h3>
+<p><a href="/fubulocalization/architecture" data-key="architecture">Architecture</a></p>
+          </div>
+          <div class="span9">
+
+              <h1 class="no-margin">Basic Implementations</h1>
+              <hr class="header-line topic-line"></hr>
+
+            <!--Title: Basic Implementations -->
+<p><section><h4 id="configs" class="section-header">Locale configs</h4>
+    <br/>
+    <p>The default implementation of the <code>ILocalizationStorage</code> interface is the <code>XmlDirectoryLocalizationStorage</code> class. This class leverages "locale files"
+    to persist localization values. The locale files are xml files with the following naming convention: <code>&lt;culture&gt;.locale.config</code>. The following is a sample:</p></section></p>
+
+  <pre data-linenums="1" class="prettyprint lang-txt">
+&lt;fubu-localization&gt;
+  &lt;string key=&quot;SubNavigationKeys:FileValidation&quot;&gt;File Validation&lt;/string&gt;
+  &lt;string key=&quot;SubNavigationKeys:Reports&quot;&gt;Reports&lt;/string&gt;
+&lt;/fubu-localization&gt;
+</pre>
+
+<p><section><h4 id="missing" class="section-header">Missing keys</h4>
+    <br/>
+    <p>Using the default XML implementation, any missing keys are written to a file called <code>missing.locale.config</code>. To override values, simply remove them from the missing.locale.config file
+    and add the desired values in the corresponding locale file (e.g., en-US.locale.config). The following is an example:</p></section></p>
+
+  <pre data-linenums="1" class="prettyprint lang-txt">
+&lt;missing-localization&gt;
+  &lt;missing key=&quot;SomeKey&quot; culture=&quot;en-US&quot;&gt;Something&lt;/missing&gt;
+&lt;/missing-localization&gt;
+</pre>
+
+  <p>There is a tool bundled in the <code>FubuLocalization</code> nuget called <code>localizer.exe</code>. It has preliminary support for merging the missing and locale files and will be documented at a later date.</p>
+
+<p><section><h4 id="fubumvc" class="section-header">FubuMVC Support</h4>
+  <br/>
+  <p>If you're using FubuMVC, checkout the <code>FubuMVC.Localization</code> nuget. It bootstraps <code>FubuLocalization</code> with the default implementations described here and ties it into all of the built-in HTML conventions.</p></section></p>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+
+<script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/bootstrap-prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
+<script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
+<script type="text/javascript" src="/_content/scripts/toastr.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
+<script type="text/javascript" src="/_content/scripts/topics.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuDocs">FubuDocs</a>.
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

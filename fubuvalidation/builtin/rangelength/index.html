@@ -1,0 +1,138 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>
+      FubuValidation - Range Length</title>
+    
+<meta charset="utf-8"/>
+<meta name="description" content="FubuDocs"/>
+<meta name="author" content="FubuDocs"/>
+
+
+
+
+<link href="/_content/styles/sons-of-obsidian.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr-responsive.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.core.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
+
+<link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+      
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
+      <a href="/fubuvalidation" title="Have validation your way, whatever way that happens to be" class="project-logo"><span>FubuValidation</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a href="http://github.com/DarthFubuMVC/FubuValidation" class="ico-github"><img alt="Github" src="/_content/images/github-icon.png" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+      <div id="nav-follow" class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a href="/fubuvalidation" data-key="index">FubuValidation &#187;</a></li><li><a href="/fubuvalidation/builtin" data-key="index">Built in rules &#187;</a></li><li class="active"><a href="/fubuvalidation/builtin/rangelength" data-key="rangelength">Range Length &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubuvalidation/builtin/required" title="Required">Previous</a></li><li><a href="/fubuvalidation/builtin/minvalue" title="Minimum value">Next</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        
+        
+
+        <div class="row">
+          <div class="span3 sidebar">
+            
+            <h3 class="half-margin">Topics</h3>
+            <ul id="page-toc" class="nav nav-tabs nav-stacked affix">
+            </ul>
+            <br/>
+            <h3>
+              FubuValidation v1.0.0.0
+            </h3>
+
+            <br/>
+            <h3 class="no-margin">Next</h3>
+<p><a href="/fubuvalidation/builtin/minvalue" data-key="minvalue">Minimum value</a></p>
+<h3 class="no-margin">Previous</h3>
+<p><a href="/fubuvalidation/builtin/required" data-key="required">Required</a></p>
+          </div>
+          <div class="span9">
+
+              <h1 class="no-margin">Range Length</h1>
+              <hr class="header-line topic-line"></hr>
+
+            <!--Title: Range Length -->
+
+<h4>Description</h4>
+<p class="half-margin">Ensures that the value of the property is within the given range.</p>
+
+<h4>Default Message</h4>
+<p class="half-margin">Value must be between {min} and {max} characters</p>
+
+<h4>Template Fields</h4>
+<ul class="half-margin">
+    <li>{field} - The property name</li>
+    <li>{min} - The minimum value</li>
+    <li>{max} - The maximum value</li>
+</ul>
+
+<h4>Usages</h4>
+<pre data-linenums="22" class="prettyprint lang-cs">
+public string AtLeastFiveButNotTen { get; set; }
+</pre>
+
+<pre data-linenums="64" class="prettyprint lang-cs">
+Property(x =&gt; x.AtLeastFiveButNotTen).RangeLength(5, 10);
+</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+
+<script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/bootstrap-prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
+<script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
+<script type="text/javascript" src="/_content/scripts/toastr.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
+<script type="text/javascript" src="/_content/scripts/topics.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuDocs">FubuDocs</a>.
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

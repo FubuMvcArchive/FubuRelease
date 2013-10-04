@@ -1,0 +1,229 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>
+      FubuValidation - Where do rules come from?</title>
+    
+<meta charset="utf-8"/>
+<meta name="description" content="FubuDocs"/>
+<meta name="author" content="FubuDocs"/>
+
+
+
+
+<link href="/_content/styles/sons-of-obsidian.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr-responsive.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.core.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
+
+<link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+      
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
+      <a href="/fubuvalidation" title="Have validation your way, whatever way that happens to be" class="project-logo"><span>FubuValidation</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a href="http://github.com/DarthFubuMVC/FubuValidation" class="ico-github"><img alt="Github" src="/_content/images/github-icon.png" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+      <div id="nav-follow" class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a href="/fubuvalidation" data-key="index">FubuValidation &#187;</a></li><li class="active"><a href="/fubuvalidation/rules" data-key="rules">Where do rules come from? &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubuvalidation/architecture" title="Architecture">Previous</a></li><li><a href="/fubuvalidation/builtin" title="Built in rules">Next</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        
+        
+
+        <div class="row">
+          <div class="span3 sidebar">
+            
+            <h3 class="half-margin">Topics</h3>
+            <ul id="page-toc" class="nav nav-tabs nav-stacked affix">
+            </ul>
+            <br/>
+            <h3>
+              FubuValidation v1.0.0.0
+            </h3>
+
+            <br/>
+            <h3 class="no-margin">Next</h3>
+<p><a href="/fubuvalidation/builtin" data-key="index">Built in rules</a></p>
+<h3 class="no-margin">Previous</h3>
+<p><a href="/fubuvalidation/architecture" data-key="architecture">Architecture</a></p>
+          </div>
+          <div class="span9">
+
+              <h1 class="no-margin">Where do rules come from?</h1>
+              <hr class="header-line topic-line"></hr>
+
+            <!--Title: Where do rules come from? -->
+
+<p>In order to understand where rules come from and how they are registered, let's first look at the various building blocks that are involved:</p>
+<ol>
+    <li>ValidationStep</li>
+    <li>ValidationPlan</li>
+    <li>ValidationGraph</li>
+</ol>
+
+<section><h4 id="validation-step" class="section-header">Validation Step</h4>
+<p><code>Validation steps</code> are simply a representation of a step in the validation process. A step is created to represent the rules found from a particular <code>IValidationSource</code>. Each step keeps track of where the rules were defined (for diagnostics purposes)
+and can execute the subset of rules.</p></section>
+
+<section><h4 id="validation-plan" class="section-header">Validation Plan</h4>
+    <p>A <code>Validation Plan</code> is a complete representation of the steps involved in validating a particular type. These steps are built-up when requested and then memoized as a <code>Validation Plan</code>.</p></section>
+
+<section><h4 id="graph" class="section-header">Validation Graph</h4>
+    <p>The <code>Validation Graph</code> is the semantic model for <code>FubuValidation</code>. It is responsible for maintaining the memoized collection of <code>Validation Plans</code>. All querying for rules and field rules can be made using the <code>graph</code>.</p></section>
+
+<section><h4 id="source" class="section-header">IValidationSource</h4>
+    <p>The <code>IValidationSource</code> interface provides a mechanism for defining rules for a particular type:</p></section>
+
+<pre data-linenums="7" class="prettyprint lang-cs">
+    public interface IValidationSource
+    {
+        IEnumerable&lt;IValidationRule&gt; RulesFor(Type type);
+    }
+</pre>
+
+<p>There are various built in implementations that are available for use. The first one is the <code>ClassValidationRules</code> DSL as seen in use here:</p>
+
+<pre data-linenums="32" class="prettyprint lang-cs">
+    public class ClassValidationModelRules : ClassValidationRules&lt;ClassValidationModel&gt;
+    {
+        public ClassValidationModelRules()
+        {
+            Property(x =&gt; x.GreaterThanZero).GreaterThanZero();
+            Property(x =&gt; x.GreaterOrEqualToZero).GreaterOrEqualToZero();
+            Property(x =&gt; x.LongerThanTen).MinimumLength(10);
+            Property(x =&gt; x.NoMoreThanFiveCharacters).MaximumLength(5);
+            Property(x =&gt; x.AtLeastFiveButNotTen).RangeLength(5, 10);
+            Property(x =&gt; x.GreaterThanFive).MinValue(5);
+            Property(x =&gt; x.LessThanFifteen).MaxValue(15);
+            Property(x =&gt; x.Email).Email();
+            Property(x =&gt; x.Required).Required();
+	        Property(x =&gt; x.Regex).RegEx(&quot;[a-zA-Z0-9]+$&quot;);
+
+            Property(x =&gt; x.Custom).Rule&lt;UniqueUsernameRule&gt;();
+
+	        Property(x =&gt; x.Password)
+				.Matches(x =&gt; x.ConfirmPassword)
+		        .ReportErrorsOn(x =&gt; x.Password)
+		        .ReportErrorsOn(x =&gt; x.ConfirmPassword);
+
+	        Property(x =&gt; x.Email)
+		        .Matches(x =&gt; x.ConfirmEmail)
+		        .ReportErrorsOn(x =&gt; x.ConfirmEmail)
+		        .UseToken(StringToken.FromKeyString(&quot;Test:Keys&quot;, &quot;Emails must match&quot;));
+        }
+    }
+</pre>
+
+<p>Another common usage is the <code>IValidated</code> interface. This interface allows you to mark your model/entity as self-validating. The mechanics can be seen in use here:</p>
+
+<pre data-linenums="8" class="prettyprint lang-cs">
+    public interface IValidated
+    {
+        void Validate(ValidationContext context);
+    }
+</pre>
+
+<pre data-linenums="55" class="prettyprint lang-cs">
+    public class SelfValidatingClassRuleSource : IValidationSource
+    {
+        public IEnumerable&lt;IValidationRule&gt; RulesFor(Type type)
+        {
+            if (type.CanBeCastTo&lt;IValidated&gt;())
+            {
+                yield return new SelfValidatingClassRule(type);
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is SelfValidatingClassRuleSource;
+        }
+    }
+</pre>
+
+<blockquote>Other example implementations might include NHibernate or Entity Framework adapters.</blockquote>
+
+<section><h4 id="field-rule-registry" class="section-header">IFieldRulesRegistry</h4>
+    <p>All field-level rules are registered through the <code>IFieldRulesRegistry</code>. </p></section>
+
+<pre data-linenums="7" class="prettyprint lang-cs">
+    public interface IFieldRulesRegistry
+    {
+        bool HasRule&lt;T&gt;(Accessor accessor) where T : IFieldValidationRule;
+        void ForRule&lt;T&gt;(Accessor accessor, Action&lt;T&gt; continuation) where T : IFieldValidationRule;
+
+        void Register(Type type, Accessor accessor, IFieldValidationRule rule);
+
+	    void FindWith(IFieldValidationSource source);
+
+        ClassFieldValidationRules RulesFor&lt;T&gt;();
+        ClassFieldValidationRules RulesFor(Type type);
+    }
+</pre>
+
+<p>Field-level rules can also be defined through:</p>
+<ol>
+    <li>The <code>ClassValidationRules</code> DSL</li>
+    <li>Attributes (e.g., Required, Email)</li>
+</ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+
+<script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/bootstrap-prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
+<script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
+<script type="text/javascript" src="/_content/scripts/toastr.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
+<script type="text/javascript" src="/_content/scripts/topics.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuDocs">FubuDocs</a>.
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
