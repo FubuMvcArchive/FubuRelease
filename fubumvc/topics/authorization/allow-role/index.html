@@ -1,0 +1,188 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>
+      FubuMVC - Know your role</title>
+    
+<meta charset="utf-8"/>
+<meta name="description" content="FubuDocs"/>
+<meta name="author" content="FubuDocs"/>
+
+
+
+
+<link href="/_content/styles/sons-of-obsidian.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr-responsive.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.core.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
+
+<link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+      
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
+      <a href="/fubumvc" title="The MVC framework that gets out of your way" class="project-logo"><span>FubuMVC</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a href="http://github.com/DarthFubuMVC/FubuMVC" class="ico-github"><img alt="Github" src="/_content/images/github-icon.png" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+      <div id="nav-follow" class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a href="/fubumvc" data-key="index">FubuMVC &#187;</a></li><li><a href="/fubumvc/topics/authorization" data-key="index">Authorization &#187;</a></li><li class="active"><a href="/fubumvc/topics/authorization/allow-role" data-key="allow-role">Know your role &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubumvc/topics/authorization" title="Authorization">Previous</a></li><li><a href="/fubumvc/topics/authorization/working-with-authorization-policies" title="Working with Authorization Policies">Next</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        
+        
+
+        <div class="row">
+          <div class="span3 sidebar">
+            
+            <h3 class="half-margin">Topics</h3>
+            <ul id="page-toc" class="nav nav-tabs nav-stacked affix">
+            </ul>
+            <br/>
+            <h3>
+              FubuMVC v1.0.0.0
+            </h3>
+
+            <br/>
+            <h3 class="no-margin">Next</h3>
+<p><a href="/fubumvc/topics/authorization/working-with-authorization-policies" data-key="working-with-authorization-policies">Working with Authorization Policies</a></p>
+<h3 class="no-margin">Previous</h3>
+<p><a href="/fubumvc/topics/authorization" data-key="index">Authorization</a></p>
+          </div>
+          <div class="span9">
+
+              <h1 class="no-margin">Know your role</h1>
+              <hr class="header-line topic-line"></hr>
+
+            <!--Title: Know your role-->
+<!--Url: allow-role-->
+<p>One way to control access rights is ensure the authenticated user is in the
+correct role.</p>
+
+<h2>Meet the AllowRoleAttribute</h2>
+
+<p>The AllowRoleAttribute will restrict all access to a list of roles. If the user does
+not happen to be in any of the roles listed, then a response with a 403 status
+code will be returned. Otherwise, the user will be allowed to proceed as
+normal.</p>
+
+<p>Example usage:</p>
+
+<pre data-linenums="6" class="prettyprint lang-cs">
+    [AllowRole(&quot;CanI&quot;)]
+    public class Controller
+    {
+        [AllowRole(&quot;MayI&quot;, &quot;AllowMe&quot;)]
+        public void RestrictedAction(RestrictedInputModel input)
+        {
+            //logic
+        }
+    }
+</pre>
+
+<p>Also note that the attribute can be applied on the controller level as well as
+the action level.</p>
+
+<p>Using attributes may be fine for those one-off cases, but imagine working on a
+web application designed with role-based access control (RBAC) in mind. With
+this type of control, every action can potentially be restricted to one or many
+roles. This can quickly become a maintenance nightmare when trying to restrict
+all of those actions. It sure would be nice to have some sort of convention set
+up for this...</p>
+
+<h2>Using a custom authorization policy</h2>
+
+<p>Let's define a convention that every action taking an input type with its name
+ending in "RoleModel" will be restricted to a particular role. The role that
+the action is allowed for will be the name of the input type without the
+"RoleModel" suffix. For example, the UpdateDescriptionRoleModel will restrict
+a user who is in the <code>UpdateDescription</code> role.</p>
+
+<pre data-linenums="9" class="prettyprint lang-cs">
+    public class RoleModelAuthorizationPolicy : IConfigurationAction
+    {
+        public void Configure(BehaviorGraph graph)
+        {
+            graph.Actions()
+                 .Where(x =&gt; x.HasInput &amp;&amp; x.InputType().Name.EndsWith(&quot;RoleModel&quot;))
+                 .Each(x =&gt;
+                 {
+                     var roleName = x.InputType().Name.Replace(&quot;RoleModel&quot;, string.Empty);
+                     x.ParentChain().Authorization.AddRole(roleName);
+                 });
+        }
+    }
+</pre>
+
+<p>The controller action would look something like this.</p>
+
+<pre data-linenums="4" class="prettyprint lang-cs">
+    public class InventoryItemController
+    {
+        public void ChangeDescription(UpdateDescriptionRoleModel input)
+        {
+            //logic
+        }
+    }
+</pre>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+
+<script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/bootstrap-prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
+<script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
+<script type="text/javascript" src="/_content/scripts/toastr.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
+<script type="text/javascript" src="/_content/scripts/topics.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuDocs">FubuDocs</a>.
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
