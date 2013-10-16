@@ -1,0 +1,164 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>
+      FubuTransportation - LightningQueuesTransport</title>
+    
+<meta charset="utf-8"/>
+<meta name="description" content="FubuDocs"/>
+<meta name="author" content="FubuDocs"/>
+
+
+
+
+<link href="/_content/styles/sons-of-obsidian.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr-responsive.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.core.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
+
+<link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+      
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
+      <a href="/fubutransportation" title="Low friction Service Bus using the best of the Fubu world" class="project-logo"><span>FubuTransportation</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a href="http://github.com/DarthFubuMVC/FubuTransportation" class="ico-github"><img alt="Github" src="/_content/images/github-icon.png" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+      <div id="nav-follow" class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a href="/fubutransportation" data-key="index">FubuTransportation &#187;</a></li><li><a href="/fubutransportation/transports" data-key="index">Transports &#187;</a></li><li class="active"><a href="/fubutransportation/transports/lightning-queues-transport" data-key="lightning_queues_transport">LightningQueuesTransport &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubutransportation/transports/in-memory-transport" title="InMemoryTransport">Previous</a></li><li><a href="/fubutransportation/serialization" title="Serialization">Next</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        
+        
+
+        <div class="row">
+          <div class="span3 sidebar">
+            
+            <h3 class="half-margin">Topics</h3>
+            <ul id="page-toc" class="nav nav-tabs nav-stacked affix">
+            </ul>
+            <br/>
+            <h3>
+              FubuTransportation v0.5.0.0
+            </h3>
+
+            <br/>
+            <h3 class="no-margin">Next</h3>
+<p><a href="/fubutransportation/serialization" data-key="serialization">Serialization</a></p>
+<h3 class="no-margin">Previous</h3>
+<p><a href="/fubutransportation/transports/in-memory-transport" data-key="in_memory_transport">InMemoryTransport</a></p>
+          </div>
+          <div class="span9">
+
+              <h1 class="no-margin">LightningQueuesTransport</h1>
+              <hr class="header-line topic-line"></hr>
+
+            <!--Title: LightningQueuesTransport-->
+<!--Url: lightning-queues-transport-->
+<p>LightningQueuesTransport provides a similar transport as you would expect when using MSMQ. It is a store and forward style
+queue that doesn't rely on network connectivity to send messages while ensuring guaranteed delivery. Currently the queue storage
+uses Esent, but there are plans to move that to LMDB in the future. The network communication techniques make this transport
+compatible with hardware-based load balancers.</p>
+
+<p>The uri format for LightningQueues is <code>lq.tcp://{localhost|dns name}:{port}/queueName</code></p>
+
+<p>With LightningQueues you can have more than one channel uri pointing the same instance of the running queues (provided it's in the same process).
+However each /queueName can be unique and have it's own thread scheduling implementation to provide an easy way for one queue to have several threads
+reading from it, while another queue can have a single thread.</p>
+
+<p>Examples</p>
+
+<p><code>lq.tcp://localhost:2200/bulk_file_processing</code> 1 thread</p>
+
+<p><code>lq.tcp://localhost:2200/real_time_message_processing</code> 6 threads</p>
+
+<p>The registry example to go along with what that would look like</p>
+
+<pre data-linenums="8" class="prettyprint lang-cs">
+    public class LQSettings
+    {
+        public LQSettings()
+        {
+            BulkFile = new Uri(&quot;lq.tcp://localhost:2200/bulk_file_processing&quot;);
+            RealTime = new Uri(&quot;lq.tcp://localhost:2200/real_time_message_processing&quot;);
+        }
+
+        public Uri BulkFile { get; set; }
+        public Uri RealTime { get; set; }
+    }
+
+    public class MultipleChannelsLQTransport : FubuTransportRegistry&lt;LQSettings&gt;
+    {
+        public MultipleChannelsLQTransport()
+        {
+            Channel(x =&gt; x.BulkFile)
+                .ReadIncoming(); //Default is 1 task
+
+            Channel(x =&gt; x.RealTime)
+                .ReadIncoming(new TaskScheduler(6));
+        }
+    }
+</pre>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+
+<script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/bootstrap-prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
+<script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
+<script type="text/javascript" src="/_content/scripts/toastr.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
+<script type="text/javascript" src="/_content/scripts/topics.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuDocs">FubuDocs</a>.
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

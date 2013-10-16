@@ -12,6 +12,7 @@
 
 
 
+<link href="/_content/styles/sons-of-obsidian.css" rel="stylesheet" type="text/css" />
 <link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
 <link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
@@ -84,7 +85,46 @@
 
             <!--Title: Pub / Sub-->
 <!--Url: pub-sub-->
-<p>TODO(Write some content!)</p>
+<h2>It's Just Routing</h2>
+
+<p>A publish and subscription are just simple IRoutingRule implementations. From the API perspective pub / sub is no different than a standard send. This
+is why you don't see any special methods on IServiceBus for doing pub / sub. A send may route to the logical owner of the message, or it may send the message
+to several interested endpoints, or it may be a reply to the original endpoint that sent the message being handled.</p>
+
+<p>Coming soon interested endpoints will be able to send their "subscriptions" at startup for more dynamic capabilities. However, this is to support more legacy
+behavior and we feel a better way would be to share these subscriptions in a shared transport registry rather than sending a bunch of messages across the wire
+for information we already have at our disposal.</p>
+
+<p>Here are some samples of how to configure the routing rules.</p>
+
+<pre data-linenums="7" class="prettyprint lang-cs">
+    public class AllEndpointsSettings
+    {
+        public Uri RemoteEndpoint { get; set; }
+        public Uri AnotherRemoteEndpoint { get; set; }
+        public Uri ThisEndpoint { get; set; }
+    }
+
+    public class RoutingSampleTransportRegistry : FubuTransportRegistry&lt;AllEndpointsSettings&gt;
+    {
+        public RoutingSampleTransportRegistry()
+        {
+            //route to remote endpoint all messages in this assembly
+            Channel(x =&gt; x.RemoteEndpoint)
+                .AcceptsMessagesInAssemblyContainingType&lt;SampleMessage&gt;();
+
+            //route all messages suffixed with Event to AnotherRemoteEndpoint
+            Channel(x =&gt; x.AnotherRemoteEndpoint)
+                .AcceptsMessages(x =&gt; x.Name.EndsWith(&quot;Event&quot;));
+
+            //Route messages suffixed with Command to ThisEndpoint
+            Channel(x =&gt; x.ThisEndpoint)
+                .AcceptsMessages(x =&gt; x.Name.EndsWith(&quot;Command&quot;))
+                //read messages from this &#39;Incoming&#39; channel
+                .ReadIncoming();
+        }
+    }
+</pre>
 
 
 
@@ -96,6 +136,8 @@
     
 
 <script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/bootstrap-prettify.js"></script>
 <script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
 <script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
 <script type="text/javascript" src="/_content/scripts/toastr.js"></script>

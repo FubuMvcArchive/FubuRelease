@@ -115,7 +115,7 @@
         {
             Channel(x =&gt; x.Uri)
                 //Routes messages in the in the getting started namespace to this channel
-                .PublishesMessages(x =&gt; typeof(GettingStartedSettings).Namespace.Equals(x.Namespace))
+                .AcceptsMessages(x =&gt; typeof(GettingStartedSettings).Namespace.Equals(x.Namespace))
                 .ReadIncoming();
         }
     }

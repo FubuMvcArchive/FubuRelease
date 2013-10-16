@@ -1,0 +1,136 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>
+      FubuTransportation - Handler Pipeline</title>
+    
+<meta charset="utf-8"/>
+<meta name="description" content="FubuDocs"/>
+<meta name="author" content="FubuDocs"/>
+
+
+
+
+<link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr-responsive.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.core.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
+
+<link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+      
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
+      <a href="/fubutransportation" title="Low friction Service Bus using the best of the Fubu world" class="project-logo"><span>FubuTransportation</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a href="http://github.com/DarthFubuMVC/FubuTransportation" class="ico-github"><img alt="Github" src="/_content/images/github-icon.png" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+      <div id="nav-follow" class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a href="/fubutransportation" data-key="index">FubuTransportation &#187;</a></li><li><a href="/fubutransportation/understanding_the_message_handling_pipeline" data-key="index">Understanding the Message Handling Pipeline &#187;</a></li><li class="active"><a href="/fubutransportation/understanding_the_message_handling_pipeline/handler-pipeline" data-key="handler_pipeline">Handler Pipeline &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubutransportation/understanding_the_message_handling_pipeline" title="Understanding the Message Handling Pipeline">Previous</a></li><li><a href="/fubutransportation/understanding_the_message_handling_pipeline/behavior-chain" title="Behavior Chain">Next</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        
+        
+
+        <div class="row">
+          <div class="span3 sidebar">
+            
+            <h3 class="half-margin">Topics</h3>
+            <ul id="page-toc" class="nav nav-tabs nav-stacked affix">
+            </ul>
+            <br/>
+            <h3>
+              FubuTransportation v0.5.0.0
+            </h3>
+
+            <br/>
+            <h3 class="no-margin">Next</h3>
+<p><a href="/fubutransportation/understanding_the_message_handling_pipeline/behavior-chain" data-key="behavior_chain">Behavior Chain</a></p>
+<h3 class="no-margin">Previous</h3>
+<p><a href="/fubutransportation/understanding_the_message_handling_pipeline" data-key="index">Understanding the Message Handling Pipeline</a></p>
+          </div>
+          <div class="span9">
+
+              <h1 class="no-margin">Handler Pipeline</h1>
+              <hr class="header-line topic-line"></hr>
+
+            <!--Title: Handler Pipeline-->
+<!--Url: handler-pipeline-->
+<p>The handler pipeline starts by invoking the serialization. After serialization is finished a strategy of envelope handlers is invoked.
+Strategy pattern comes to play for things like delayed messages, handling a correlated response, invoking the chain, or indicating that
+no handler is found. This is accomplished by returning a continuation from the envelope handler. The continuation is responsible for the actual
+processing of a message. Although you may never have to interact directly with the handler pipeline, it's good to understand what it's doing under the covers.
+Listed below are all the responsibilities that the handler pipeline currently deals with.</p>
+
+<ul>
+<li>Handling the execution and result of async handlers</li>
+<li>Handling errors that occurred while invoking the handler's behavior chain</li>
+<li>Indicating the success of message handling</li>
+<li>Delayed retry of a message after an error has occurred</li>
+<li>Moving serialization errors immediately to the error queue</li>
+<li>Moving errors to the error queue</li>
+<li>Requeueing a message after an error has occurred (putting at the end of the line)</li>
+<li>Retrying the handler's behavior chain immediately</li>
+<li>Moving a delayed message to a temporary holding queue until it's time to be received again</li>
+<li>Sending a reply that no handler's were found</li>
+<li>Bypassing the handler chain for a correlated response invoked via the event aggregator</li>
+<li>Invoking the handler's behavior chain</li>
+</ul>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+
+<script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
+<script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
+<script type="text/javascript" src="/_content/scripts/toastr.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
+<script type="text/javascript" src="/_content/scripts/topics.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuDocs">FubuDocs</a>.
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
