@@ -1,0 +1,136 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>
+      FubuCsProjFile - CsProj Files</title>
+    
+<meta charset="utf-8"/>
+<meta name="description" content="FubuDocs"/>
+<meta name="author" content="FubuDocs"/>
+
+
+
+
+<link href="/_content/styles/sons-of-obsidian.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr-responsive.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.core.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
+
+<link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+      
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
+      <a href="/fubucsprojfile" title="A member of the Fubu family of projects" class="project-logo"><span>FubuCsProjFile</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a href="http://twitter.com/@fubumvc" class="ico-twitter"><img alt="Twitter" src="/_content/images/twitter-icon.png" /></a>
+<a href="http://github.com/DarthFubuMVC/FubuCsProjFile" class="ico-github"><img alt="Github" src="/_content/images/github-icon.png" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+      <div id="nav-follow" class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a href="/fubucsprojfile" data-key="index">FubuCsProjFile &#187;</a></li><li class="active"><a href="/fubucsprojfile/csproj-files" data-key="index">CsProj Files &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubucsprojfile/solution-files" title="Solution Files">Previous</a></li><li><a href="/fubucsprojfile/csproj-files/assembly-references" title="Assembly References">Next</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        
+        
+
+        <div class="row">
+          <div class="span3 sidebar">
+            
+            <h3 class="half-margin">Topics</h3>
+            <ul id="page-toc" class="nav nav-tabs nav-stacked affix">
+            </ul>
+            <br/>
+            <h3>
+              FubuCsProjFile v1.0.0.0
+            </h3>
+
+            <br/>
+            <h3 class="no-margin">Next</h3>
+<p><a href="/fubucsprojfile/csproj-files/assembly-references" data-key="assembly-references">Assembly References</a></p>
+<h3 class="no-margin">Previous</h3>
+<p><a href="/fubucsprojfile/solution-files" data-key="solution-files">Solution Files</a></p>
+          </div>
+          <div class="span9">
+
+              <h1 class="no-margin">CsProj Files</h1>
+              <hr class="header-line topic-line"></hr>
+
+            <!--Title: CsProj Files-->
+<!--Url: csproj-files-->
+<div class="alert alert-info"><i class="icon-info-sign"></i>FubuCsProjFile's functionality for manipulating *.csproj files is largely taken from the <a href="http://monodevelop.com">MonoDevelop</a> codebase.</div>
+
+<p>The key class for manipulating *.csproj files is unsurprisingly called <code>CsProjFile</code>.</p>
+
+<pre data-linenums="187" class="prettyprint lang-cs">
+            var project = CsProjFile.LoadFrom(&quot;FubuMVC.SlickGrid.Docs.csproj&quot;);
+
+            // Add new references, code items, etc.
+
+            project.Save();
+</pre>
+
+<p>As of now, the <code>CsProjFile</code> class allows you to create, load, and save *.csproj files while editing basic properties and managing code items and assembly references.</p>
+
+<div><h2 class="half-margin">Table of Contents</h2><ul class="table-of-contents"><li><a href="/fubucsprojfile/csproj-files/assembly-references">Assembly References</a></li><li><a href="/fubucsprojfile/csproj-files/embedded-resources">Embedded Resources</a></li><li><a href="/fubucsprojfile/csproj-files/code-files">Code Files</a></li></ul></div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+
+<script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/bootstrap-prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
+<script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
+<script type="text/javascript" src="/_content/scripts/toastr.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
+<script type="text/javascript" src="/_content/scripts/topics.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuDocs">FubuDocs</a>.
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

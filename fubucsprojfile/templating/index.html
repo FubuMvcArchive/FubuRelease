@@ -1,0 +1,189 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>
+      FubuCsProjFile - Templating</title>
+    
+<meta charset="utf-8"/>
+<meta name="description" content="FubuDocs"/>
+<meta name="author" content="FubuDocs"/>
+
+
+
+
+<link href="/_content/styles/sons-of-obsidian.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr-responsive.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.core.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
+
+<link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+      
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
+      <a href="/fubucsprojfile" title="A member of the Fubu family of projects" class="project-logo"><span>FubuCsProjFile</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a href="http://twitter.com/@fubumvc" class="ico-twitter"><img alt="Twitter" src="/_content/images/twitter-icon.png" /></a>
+<a href="http://github.com/DarthFubuMVC/FubuCsProjFile" class="ico-github"><img alt="Github" src="/_content/images/github-icon.png" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+      <div id="nav-follow" class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a href="/fubucsprojfile" data-key="index">FubuCsProjFile &#187;</a></li><li class="active"><a href="/fubucsprojfile/templating" data-key="index">Templating &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubucsprojfile/csproj-files" title="CsProj Files">Previous</a></li><li><a href="/fubucsprojfile/templating/template-inputs" title="Template Inputs">Next</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        
+        
+
+        <div class="row">
+          <div class="span3 sidebar">
+            
+            <h3 class="half-margin">Topics</h3>
+            <ul id="page-toc" class="nav nav-tabs nav-stacked affix">
+            </ul>
+            <br/>
+            <h3>
+              FubuCsProjFile v1.0.0.0
+            </h3>
+
+            <br/>
+            <h3 class="no-margin">Next</h3>
+<p><a href="/fubucsprojfile/templating/template-inputs" data-key="template-inputs">Template Inputs</a></p>
+<h3 class="no-margin">Previous</h3>
+<p><a href="/fubucsprojfile/csproj-files" data-key="index">CsProj Files</a></p>
+          </div>
+          <div class="span9">
+
+              <h1 class="no-margin">Templating</h1>
+              <hr class="header-line topic-line"></hr>
+
+            <!--Title: Templating-->
+<!--Url: templating-->
+
+FubuCsProjFile is the templating engine used by <span>LINK TO PROJECT &#39;fubu&#39;</span> to generate new code trees, new projects, and enhance existing projects.  
+
+FubuCsProjFile's templating capabilities differ from other .Net solutions by allowing for the combination of templates at one time and reentrant modifications to existing code trees and projects.  FubuCsProjFile was built for the Fubu suite of tools and includes many Fubu-specific features like <a href="/ripple" title="ripple was originally created to aide the Fubu team in managing large numbers of dependencies both locally and in continuation integration environments. It was designed to fill a gap in usage found with the NuGet client.">ripple</a> and <a href="/fuburake">FubuRake</a> generation.
+
+<section><h4 id="creating" class="section-header">Creating a Template Library</h4><p>To setup your own custom library of templates, create a single folder with three child folders:</p>
+
+<ol>
+<li><strong>solution</strong> -- template folders that would apply to the root of your code repository</li>
+<li><strong>project</strong> -- template folders that act as a recipe for an all new VS.Net project</li>
+<li><strong>alteration</strong> -- template folders that act as an enhancement to an existing VS.Net project</li>
+</ol>
+
+<p>To see a working example of a template library, check out the templates behind <span>LINK TO PROJECT &#39;fubu&#39;</span> in <a href="https://github.com/DarthFubuMVC/fubu/tree/master/templates">GitHub</a>.</p>
+</section>
+
+<section><h4 id="invoking" class="section-header">Invoking a Template</h4>
+After you build your library of solution, project, and alteration templates, you can invoke the templates by first creating a template request defining what you want to have happen like so:
+
+<pre data-linenums="23" class="prettyprint lang-cs">
+        private static TemplateRequest buildTemplateRequest()
+        {
+            var request = new TemplateRequest
+            {
+                RootDirectory = &quot;root directory&quot;,
+                SolutionName = &quot;MySolution.sln&quot;
+            };
+
+            // Add a project named &quot;MyProject&quot; using a project template named &quot;basic-new-project&quot;
+            request.AddProjectRequest(&quot;MyProject&quot;, &quot;basic-new-project&quot;, project =&gt; {
+                // Add some extra templates from the /alterations folder
+                project.AddAlteration(&quot;raven&quot;);
+                project.AddAlteration(&quot;spark&quot;);
+
+                // Add some substitution values for the templating if desired
+                // See the topic page for subsitutions and inputs
+                project.Substitutions.Set(&quot;%SHORT_NAME%&quot;, &quot;MyProj&quot;);
+            });
+
+            // Add a testing project related to our first project using the &quot;unit-testing&quot; project template
+            // See the topic about testing projects
+            request.AddTestingRequest(new TestProjectRequest(&quot;MyProject.Testing&quot;, &quot;unit-testing&quot;, &quot;MyProject&quot;));
+
+            return request;
+        }
+</pre>
+
+Next, we invoke our templating request by generating and executing a <code>TemplatePlan</code> using our template library like this code below:
+
+<pre data-linenums="12" class="prettyprint lang-cs">
+            var library = new TemplateLibrary(&quot;path to your templates&quot;);
+            var builder = new TemplatePlanBuilder(library);
+            var request = buildTemplateRequest();
+
+            // Build a TemplatePlan
+            var plan = builder.BuildPlan(request);
+            plan.Execute();
+</pre>
+</section>
+
+The following topics will explain how to use the various possibilities for building your own templates.
+
+<br/>
+<br/>
+<div><h2 class="half-margin">Table of Contents</h2><ul class="table-of-contents"><li><a href="/fubucsprojfile/templating/template-inputs">Template Inputs</a></li><li><a href="/fubucsprojfile/templating/solutions">Solution Templates</a></li><li><a href="/fubucsprojfile/templating/project-templates">Project Templates</a></li><li><a href="/fubucsprojfile/templating/code-files">Code Files</a></li><li><a href="/fubucsprojfile/templating/files-and-folders">Files and Folders</a></li><li><a href="/fubucsprojfile/templating/system-assembly-references">System Assembly References</a></li><li><a href="/fubucsprojfile/templating/nuget-references">Nuget References</a></li><li><a href="/fubucsprojfile/templating/gitignore-entries">Gitignore Entries</a></li><li><a href="/fubucsprojfile/templating/gem-dependencies">Gem Dependencies</a></li><li><a href="/fubucsprojfile/templating/rake-files">Rake Files</a></li><li><a href="/fubucsprojfile/templating/assemblyinfo-alterations">AssemblyInfo Alterations</a></li><li><a href="/fubucsprojfile/templating/using-instructions">Using Instructions</a></li></ul></div>
+<p></p>
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+
+<script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/bootstrap-prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
+<script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
+<script type="text/javascript" src="/_content/scripts/toastr.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
+<script type="text/javascript" src="/_content/scripts/topics.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuDocs">FubuDocs</a>.
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

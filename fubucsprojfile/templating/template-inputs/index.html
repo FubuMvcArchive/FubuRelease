@@ -1,0 +1,176 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>
+      FubuCsProjFile - Template Inputs</title>
+    
+<meta charset="utf-8"/>
+<meta name="description" content="FubuDocs"/>
+<meta name="author" content="FubuDocs"/>
+
+
+
+
+<link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr-responsive.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.core.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
+
+<link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+      
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
+      <a href="/fubucsprojfile" title="A member of the Fubu family of projects" class="project-logo"><span>FubuCsProjFile</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a href="http://twitter.com/@fubumvc" class="ico-twitter"><img alt="Twitter" src="/_content/images/twitter-icon.png" /></a>
+<a href="http://github.com/DarthFubuMVC/FubuCsProjFile" class="ico-github"><img alt="Github" src="/_content/images/github-icon.png" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+      <div id="nav-follow" class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a href="/fubucsprojfile" data-key="index">FubuCsProjFile &#187;</a></li><li><a href="/fubucsprojfile/templating" data-key="index">Templating &#187;</a></li><li class="active"><a href="/fubucsprojfile/templating/template-inputs" data-key="template-inputs">Template Inputs &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubucsprojfile/templating" title="Templating">Previous</a></li><li><a href="/fubucsprojfile/templating/solutions" title="Solution Templates">Next</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        
+        
+
+        <div class="row">
+          <div class="span3 sidebar">
+            
+            <h3 class="half-margin">Topics</h3>
+            <ul id="page-toc" class="nav nav-tabs nav-stacked affix">
+            </ul>
+            <br/>
+            <h3>
+              FubuCsProjFile v1.0.0.0
+            </h3>
+
+            <br/>
+            <h3 class="no-margin">Next</h3>
+<p><a href="/fubucsprojfile/templating/solutions" data-key="solutions">Solution Templates</a></p>
+<h3 class="no-margin">Previous</h3>
+<p><a href="/fubucsprojfile/templating" data-key="index">Templating</a></p>
+          </div>
+          <div class="span9">
+
+              <h1 class="no-margin">Template Inputs</h1>
+              <hr class="header-line topic-line"></hr>
+
+            <!--Title: Template Inputs-->
+<!--Url: template-inputs-->
+<p>Some of the template options like code files allow you to express substitutions in text that will be replaced by a value supplied by the template request.  </p>
+
+<p>For an example, look at this sample taken from the fubu templates for a file named <code>%FUBU_REGISTRY%.cs</code>:</p>
+
+<pre>
+using FubuMVC.Core;
+
+namespace %NAMESPACE%
+{
+    public class %FUBU_REGISTRY% : FubuRegistry
+    {
+        public %FUBU_REGISTRY%()
+        {
+            // Register any custom FubuMVC policies, inclusions, or 
+            // other FubuMVC configuration here
+            // Or leave as is to use the default conventions unchanged
+        }
+    }
+}
+</pre>
+
+<p>When the template containing this file is executed, the text items %NAMESPACE% and %FUBU_REGISTRY% will be replaced in both the resulting text and the file name with the values of those substitutions in the template request.</p>
+
+<div class="alert alert-info"><i class="icon-info-sign"></i>The usage of '%' and all caps in the substitution names is simply an idiom and not a requirement</div>
+
+<p><section><h4 id="built-in" class="section-header">Built in Substitutions</h4>
+FubuCsProjFile has a couple special substitutions whose values are supplied by the templating engine based off the initial <code>TemplateRequest</code> itself:</p>
+
+<ol>
+<li><strong>%SOLUTION_NAME%</strong> -- the name of a new solution without a file extension</li>
+<li><strong>%SOLUTION_PATH%</strong> -- the relative path to the solution file from the root of the code repository</li>
+<li><strong>%INSTRUCTIONS%</strong> -- the generated instructions to the user describing the template operation</li>
+<li><strong>%NAMESPACE%</strong> -- only valid inside of code files to a project, the current namespace based on project name and current folder</li>
+<li><strong>%ASSEMBLY_NAME%</strong> -- only valid inside of code files to a project, the assembly name of the current project</li>
+<li><strong>%SHORT_NAME%</strong> -- generally meant to be a prefix for other classes.  If not specified, FubuCsProjFile determines this by trying to turn "MyCompany.SuperProject" into "SuperProject."</li>
+<li><strong>%PROJECT_PATH%</strong> -- the relative path from the code repository to the current csproj file </li>
+<li><strong>%PROJECT_FOLDER%</strong> -- the relative path from the code repository to the folder containing the current csproj file</section></li>
+</ol>
+
+<p><section><h4 id="specific" class="section-header">Defining template specific inputs</h4>
+You can specify requirements for custom inputs to new templates by adding a file called <code>inputs.txt</code> to a template folder.  That file is a flat file that follows this format:</p>
+
+<pre>
+%INPUT_NAME1%=some default value,some description about what %INPUT_NAME% means
+%INPUT_NAME2%=some default value,some description about what %INPUT_NAME% means
+%INPUT_NAME3%=some default value,some description about what %INPUT_NAME% means
+</pre>
+
+<p>Default values can be built using other substitutions like this example from the FubuMVC project generation:</p>
+
+<pre>
+%FUBU_REGISTRY%=%SHORT_NAME%FubuRegistry,The name of the FubuRegistry class for the application
+</pre>
+
+<p>You can see an example of using <code>inputs.txt</code> in the <a href="https://github.com/DarthFubuMVC/fubu/tree/master/templates/alteration/fubumvc-empty">empty FubuMVC template from fubu.exe</a>.
+</section></p>
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+
+<script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
+<script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
+<script type="text/javascript" src="/_content/scripts/toastr.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
+<script type="text/javascript" src="/_content/scripts/topics.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuDocs">FubuDocs</a>.
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
