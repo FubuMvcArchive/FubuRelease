@@ -1,0 +1,141 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>
+      fubu - Adding Projects to Existing Solutions</title>
+    
+<meta charset="utf-8"/>
+<meta name="description" content="FubuDocs"/>
+<meta name="author" content="FubuDocs"/>
+
+
+
+
+<link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr-responsive.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.core.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
+
+<link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+
+    
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar" position="relative">
+      
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
+      <a href="/fubu" title="Command line tools for FubuMVC or FubuTransportation development" class="project-logo"><span>fubu</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a href="http://github.com/DarthFubuMVC/fubu" class="ico-github"><img alt="Github" src="/_content/images/github-icon.png" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+      <div id="nav-follow" class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a href="/fubu" data-key="index">fubu &#187;</a></li><li><a href="/fubu/templating" data-key="index">Project and Solution Templating &#187;</a></li><li class="active"><a href="/fubu/templating/adding-projects-to-existing-solutions" data-key="adding-projects-to-existing-solutions">Adding Projects to Existing Solutions &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubu/templating/new-solutions-and-code-trees" title="New Solutions and Code Trees">Previous</a></li><li><a href="/fubu/templating/enhancing-existing-projects" title="Enhancing Existing Projects">Next</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        
+        
+
+        <div class="row">
+          <div class="span3 sidebar" data-spy="affix" data-offset-top="150" data-offset-bottom="200">
+            
+            <h3 class="half-margin">Topics</h3>
+            <ul id="page-toc" class="nav nav-tabs nav-stacked bs-docs-sidebar">
+            </ul>
+            <br/>
+            <h3>
+              fubu v1.0.0.0
+            </h3>
+
+            <br/>
+            <h3 class="no-margin">Next</h3>
+<p><a href="/fubu/templating/enhancing-existing-projects" data-key="enhancing-existing-projects">Enhancing Existing Projects</a></p>
+<h3 class="no-margin">Previous</h3>
+<p><a href="/fubu/templating/new-solutions-and-code-trees" data-key="new-solutions-and-code-trees">New Solutions and Code Trees</a></p>
+          </div>
+          <div class="span9">
+
+              <h1 class="no-margin">Adding Projects to Existing Solutions</h1>
+              <hr class="header-line topic-line"></hr>
+
+            <!--Title: Adding Projects to Existing Solutions-->
+<!--Url: adding-projects-to-existing-solutions-->
+
+<section class="command-section"><h4><span id="add" class="section-header">fubu add</span><i class="command-description">Adds new projects to an existing solution</i></h4>
+The <code>fubu add</code> command creates new projects to an existing solution.  Run this command from the root directory of your code repository.
+
+At this point, all the project types for <code>add</code> are the same as <code>fubu new</code>.<table class="table usages-table"><thead><tr><th colspan="2">Usages</th></tr></thead><tbody><tr><td>default</td><td class="command-usage">fubu add &lt;projectname&gt; &lt;profile&gt; [-s, --solution &lt;solution&gt;] [-s, --short-name &lt;shortname&gt;] [-n, --no-tests] [-l, --list] [-o, --options [&lt;options1 options2 options3 ...&gt;]] [-d, --dot-net &lt;dotnet&gt;]</td></tr><tr><td>list</td><td class="command-usage">fubu add [-l, --list]</td></tr></tbody></table>
+<table class="table"><thead><tr><th colspan="2">Arguments</th></tr></thead><tbody><tr><td class="command-arg-name">projectname</td><td class="command-arg-description">The name of the new project</td></tr><tr><td class="command-arg-name">profile</td><td class="command-arg-description">Project profile.  Use the --list flag to see the valid options</td></tr></tbody></table>
+<table class="table"><thead><tr><th colspan="2">Flags</th></tr></thead><tbody><tr><td class="command-flag-usage">[-s, --solution &lt;solution&gt;]</td><td class="command-flag-description">Specify the solution file name if there is more than one in this code tree</td></tr><tr><td class="command-flag-usage">[-s, --short-name &lt;shortname&gt;]</td><td class="command-flag-description">Used in many templates as a prefix for generted classes</td></tr><tr><td class="command-flag-usage">[-n, --no-tests]</td><td class="command-flag-description">Do not generate a matching testing project.  Boo!</td></tr><tr><td class="command-flag-usage">[-l, --list]</td><td class="command-flag-description">List all the possible project types and their valid options</td></tr><tr><td class="command-flag-usage">[-o, --options [&lt;options1 options2 options3 ...&gt;]]</td><td class="command-flag-description">Extra options for the new application</td></tr><tr><td class="command-flag-usage">[-d, --dot-net &lt;dotnet&gt;]</td><td class="command-flag-description">Specify the .Net version &#39;v4.0&#39; or &#39;v4.5&#39;</td></tr></tbody></table></section>
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br></br>
+    <hr></hr>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <ul class="nav"><li><a href="/fubu" data-key="index">fubu &#187;</a></li><li><a href="/fubu/templating" data-key="index">Project and Solution Templating &#187;</a></li><li class="active"><a href="/fubu/templating/adding-projects-to-existing-solutions" data-key="adding-projects-to-existing-solutions">Adding Projects to Existing Solutions &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubu/templating/new-solutions-and-code-trees" title="New Solutions and Code Trees">Previous</a></li><li><a href="/fubu/templating/enhancing-existing-projects" title="Enhancing Existing Projects">Next</a></li></ul>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+
+<script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
+<script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
+<script type="text/javascript" src="/_content/scripts/toastr.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/diagnostics/bootstrap-scrollspy.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
+<script type="text/javascript" src="/_content/scripts/topics.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuDocs">FubuDocs</a>.
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

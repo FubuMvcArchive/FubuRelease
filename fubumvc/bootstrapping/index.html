@@ -1,0 +1,382 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>
+      FubuMVC - Bootstrapping</title>
+    
+<meta charset="utf-8"/>
+<meta name="description" content="FubuDocs"/>
+<meta name="author" content="FubuDocs"/>
+
+
+
+
+<link href="/_content/styles/sons-of-obsidian.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr-responsive.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.core.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
+
+<link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+
+    
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar" position="relative">
+      
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
+      <a href="/fubumvc" title="The .Net web development framework that gets out of your way" class="project-logo"><span>FubuMVC</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a href="http://github.com/DarthFubuMVC/FubuMVC" class="ico-github"><img alt="Github" src="/_content/images/github-icon.png" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+      <div id="nav-follow" class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a href="/fubumvc/index" data-key="index">FubuMVC &#187;</a></li><li class="active"><a href="/fubumvc/bootstrapping" data-key="index">Bootstrapping &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubumvc/terminology" title="Terminology">Previous</a></li><li><a href="/fubumvc/bootstrapping/fuburegistry" title="FubuRegistry">Next</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        
+        
+
+        <div class="row">
+          <div class="span3 sidebar" data-spy="affix" data-offset-top="150" data-offset-bottom="200">
+            
+            <h3 class="half-margin">Topics</h3>
+            <ul id="page-toc" class="nav nav-tabs nav-stacked bs-docs-sidebar">
+            </ul>
+            <br/>
+            <h3>
+              FubuMVC v1.0.0.0
+            </h3>
+
+            <br/>
+            <h3 class="no-margin">Next</h3>
+<p><a href="/fubumvc/bootstrapping/fuburegistry" data-key="fuburegistry">FubuRegistry</a></p>
+<h3 class="no-margin">Previous</h3>
+<p><a href="/fubumvc/terminology" data-key="terminology">Terminology</a></p>
+          </div>
+          <div class="span9">
+
+              <h1 class="no-margin">Bootstrapping</h1>
+              <hr class="header-line topic-line"></hr>
+
+            <!--Title: Bootstrapping-->
+<!--Url: bootstrapping-->
+<p>The first step to building a new FubuMVC application is creating the bootstrapping code for the new application.  When you bootstrap a FubuMVC application,
+youll need to tell the <code>FubuApplication</code> class a couple pieces of information:</p>
+
+<ol>
+<li>Any custom conventions or policies for the application</li>
+<li>An <em>IoC container facility</em> to handle service registration at bootstrapping time and behavior creation at runtime</li>
+<li>Optionally, you may also register additional <a href="/bottles">Bottles</a> package loaders, activators, and bootstrappers. </li>
+</ol>
+
+<p><section><h4 id="under-the-covers" class="section-header">Under the Covers</h4></p>
+
+<p>At bootstrapping time, <code>FubuApplication</code> takes the container facility, any custom conventions or policies, and the bottles loaders you specified 
+and uses those ingredients to build up a <code>FubuRuntime</code> by following these steps:</p>
+
+<ol>
+<li>Discovers and loads any <a href="/bottles">Bottles</a> packages deployed to the application</li>
+<li>Builds up the BehaviorGraph model for the application against assembly and the active conventions</li>
+<li><em>Bakes</em> the behaviors and service registrations into the application's IoC container</li>
+<li>Builds the routing table</li>
+<li>Runs any registered <a href="/bottles">Bottles</a> <em>Activators</em></li>
+</ol>
+
+<p>You just need to declaratively provide the ingredients and <code>FubuApplication</code> will perform the right operations in the correct order.<br />
+</section></p>
+
+<p><section><h4 id="fuburuntime" class="section-header">Building a FubuRuntime</h4></p>
+
+<p>The <code>FubuRuntime</code> class simply holds all the runtime elements of a running FubuMVC application.  You generally won't interact with
+instances of <code>FubuRuntime</code> other than calling <code>Dispose()</code> to shutdown an application, but it is useful in testing scenarios to access the underlying IoC container, <code>BehaviorGraph</code>, and the routing table.</p>
+
+<p>The simplest possible way to bootstrap a FubuMVC application is to use the default policies and a new empty IoC container as in this code:</p>
+
+<pre data-linenums="18" class="prettyprint lang-cs">
+            FubuApplication
+                // Only going to use the default
+                // conventions and policies
+                .DefaultPolicies()
+
+                // Starting with a brand new
+                // StructureMap container.
+                .StructureMap()
+
+                // Build it up!
+                .Bootstrap();
+
+</pre>
+
+<p></section></p>
+
+<p><section><h4 id="iapplicationsource" class="section-header">IApplicationSource</h4></p>
+
+<p>While it isn't expressly mandatory, the FubuMVC team recommends that you embed your bootstrapping code into a class that implements the
+<code>IApplicationSource</code> interface like this class below:</p>
+
+<pre data-linenums="37" class="prettyprint lang-cs">
+    public class SimpleApplicationSource : IApplicationSource
+    {
+        public FubuApplication BuildApplication()
+        {
+            return FubuApplication
+                .DefaultPolicies()
+                .StructureMap();
+        }
+    }
+</pre>
+
+<p>Using an <code>IApplicationSource</code> enables you to create a specification for how your application is bootstrapped that can be reused unchanged in different contexts
+such as ASP.Net hosting, embedded Katana servers, test harnesses, and the <a href="/fubu" title="Command line goodness for creating, running, and editing FubuMVC or FubuTransportation applications">fubu</a> development server.</section></p>
+
+<p><section><h4 id="aspnet" class="section-header">Bootstrapping in ASP.Net</h4></p>
+
+<p>To bootstrap a FubuMVC application for ASP.Net usage, you just need to build a <code>FubuRuntime</code> object at application startup and dispose it at application unloading like this:</p>
+
+<pre data-linenums="50" class="prettyprint lang-cs">
+    public class Global : HttpApplication
+    {
+        private FubuRuntime _runtime;
+
+        protected void Application_Start(object sender, EventArgs e)
+        {
+            // Start the runtime at application start
+            _runtime = FubuApplication
+                .BootstrapApplication&lt;SimpleApplicationSource&gt;();
+        }
+
+        protected void Application_End(object sender, EventArgs e)
+        {
+            // Clean up after yourself when the application is
+            // unloading!!!
+            _runtime.Dispose();
+        }
+    }
+</pre>
+
+<p>Do note that in the case of ASP.Net hosting that the routes are stored in the static <code>RouteTable.Routes</code> collection.
+</section></p>
+
+<p><section><h4 id="embedded-katana" class="section-header">Bootstrapping for an Embedded Katana Server</h4></p>
+
+<p>Bootstrapping FubuMVC for Katana uses the same <code>FubuApplication</code> / <code>FubuRuntime</code> mechanisms as we used above for ASP.Net:</p>
+
+<pre data-linenums="9" class="prettyprint lang-cs">
+    public static class KatanaBootstrapper
+    {
+        public static void WithApplicationSource()
+        {
+            using (var server = EmbeddedFubuMvcServer.For&lt;SimpleApplication&gt;())
+            {
+                var greeting = server.Endpoints.Get&lt;HelloEndpoint&gt;(x =&gt; x.get_greeting());
+                Console.WriteLine(greeting);
+            }
+        }
+
+        public static void Inline()
+        {
+            using (var server = FubuApplication.DefaultPolicies().StructureMap().RunEmbedded())
+            {
+                var greeting = server.Endpoints.Get&lt;HelloEndpoint&gt;(x =&gt; x.get_greeting());
+                Console.WriteLine(greeting);
+            }
+        }
+    }
+
+    public class SimpleApplication : IApplicationSource
+    {
+        public FubuApplication BuildApplication()
+        {
+            return FubuApplication
+                .DefaultPolicies()
+                .StructureMap();
+        }
+    }
+
+    public class HelloEndpoint
+    {
+        public string get_greeting()
+        {
+            return &quot;Hello&quot;;
+        }
+    }
+</pre>
+
+<p></section></p>
+
+<p><section><h4 id="custom-policies" class="section-header">Custom Policies and Conventions with FubuRegistry</h4></p>
+
+<p>You can register your own custom policies or conventions with FubuMVC to govern almost anything in your application using your own <code>FubuRegistry</code> class
+like the one following:</p>
+
+<pre data-linenums="71" class="prettyprint lang-cs">
+    public class CustomApplication : IApplicationSource
+    {
+        public FubuApplication BuildApplication()
+        {
+            return FubuApplication
+                .For&lt;CustomFubuRegistry&gt;()
+                .StructureMap();
+        }
+    }
+
+
+    public class CustomFubuRegistry : FubuRegistry
+    {
+        public CustomFubuRegistry()
+        {
+            // I want to name my action classes with the
+            // &quot;Controller&quot; suffix
+            Actions.IncludeClassesSuffixedWithController();
+
+            // Registering a custom policy
+            Policies.Add&lt;MyCustomPolicy&gt;();
+
+            // You *can* also declare IoC service
+            // registrations in your FubuRegistry
+            Services(x =&gt; {
+                x.AddService&lt;IActivator, MyCustomActivator&gt;();
+            });
+        }
+    }
+
+    public class MyCustomPolicy : IConfigurationAction
+    {
+        public void Configure(BehaviorGraph graph)
+        {
+            // insert new behaviors for some sort of
+            // cross cutting concern
+        }
+    }
+
+    public class MyCustomActivator : IActivator
+    {
+        public void Activate(IEnumerable&lt;IPackageInfo&gt; packages, IPackageLog log)
+        {
+            // do something as the application starts up, 
+            // but after the IoC container registrations are
+            // completely baked in
+        }
+    }
+</pre>
+
+<p>See the topic on <code>FubuRegistry</code> for more information.
+</section></p>
+
+<p><section><h4 id="bottles" class="section-header">Customizing the Bottles Loading</h4>
+<a href="/bottles">Bottles</a> itself is extensible.  If you want to load Bottles packages to your application in a different way than the defaults,
+you can register your custom loaders, activators, and bootstrappers with the <code>Packages()</code> method on <code>FubuApplication</code>:</p>
+
+<pre data-linenums="12" class="prettyprint lang-cs">
+    public class CustomPackageLoadingApplication : IApplicationSource
+    {
+        public FubuApplication BuildApplication()
+        {
+            return FubuApplication
+                .DefaultPolicies()
+                .StructureMap()
+                .Packages(x =&gt; {
+                    x.Loader(new CustomPackageLoader());
+                    x.Activator(new SpecialStartupActivator());
+                });
+        }
+    }
+
+    // This class will run at startup time
+    public class SpecialStartupActivator : IActivator
+    {
+        public void Activate(IEnumerable&lt;IPackageInfo&gt; packages, IPackageLog log)
+        {
+            // Do something!
+        }
+    }
+
+    public class CustomPackageLoader : IPackageLoader
+    {
+        public IEnumerable&lt;IPackageInfo&gt; Load(IPackageLog log)
+        {
+            // discover and load Bottles (IPackageInfo) in your
+            // own special application way
+            yield break;
+        }
+    }
+</pre>
+
+<p></section></p>
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br></br>
+    <hr></hr>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <ul class="nav"><li><a href="/fubumvc/index" data-key="index">FubuMVC &#187;</a></li><li class="active"><a href="/fubumvc/bootstrapping" data-key="index">Bootstrapping &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubumvc/terminology" title="Terminology">Previous</a></li><li><a href="/fubumvc/bootstrapping/fuburegistry" title="FubuRegistry">Next</a></li></ul>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+
+<script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/bootstrap-prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
+<script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
+<script type="text/javascript" src="/_content/scripts/toastr.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/diagnostics/bootstrap-scrollspy.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
+<script type="text/javascript" src="/_content/scripts/topics.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuDocs">FubuDocs</a>.
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

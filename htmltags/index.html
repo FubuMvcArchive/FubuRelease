@@ -20,8 +20,10 @@
 <link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
 
 <link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+
+    
   </head>
-  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+  <body data-spy="scroll" data-target=".bs-docs-sidebar" position="relative">
       
     <div class="container">
       
@@ -61,10 +63,10 @@
         
 
         <div class="row">
-          <div class="span3 sidebar">
+          <div class="span3 sidebar" data-spy="affix" data-offset-top="150" data-offset-bottom="200">
             
             <h3 class="half-margin">Topics</h3>
-            <ul id="page-toc" class="nav nav-tabs nav-stacked affix">
+            <ul id="page-toc" class="nav nav-tabs nav-stacked bs-docs-sidebar">
             </ul>
             <br/>
             <h3>
@@ -77,8 +79,6 @@
           </div>
           <div class="span9">
 
-              <h1 class="no-margin">HtmlTags</h1>
-              <hr class="header-line topic-line"></hr>
 
             <!--Title: HtmlTags-->
 
@@ -133,11 +133,27 @@
 </div>
 <div><h2 class="half-margin">Table of Contents</h2><ul class="table-of-contents"><li><a href="/htmltags/classes">CSS Classes</a></li><li><a href="/htmltags/text">Inner Text</a></li><li><a href="/htmltags/attributes">Html Attributes</a></li><li><a href="/htmltags/rendering">Hiding and Showing</a></li><li><a href="/htmltags/authorization">Integration with Authorization Rules</a></li><li><a href="/htmltags/styles">Inline Styles</a></li><li><a href="/htmltags/data">data-* Attributes</a></li><li><a href="/htmltags/children">Adding Children Tags</a></li><li><a href="/htmltags/metadata">Metadata Smuggling</a></li><li><a href="/htmltags/rendering">Controlling Rendering</a></li><li><a href="/htmltags/wrapping">Wrapping Tags</a></li><li><a href="/htmltags/after">Sibling Tags</a></li><li><a href="/htmltags/noclosingtag">Omitting the Closing Tag</a></li><li><a href="/htmltags/builtin">Out of the Box Tag Classes</a><ul><li><a href="/htmltags/builtin/link">LinkTag</a></li><li><a href="/htmltags/builtin/br">BrTag</a></li><li><a href="/htmltags/builtin/checkbox">CheckboxTag</a></li><li><a href="/htmltags/builtin/div">DivTag</a></li><li><a href="/htmltags/builtin/dl">DLTag</a></li><li><a href="/htmltags/builtin/form">FormTag</a></li><li><a href="/htmltags/builtin/hidden">HiddenTag</a></li><li><a href="/htmltags/builtin/no">NoTag</a></li><li><a href="/htmltags/builtin/select">SelectTag</a></li><li><a href="/htmltags/builtin/table">TableTag</a></li><li><a href="/htmltags/builtin/textbox">TextboxTag</a></li></ul></li><li><a href="/htmltags/groups">Groups of HtmlTags</a></li><li><a href="/htmltags/conventions">Html Element Conventions</a><ul><li><a href="/htmltags/conventions/builders">Tag Builders</a></li><li><a href="/htmltags/conventions/modifiers">Tag Modifiers</a></li><li><a href="/htmltags/conventions/activators">Tag Request Activators</a></li><li><a href="/htmltags/conventions/library">Registering Tag Builders and Modifiers</a></li><li><a href="/htmltags/conventions/generator">Generating Tags</a></li><li><a href="/htmltags/conventions/categories">Tag Categories</a></li><li><a href="/htmltags/conventions/services">Registering Tag Building Services</a></li></ul></li></ul></div>
 
+
+
+
+
           </div>
         </div>
       </div>
     </div>
 
+    <br></br>
+    <hr></hr>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <ul class="nav"><li class="active"><a href="/htmltags" data-key="index">HtmlTags &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/htmltags/classes" title="CSS Classes">Next</a></li></ul>
+        </div>
+      </div>
+    </div>
+    
+    
     
 
 <script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
@@ -146,6 +162,7 @@
 <script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
 <script type="text/javascript" src="/_content/scripts/toastr.js"></script>
 <script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/diagnostics/bootstrap-scrollspy.js"></script>
 <script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
 <script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
 <script type="text/javascript" src="/_content/scripts/topics.js"></script>

@@ -21,8 +21,10 @@
 <link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
 
 <link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+
+    
   </head>
-  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+  <body data-spy="scroll" data-target=".bs-docs-sidebar" position="relative">
       
     <div class="container">
       
@@ -62,14 +64,14 @@
         
 
         <div class="row">
-          <div class="span3 sidebar">
+          <div class="span3 sidebar" data-spy="affix" data-offset-top="150" data-offset-bottom="200">
             
             <h3 class="half-margin">Topics</h3>
-            <ul id="page-toc" class="nav nav-tabs nav-stacked affix">
+            <ul id="page-toc" class="nav nav-tabs nav-stacked bs-docs-sidebar">
             </ul>
             <br/>
             <h3>
-              FubuRake v0.9.5.0
+              FubuRake v1.0.1.0
             </h3>
 
             <br/>
@@ -171,11 +173,27 @@ end
   
   
 
+
+
+
+
           </div>
         </div>
       </div>
     </div>
 
+    <br></br>
+    <hr></hr>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <ul class="nav"><li><a href="/fuburake" data-key="index">FubuRake &#187;</a></li><li class="active"><a href="/fuburake/compilation" data-key="compilation">Compilation &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fuburake/options" title="Options">Previous</a></li><li><a href="/fuburake/clean" title="Cleaning before new Builds">Next</a></li></ul>
+        </div>
+      </div>
+    </div>
+    
+    
     
 
 <script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
@@ -185,6 +203,7 @@ end
 <script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
 <script type="text/javascript" src="/_content/scripts/toastr.js"></script>
 <script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/diagnostics/bootstrap-scrollspy.js"></script>
 <script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
 <script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
 <script type="text/javascript" src="/_content/scripts/topics.js"></script>

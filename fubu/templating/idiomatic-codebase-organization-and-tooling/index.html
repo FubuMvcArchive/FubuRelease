@@ -1,0 +1,178 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>
+      fubu - Idiomatic Codebase Organization and Tooling</title>
+    
+<meta charset="utf-8"/>
+<meta name="description" content="FubuDocs"/>
+<meta name="author" content="FubuDocs"/>
+
+
+
+
+<link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr-responsive.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.core.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
+
+<link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+
+    
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar" position="relative">
+      
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
+      <a href="/fubu" title="Command line tools for FubuMVC or FubuTransportation development" class="project-logo"><span>fubu</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a href="http://github.com/DarthFubuMVC/fubu" class="ico-github"><img alt="Github" src="/_content/images/github-icon.png" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+      <div id="nav-follow" class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a href="/fubu" data-key="index">fubu &#187;</a></li><li><a href="/fubu/templating" data-key="index">Project and Solution Templating &#187;</a></li><li class="active"><a href="/fubu/templating/idiomatic-codebase-organization-and-tooling" data-key="idiomatic-codebase-organization-and-tooling">Idiomatic Codebase Organization and Tooling &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubu/templating" title="Project and Solution Templating">Previous</a></li><li><a href="/fubu/templating/new-solutions-and-code-trees" title="New Solutions and Code Trees">Next</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        
+        
+
+        <div class="row">
+          <div class="span3 sidebar" data-spy="affix" data-offset-top="150" data-offset-bottom="200">
+            
+            <h3 class="half-margin">Topics</h3>
+            <ul id="page-toc" class="nav nav-tabs nav-stacked bs-docs-sidebar">
+            </ul>
+            <br/>
+            <h3>
+              fubu v1.0.0.0
+            </h3>
+
+            <br/>
+            <h3 class="no-margin">Next</h3>
+<p><a href="/fubu/templating/new-solutions-and-code-trees" data-key="new-solutions-and-code-trees">New Solutions and Code Trees</a></p>
+<h3 class="no-margin">Previous</h3>
+<p><a href="/fubu/templating" data-key="index">Project and Solution Templating</a></p>
+          </div>
+          <div class="span9">
+
+              <h1 class="no-margin">Idiomatic Codebase Organization and Tooling</h1>
+              <hr class="header-line topic-line"></hr>
+
+            <!--Title: Idiomatic Codebase Organization and Tooling-->
+<!--Url: idiomatic-codebase-organization-and-tooling-->
+
+
+<p>All of the templating generation is built around making fubu-related tools easier to use, especially for newer users.
+The way that we're attempting to do this is by establishing <a href="http://msdn.microsoft.com/en-us/magazine/dd419655.aspx">sensible defaults</a> for codebase
+layout and organization.  We have also created a new gem named <a href="/fuburake">FubuRake</a> that utilizes
+these defaults to make build scripts as declarative as possible.</p>
+
+<p><section><h4 id="technologies" class="section-header">Technology Defaults</h4></p>
+
+<p>We also assume some default technology choices with the templating:</p>
+
+<ul>
+<li><a href="http://rake.rubyforge.org">Rake</a> and Ruby for build automation</li>
+<li>Git for source control -- but only so far as we assume Git usage when we write out source control ignore policies</li>
+<li><a href="/ripple" title="ripple was originally created to aide the Fubu team in managing large numbers of dependencies both locally and in continuation integration environments. It was designed to fill a gap in usage found with the NuGet client.">ripple</a> for Nuget package management at build time
+</section></li>
+</ul>
+
+<p><section><h4 id="layout" class="section-header">Codebase Layout</h4></p>
+
+<p>Let's say you open a command prompt and type <code>fubu new MyNewApp</code>. 
+At the end of the command you should have a new <code>MyNewApp</code> folder that looks like this:</p>
+
+<ul>
+<li>rakefile - A build script with tasks for compilation, unit testing, and Nuget package management with <a href="/ripple" title="ripple was originally created to aide the Fubu team in managing large numbers of dependencies both locally and in continuation integration environments. It was designed to fill a gap in usage found with the NuGet client.">ripple</a></li>
+<li>.gitignore</li>
+<li>Gemfile - we use a handful of command line tools and Ruby libraries in the build that are distributed as gems</li>
+<li>instructions.txt</li>
+<li>ripple.config - configures the Nuget feeds and policies for this solution</li>
+<li>VERSION.txt - crude way we use to declare the current version of the libraries and applications in the codebase</li>
+<li>/src - you can change this, but we typically use "src" to hold all the source code for a code repository</li>
+<li>/src/MyNewApp.sln</li>
+<li>/src/MyNewApp</li>
+<li>/src/MyNewApp.Testing - testing library for the MyNewApp application</li>
+</ul>
+
+<p>See the <a href="/fuburake">FubuRake</a> documentation for more information about the rake scripts and the VERSION.txt file.
+</section></p>
+
+<p><section><h4 id="assembly-info" class="section-header">Standardizing and Versioning Assembly Info</h4>
+All the projects generated by fubu will have a link to a shared <code>CommonAssemblyInfo.cs</code> file.  This file is generated by the rake script anytime the code is recompiled.
+This file uses the version information from the VERSION.txt file described above.</section></p>
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br></br>
+    <hr></hr>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <ul class="nav"><li><a href="/fubu" data-key="index">fubu &#187;</a></li><li><a href="/fubu/templating" data-key="index">Project and Solution Templating &#187;</a></li><li class="active"><a href="/fubu/templating/idiomatic-codebase-organization-and-tooling" data-key="idiomatic-codebase-organization-and-tooling">Idiomatic Codebase Organization and Tooling &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubu/templating" title="Project and Solution Templating">Previous</a></li><li><a href="/fubu/templating/new-solutions-and-code-trees" title="New Solutions and Code Trees">Next</a></li></ul>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+
+<script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
+<script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
+<script type="text/javascript" src="/_content/scripts/toastr.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/diagnostics/bootstrap-scrollspy.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
+<script type="text/javascript" src="/_content/scripts/topics.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuDocs">FubuDocs</a>.
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

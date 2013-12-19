@@ -1,0 +1,328 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>
+      FubuMVC - Terminology</title>
+    
+<meta charset="utf-8"/>
+<meta name="description" content="FubuDocs"/>
+<meta name="author" content="FubuDocs"/>
+
+
+
+
+<link href="/_content/styles/sons-of-obsidian.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr-responsive.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.core.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
+
+<link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+
+    
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar" position="relative">
+      
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
+      <a href="/fubumvc" title="The .Net web development framework that gets out of your way" class="project-logo"><span>FubuMVC</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a href="http://github.com/DarthFubuMVC/FubuMVC" class="ico-github"><img alt="Github" src="/_content/images/github-icon.png" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+      <div id="nav-follow" class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a href="/fubumvc/index" data-key="index">FubuMVC &#187;</a></li><li class="active"><a href="/fubumvc/terminology" data-key="terminology">Terminology &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubumvc/getting-started" title="Getting Started">Previous</a></li><li><a href="/fubumvc/bootstrapping" title="Bootstrapping">Next</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        
+        
+
+        <div class="row">
+          <div class="span3 sidebar" data-spy="affix" data-offset-top="150" data-offset-bottom="200">
+            
+            <h3 class="half-margin">Topics</h3>
+            <ul id="page-toc" class="nav nav-tabs nav-stacked bs-docs-sidebar">
+            </ul>
+            <br/>
+            <h3>
+              FubuMVC v1.0.0.0
+            </h3>
+
+            <br/>
+            <h3 class="no-margin">Next</h3>
+<p><a href="/fubumvc/bootstrapping" data-key="index">Bootstrapping</a></p>
+<h3 class="no-margin">Previous</h3>
+<p><a href="/fubumvc/getting-started" data-key="getting-started">Getting Started</a></p>
+          </div>
+          <div class="span9">
+
+              <h1 class="no-margin">Terminology</h1>
+              <hr class="header-line topic-line"></hr>
+
+            <!--Title: Terminology-->
+<!--Url: terminology-->
+<p><section><h4 id="behaviors" class="section-header">Behaviors and Behavior Chains</h4></p>
+
+<p>Internally, the key FubuMVC runtime abstraction is a small chunk of functionality called a <em>behavior</em>:</p>
+
+<pre data-linenums="9" class="prettyprint lang-cs">
+    public interface IActionBehavior
+    {
+        void Invoke();
+        void InvokePartial();
+    }
+</pre>
+
+<p>Each <em>endpoint</em> in a FubuMVC application is composed of a chain of one or more "behavior" objects nested within each other in
+what we frequently refer to as the <a href="http://codebetter.com/jeremymiller/2011/01/09/fubumvcs-internal-runtime-the-russian-doll-model-and-how-it-compares-to-asp-net-mvc-and-openrasta/">Russian Doll
+Model</a>.</p>
+
+<p>Even a simple HTTP request is likely to be handled by multiple behaviors. While
+FubuMVC comes out of the box with behaviors for common tasks like Json or Xml
+serialization/deserialization, calling actions, and rendering views, you can
+build your own custom behaviors.</p>
+
+<p>During day to day development most developers are going to be working strictly
+with view models, actions, and views, but it's still good to know that it's possible to customize the behavior pipeline. 
+</section></p>
+
+<p><section><h4 id="endpoints" class="section-header">Endpoints, Routes, and Partials</h4>
+Behavior chains can be invoked in FubuMVC either through an HTTP request that matches a predefined <em>Route</em> that matches a known Url pattern or through direct invocation of the chain as a <em>Partial</em> through the <code>IPartialInvoker</code> service.
+For the purpose of documentation and diagnostics screens, the term <em>Endpoints</em> is used to refer to the configured behavior chains both with or without a matching Route.
+Unlike the web development frameworks like ASP.Net MVC or Web API, FubuMVC creates a unique Route object per endpoint.</p>
+
+<p><em>Partials</em> are very useful for composing large, complicated screens into manageable chunks, sharing bits of user interface across screens, or even to create configurable screens.
+<ProjectLink name="FubuTransportation" uses <em>Partial's</em>  for its message handler chains.</p>
+
+<div class="alert alert-info"><i class="icon-info-sign"></i>FubuMVC still uses the <a href="http://msdn.microsoft.com/en-us/library/system.web.routing.urlroutingmodule(v=vs.110).aspx">Url Routing Module from ASP.Net</a> as our <a href="http://martinfowler.com/eaaCatalog/frontController.html">Front Controller</a> mechanism.  This may be changed in later versions of FubuMVC in favor of a faster implementation of routing like <a href="https://github.com/phatboyg/Magnum/tree/master/src/Magnum.Routing">Magnum's.</a></div>
+
+<p></section></p>
+
+<p><section><h4 id="view-models" class="section-header">View, Input, and Output Models</h4></p>
+
+<p>View, Input, or Output models are typically <a href="http://en.wikipedia.org/wiki/Data_transfer_object">Data Transfer
+Objects</a> that are either
+inputs to or outputs from behaviors. It's probably advantageous to think of
+view models as messages passed to or between behaviors. As a baked in
+<em>opinion</em>, FubuMVC strongly prefers that the input models are unique across
+actions in your application. FubuMVC can use an input model to resolve URL's or
+authorization rules in the system. Likewise, output model signatures from
+action methods are used to "attach" view and other output behaviors to a
+behavior chain.</p>
+
+<pre data-linenums="36" class="prettyprint lang-cs">
+    public class InputModel
+    {
+        public Guid Id { get; set; }
+    }
+
+    public class OutputModel
+    {
+        public string Statue { get; set; }
+    }
+
+    // &#39;ViewModel&#39; just means an object that is
+    // consumed by a matching Spark or Razor view
+    public class ViewModel
+    {
+        public string Title { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+    }
+</pre>
+
+<p></section></p>
+
+<p><section><h4 id="actions" class="section-header">Actions</h4></p>
+
+<p>While you <em>could</em> treat FubuMVC as a classic MVC framework and use controllers to direct what should happen within a route or input, 
+idiomatic FubuMVC usage is to instead use simpler
+<em>actions</em> that are just methods on concrete
+<a href="http://en.wikipedia.org/wiki/Plain_Old_CLR_Object">POCO</a> classes in your
+application that will be called during an HTTP request like the following:</p>
+
+<pre data-linenums="6" class="prettyprint lang-cs">
+    // The suffix &quot;Endpoint&quot; is a default
+    // convention of FubuMVC.  
+    public class HomeEndpoint
+    {
+        // By returning 
+        public HomeViewModel Index()
+        {
+            return new HomeViewModel();
+        }
+
+        public string get_hello()
+        {
+            return &quot;Hello!&quot;;
+        }
+
+        public Response post_update(Request request)
+        {
+            return new Response();
+        }
+    }
+
+    public class Request{}
+    public class Response{}
+
+    public class HomeViewModel
+    {
+    }
+</pre>
+
+<p>Typically, you will let FubuMVC itself figure out what else needs to happen on
+an HTTP request by applying conventions against the signature of the <em>actions.</em>
+Actions are in turn called by specialized Behavior's that deal with the repetitive
+"resolve the input, call the action with that input, store the output" logic.</p>
+
+<p>To make this concrete for a typical HTTP request, FubuMVC will marshal the raw HTTP data into an input model,
+then FubuMVC will call your action method directly and store any output where
+nested behaviors can find it and write out any necessary HTTP response. This is what we call the <em><a href="http://rexflex.net/2011/07/fubumvc-one-model-in-one-model-out/">one model in, one model out</a></em> philosophy, meaning that actions should typically only be concerned with
+your application's data and services rather than exercising framework
+machinery.</p>
+
+<p>One of the original goals of FubuMVC was to simplify our controller actions so
+that all they had to do was process a request object and return a response with
+no coupling to giant base classes or repetitive boilerplate code just to feed
+the framework. We believe that the "one model in, one model out" opinion
+makes our code easier to read, write, and test by removing the noise code so
+prevalent in other .NET solutions. It also greatly improves our ability to
+compose the runtime pipeline and creates traceability between parts of the
+application.
+</section></p>
+
+<p><section><h4 id="views" class="section-header">Views</h4></p>
+
+<p>Now that you've got view models and actions to process them, you need something
+to render the view model into HTML. As of this writing, FubuMVC supports the
+Razor and Spark view engines. In addition, you can happily have actions
+spit out raw HTML or <a href="/htmltags">HtmlTags</a> objects.</p>
+
+<div class="alert alert-info"><i class="icon-info-sign"></i>We have just recently deprecated the support for WebForms.  We feel that this decision will make the world a slightly better place.</div>
+
+<p></section></p>
+
+<p><section><h4 id="wrappers" class="section-header">Wrappers</h4></p>
+
+<p>Wrappers are simply behaviors that you can use to perform additional work
+during an HTTP request like authorization checks, validation, caching, activity tracking,
+or just extra auditing.  Wrappers are able to stop the processing of nested behaviors in the chain.
+</section></p>
+
+<p><section><h4 id="behaviorgraph" class="section-header">BehaviorGraph and FubuRegistry</h4></p>
+
+<p>FubuMVC contains a configuration model called BehaviorGraph that completely
+models how each possible HTTP route and headless partial will be handled. For each endpoint (chain)
+in the system, the BehaviorGraph models:</p>
+
+<ol>
+<li>Routes and URL's including HTTP constraints</li>
+<li>Behavior Chains</li>
+<li>Actions to be called</li>
+<li>Views or other output behaviors like Json output that will be called</li>
+<li>Authorization and/or Authentication rules</li>
+<li>Wrappers</li>
+</ol>
+
+<p>You generally won't work directly with these objects daily, but understanding the
+underlying BehaviorGraph model is crucial to writing your own FubuMVC
+conventionsm, policies, and shared infrastructure Bottles later.
+</section></p>
+
+<p><section><h4 id="ioc" class="section-header">Inversion of Control Container</h4></p>
+
+<p>FubuMVC is built around the idea of composition, but that composition can come
+at a cost. FubuMVC uses your application's IoC container to do the mechanical work of assembling all the
+various pieces, services, behaviors, and extensions that make up a functioning
+FubuMVC application. We like to say that FubuMVC is "Dependency Injection
+turtles all the way down," meaning that <strong>all</strong> FubuMVC services are resolved
+from the IoC container without hacks like "IDependencyResolver."</p>
+
+  <div class="alert alert-info"><i class="icon-info-sign"></i>
+    At this writing (Nov 2013), FubuMVC supports the StructureMap, Autofac, and Castle Windsor containers, with work ongoing to support Ninject as well.  A few Bottles (FubuMVC.RavenDb) do specifically require StructureMap.</div>
+
+<p></section>  </p>
+
+<p><section><h4 id="bottles" class="section-header">Bottles</h4>  </p>
+
+<p>FubuMVC uses the <a href="https://github.com/DarthFubuMVC/bottles">Bottles project</a>
+for modularity.  Bottles can be used to break your application up into
+different "areas" or to extend your application with new content or abilities.
+</section></p>
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br></br>
+    <hr></hr>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <ul class="nav"><li><a href="/fubumvc/index" data-key="index">FubuMVC &#187;</a></li><li class="active"><a href="/fubumvc/terminology" data-key="terminology">Terminology &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubumvc/getting-started" title="Getting Started">Previous</a></li><li><a href="/fubumvc/bootstrapping" title="Bootstrapping">Next</a></li></ul>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+
+<script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/bootstrap-prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
+<script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
+<script type="text/javascript" src="/_content/scripts/toastr.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/diagnostics/bootstrap-scrollspy.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
+<script type="text/javascript" src="/_content/scripts/topics.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuDocs">FubuDocs</a>.
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

@@ -21,8 +21,10 @@
 <link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
 
 <link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+
+    
   </head>
-  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+  <body data-spy="scroll" data-target=".bs-docs-sidebar" position="relative">
       
     <div class="container">
       
@@ -62,14 +64,14 @@
         
 
         <div class="row">
-          <div class="span3 sidebar">
+          <div class="span3 sidebar" data-spy="affix" data-offset-top="150" data-offset-bottom="200">
             
             <h3 class="half-margin">Topics</h3>
-            <ul id="page-toc" class="nav nav-tabs nav-stacked affix">
+            <ul id="page-toc" class="nav nav-tabs nav-stacked bs-docs-sidebar">
             </ul>
             <br/>
             <h3>
-              FubuRake v0.9.5.0
+              FubuRake v1.0.1.0
             </h3>
 
             <br/>
@@ -87,8 +89,16 @@
 <!-- Url: fubumvc -->
 <p>To enable <a href="http://katanaproject.codeplex.com/documentation">Katana hosting</a> for either FubuMVC or FubuTransportation applications, simple use the <code>FubuRake::MvcApp</code> helper like this snippet:</p>
 
-<pre data-linenums="210" class="prettyprint lang-rb">
-FubuRake::MvcApp.new({:directory =&gt; &#39;src/Music&#39;, :name =&gt; &#39;Music&#39;})
+<pre data-linenums="211" class="prettyprint lang-rb">
+FubuRake::MvcApp.new({
+    :directory =&gt; &#39;src/Music&#39;, 
+    :name =&gt; &#39;Music&#39;,
+
+    # this is only necessary if the config file
+    # name is something besides app.config or
+    # web.config
+    :config =&gt; &#39;Music.dll.config&#39; 
+})
 </pre>
 
 <p>Which will give you these rake tasks using <em>music</em> as the task prefix from the snippet above:</p>
@@ -130,11 +140,27 @@ FubuRake::MvcApp.new({:directory =&gt; &#39;src/Music&#39;, :name =&gt; &#39;Mus
   </tbody>
 </table>
 
+
+
+
+
           </div>
         </div>
       </div>
     </div>
 
+    <br></br>
+    <hr></hr>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <ul class="nav"><li><a href="/fuburake" data-key="index">FubuRake &#187;</a></li><li class="active"><a href="/fuburake/fubumvc" data-key="fubu">FubuMVC Applications &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fuburake/services" title="BottleServiceRunner and TopShelf">Previous</a></li><li><a href="/fuburake/storyteller2-integration" title="Storyteller2 Integration">Next</a></li></ul>
+        </div>
+      </div>
+    </div>
+    
+    
     
 
 <script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
@@ -144,6 +170,7 @@ FubuRake::MvcApp.new({:directory =&gt; &#39;src/Music&#39;, :name =&gt; &#39;Mus
 <script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
 <script type="text/javascript" src="/_content/scripts/toastr.js"></script>
 <script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/diagnostics/bootstrap-scrollspy.js"></script>
 <script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
 <script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
 <script type="text/javascript" src="/_content/scripts/topics.js"></script>

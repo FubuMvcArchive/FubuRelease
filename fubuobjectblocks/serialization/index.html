@@ -1,0 +1,238 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>
+      FubuObjectBlocks - Serialization</title>
+    
+<meta charset="utf-8"/>
+<meta name="description" content="FubuDocs"/>
+<meta name="author" content="FubuDocs"/>
+
+
+
+
+<link href="/_content/styles/sons-of-obsidian.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr-responsive.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.core.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
+
+<link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+
+    
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar" position="relative">
+      
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
+      <a href="/fubuobjectblocks" title="Conventional object notation" class="project-logo"><span>FubuObjectBlocks</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a href="https://github.com/DarthFubuMVC/FubuObjectBlocks" class="ico-github"><img alt="Github" src="/_content/images/github-icon.png" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+      <div id="nav-follow" class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a href="/fubuobjectblocks" data-key="index">FubuObjectBlocks &#187;</a></li><li class="active"><a href="/fubuobjectblocks/serialization" data-key="serialization">Serialization &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubuobjectblocks/syntax" title="Syntax">Previous</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        
+        
+
+        <div class="row">
+          <div class="span3 sidebar" data-spy="affix" data-offset-top="150" data-offset-bottom="200">
+            
+            <h3 class="half-margin">Topics</h3>
+            <ul id="page-toc" class="nav nav-tabs nav-stacked bs-docs-sidebar">
+            </ul>
+            <br/>
+            <h3>
+              FubuObjectBlocks v1.0.0.0
+            </h3>
+
+            <br/>
+            <h3 class="no-margin">Previous</h3>
+<p><a href="/fubuobjectblocks/syntax" data-key="syntax">Syntax</a></p>
+          </div>
+          <div class="span9">
+
+              <h1 class="no-margin">Serialization</h1>
+              <hr class="header-line topic-line"></hr>
+
+            <!--Title: Serialization -->
+
+<section><h4 id="class" class="section-header">Sample Class</h4>
+    <p>Let's briefly look at the class represented by the sample syntax in the previous section:</p></section>
+
+<pre data-linenums="9" class="prettyprint lang-cs">
+        public class Solution
+        {
+            public SolutionOptions Options { get; set; }
+
+            [BlockSettings(ExpressAs = &quot;feed&quot;, ImplicitProperty = &quot;Url&quot;)]
+            public IEnumerable&lt;Feed&gt; Feeds { get; set; }
+        }
+
+        public class SolutionName
+        {
+            public SolutionName()
+            {
+            }
+
+            public SolutionName(string name)
+            {
+                Name = name;
+            }
+
+            public string Name { get; private set; }
+        }
+
+        public class SolutionOptions
+        {
+            [ImplicitValue]
+            public SolutionName Name { get; set; }
+            public string Nuspecs { get; set; }
+            public string SrcFolder { get; set; }
+            public string BuildCmd { get; set; }
+            public string FastBuildCommand { get; set; }
+
+            public SolutionConstraints Constraints { get; set; }
+        }
+
+        public class SolutionConstraints
+        {
+            public string Float { get; set; }
+            public string Fixed { get; set; }
+        }
+
+        public class Feed
+        {
+            public string Url { get; set; }
+            public string Mode { get; set; }
+            public string Stability { get; set; }
+        }
+</pre>
+
+<p>See that weird looking attribute? Don't worry, there's a better way. That's just a one-off usage as an example.</p>
+
+<section><h4 id="deserialization" class="section-header">Deserialization</h4>
+    <p>Using the sample file from the previous section, let's deserialize that into our Solution class:</p></section>
+
+<pre data-linenums="58" class="prettyprint lang-cs">
+        public void deserialize()
+        {
+            var fileSystem = new FileSystem();
+            
+            // You can also register IObjectBlockReader/ObjectBlockReader
+            // into your container
+            var reader = ObjectBlockReader.Basic();
+
+            var contents = fileSystem.ReadStringFromFile(&quot;syntax.txt&quot;);
+            var solution = reader.Read&lt;Solution&gt;(contents);
+        }
+</pre>
+
+<section><h4 id="deserialization" class="section-header">Serialization</h4>
+    <p>Now we'll go from a Solution instance back down to a string:</p></section>
+
+<pre data-linenums="72" class="prettyprint lang-cs">
+        public void serialize()
+        {
+            var solution = new Solution {Options = new SolutionOptions {Name = new SolutionName(&quot;test&quot;)}};
+            var writer = ObjectBlockWriter.Basic();
+
+            var serializedString = writer.Write(solution);
+        }
+</pre>
+
+<section><h4 id="deserialization" class="section-header">Serialization</h4>
+    <p>Here's a sample of how to avoid the attribute(s):</p></section>
+
+<pre data-linenums="82" class="prettyprint lang-cs">
+        public class SolutionBlockSettings : ObjectBlockSettings&lt;Solution&gt;
+        {
+            public SolutionBlockSettings()
+            {
+                //Question: calling .ImplicitValue here happens in addition to 
+                Collection(x =&gt; x.Feeds)
+                    .ExpressAs(&quot;feed&quot;)
+                    .ImplicitValue(x =&gt; x.Url);
+            }
+        }
+
+        public void serialize_with_settings()
+        {
+            
+        }
+</pre>
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br></br>
+    <hr></hr>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <ul class="nav"><li><a href="/fubuobjectblocks" data-key="index">FubuObjectBlocks &#187;</a></li><li class="active"><a href="/fubuobjectblocks/serialization" data-key="serialization">Serialization &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubuobjectblocks/syntax" title="Syntax">Previous</a></li></ul>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+
+<script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/bootstrap-prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
+<script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
+<script type="text/javascript" src="/_content/scripts/toastr.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/diagnostics/bootstrap-scrollspy.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
+<script type="text/javascript" src="/_content/scripts/topics.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuDocs">FubuDocs</a>.
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

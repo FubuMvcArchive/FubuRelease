@@ -20,8 +20,10 @@
 <link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
 
 <link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+
+    
   </head>
-  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+  <body data-spy="scroll" data-target=".bs-docs-sidebar" position="relative">
       
     <div class="container">
       
@@ -51,7 +53,7 @@
         <div class="navbar-inner">
           <div class="container">
             <ul class="nav"><li class="active"><a href="/bottles" data-key="index">Bottles &#187;</a></li></ul>
-<ul class="nav" style="float:right"><li><a href="/bottles/consuming" title="Consuming Bottles">Next</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/bottles/concepts" title="Concepts">Next</a></li></ul>
           </div>
         </div>
       </div>
@@ -61,10 +63,10 @@
         
 
         <div class="row">
-          <div class="span3 sidebar">
+          <div class="span3 sidebar" data-spy="affix" data-offset-top="150" data-offset-bottom="200">
             
             <h3 class="half-margin">Topics</h3>
-            <ul id="page-toc" class="nav nav-tabs nav-stacked affix">
+            <ul id="page-toc" class="nav nav-tabs nav-stacked bs-docs-sidebar">
             </ul>
             <br/>
             <h3>
@@ -73,12 +75,10 @@
 
             <br/>
             <h3 class="no-margin">Next</h3>
-<p><a href="/bottles/consuming" data-key="consuming">Consuming Bottles</a></p>
+<p><a href="/bottles/concepts" data-key="concepts">Concepts</a></p>
           </div>
           <div class="span9">
 
-              <h1 class="no-margin">Bottles</h1>
-              <hr class="header-line topic-line"></hr>
 
             <!--Title: Bottles-->
 
@@ -135,13 +135,29 @@
 		</div>
 	</div>
 </div>
-<div><h2 class="half-margin">Table of Contents</h2><ul class="table-of-contents"><li><a href="/bottles/consuming">Consuming Bottles</a></li><li><a href="/bottles/architecture">Architecture</a><ul><li><a href="/bottles/architecture/packages">Packages</a></li><li><a href="/bottles/architecture/loaders">Package Loaders</a></li><li><a href="/bottles/architecture/assemblies">Assembly Loading</a></li><li><a href="/bottles/architecture/bootstrappers">Bootstrappers</a></li><li><a href="/bottles/architecture/activators">Activators</a></li><li><a href="/bottles/architecture/facilities">Package Facilities</a></li><li><a href="/bottles/architecture/packageregistry">Loading Bottles with PackageRegistry</a></li><li><a href="/bottles/architecture/diagnostics">Diagnostics</a></li></ul></li><li><a href="/bottles/structuremap">StructureMap Registration and Bottles</a></li><li><a href="/bottles/manifest">Package Manifest Schema</a></li><li><a href="/bottles/commandline">Using Bottles at the Command Line</a><ul><li><a href="/bottles/commandline/aliases">Folder Aliases</a></li><li><a href="/bottles/commandline/init">Initializing Bottle Projects</a></li><li><a href="/bottles/commandline/create">Creating Zip Bottles</a></li><li><a href="/bottles/commandline/assemblypak">Creating Assembly Bottles</a></li><li><a href="/bottles/commandline/linking">Linked Project Bottles</a></li><li><a href="/bottles/commandline/openmanifest">Open Bottle Manifest</a></li></ul></li></ul></div>
+<div><h2 class="half-margin">Table of Contents</h2><ul class="table-of-contents"><li><a href="/bottles/concepts">Concepts</a></li><li><a href="/bottles/bootstrapping">Bootstrapping a Bottles Aware Application</a></li><li><a href="/bottles/creating-bottles">Creating Bottles</a><ul><li><a href="/bottles/creating-bottles/assembly-bottles">Assembly Bottles</a></li><li><a href="/bottles/creating-bottles/zip-bottles">Zip Bottles</a></li><li><a href="/bottles/creating-bottles/manifest">Package Manifest Schema</a></li></ul></li><li><a href="/bottles/custom-packages-and-loaders">Custom Packages and Loaders</a></li><li><a href="/bottles/using-activator&#39;s-at-runtime">Using Activator&#39;s at Runtime</a></li><li><a href="/bottles/environment-checks">Environment Checks</a></li><li><a href="/bottles/diagnostics">Diagnostics</a></li><li><a href="/bottles/linking-projects">Linking Projects</a></li><li><a href="/bottles/multiple-appdomains">Multiple AppDomain Support</a></li><li><a href="/bottles/event-aggregation">Event Aggregation</a></li><li><a href="/bottles/windows-services">Windows Services</a></li><li><a href="/bottles/commandline">Using Bottles at the Command Line</a><ul><li><a href="/bottles/commandline/aliases">Folder Aliases</a></li><li><a href="/bottles/commandline/init">Initializing Bottle Projects</a></li><li><a href="/bottles/commandline/create">Creating Zip Bottles</a></li><li><a href="/bottles/commandline/assemblypak">Creating Assembly Bottles</a></li><li><a href="/bottles/commandline/linking">Linked Project Bottles</a></li><li><a href="/bottles/commandline/openmanifest">Open Bottle Manifest</a></li></ul></li></ul></div>
+
+
+
+
 
           </div>
         </div>
       </div>
     </div>
 
+    <br></br>
+    <hr></hr>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <ul class="nav"><li class="active"><a href="/bottles" data-key="index">Bottles &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/bottles/concepts" title="Concepts">Next</a></li></ul>
+        </div>
+      </div>
+    </div>
+    
+    
     
 
 <script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
@@ -150,6 +166,7 @@
 <script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
 <script type="text/javascript" src="/_content/scripts/toastr.js"></script>
 <script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/diagnostics/bootstrap-scrollspy.js"></script>
 <script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
 <script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
 <script type="text/javascript" src="/_content/scripts/topics.js"></script>

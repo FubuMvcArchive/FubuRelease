@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <title>
-      FubuMVC - Introduction</title>
+      FubuMVC - Introduction and Hello World</title>
     
 <meta charset="utf-8"/>
 <meta name="description" content="FubuDocs"/>
@@ -12,6 +12,7 @@
 
 
 
+<link href="/_content/styles/sons-of-obsidian.css" rel="stylesheet" type="text/css" />
 <link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
 <link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
@@ -20,8 +21,10 @@
 <link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
 
 <link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+
+    
   </head>
-  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+  <body data-spy="scroll" data-target=".bs-docs-sidebar" position="relative">
       
     <div class="container">
       
@@ -31,7 +34,7 @@
   <div class="span6">
     <p class="logo">
       <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
-      <a href="/fubumvc" title="The MVC framework that gets out of your way" class="project-logo"><span>FubuMVC</span></a>
+      <a href="/fubumvc" title="The .Net web development framework that gets out of your way" class="project-logo"><span>FubuMVC</span></a>
     </p>
   </div>
   <div class="span6">
@@ -50,8 +53,8 @@
       <div id="nav-follow" class="navbar">
         <div class="navbar-inner">
           <div class="container">
-            <ul class="nav"><li><a href="/fubumvc" data-key="index">FubuMVC &#187;</a></li><li class="active"><a href="/fubumvc/introduction" data-key="index">Introduction &#187;</a></li></ul>
-<ul class="nav" style="float:right"><li><a href="/fubumvc" title="FubuMVC">Previous</a></li><li><a href="/fubumvc/introduction/overview" title="Overview">Next</a></li></ul>
+            <ul class="nav"><li><a href="/fubumvc/index" data-key="index">FubuMVC &#187;</a></li><li class="active"><a href="/fubumvc/introduction" data-key="introduction">Introduction and Hello World &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubumvc/index" title="FubuMVC">Previous</a></li><li><a href="/fubumvc/faq" title="Frequently Asked Questions">Next</a></li></ul>
           </div>
         </div>
       </div>
@@ -61,10 +64,10 @@
         
 
         <div class="row">
-          <div class="span3 sidebar">
+          <div class="span3 sidebar" data-spy="affix" data-offset-top="150" data-offset-bottom="200">
             
             <h3 class="half-margin">Topics</h3>
-            <ul id="page-toc" class="nav nav-tabs nav-stacked affix">
+            <ul id="page-toc" class="nav nav-tabs nav-stacked bs-docs-sidebar">
             </ul>
             <br/>
             <h3>
@@ -73,18 +76,174 @@
 
             <br/>
             <h3 class="no-margin">Next</h3>
-<p><a href="/fubumvc/introduction/overview" data-key="overview">Overview</a></p>
+<p><a href="/fubumvc/faq" data-key="faq">Frequently Asked Questions</a></p>
 <h3 class="no-margin">Previous</h3>
-<p><a href="/fubumvc" data-key="index">FubuMVC</a></p>
+<p><a href="/fubumvc/index" data-key="index">FubuMVC</a></p>
           </div>
           <div class="span9">
 
-              <h1 class="no-margin">Introduction</h1>
+              <h1 class="no-margin">Introduction and Hello World</h1>
               <hr class="header-line topic-line"></hr>
 
-            <!--Title: Introduction-->
+            <!--Title: Introduction and Hello World-->
 <!--Url: introduction-->
-<p>TODO(Write some content!)</p>
+<p>FubuMVC is an open source framework for web development in .Net written with the C# language started by a team of developers who
+were looking for a different type of development experience than what the mainstream .Net tools provided at the time (and still don't in our opinion).</p>
+
+<p>FubuMVC is licensed under the <a href="https://github.com/DarthFubuMVC/fubumvc/raw/master/license.txt">permissive Apache 2.0
+license</a>.
+Contributions are most certainly welcome, just fork the <a href="https://github.com/DarthFubuMVC/fubumvc">Git
+repository</a> and start firing off pull
+requests.</p>
+
+<p><section><h4 id="hello-world" class="section-header">Hello World with ASP.Net</h4>
+To get to the obligatory <em>Hello World</em> screen with Visual Studio.Net and ASP.NET hosting in a new solution:</p>
+
+<ol>
+<li>Add a new <em>Empty ASP.NET Empty Web Application</em> project in Visual Studio.Net</li>
+<li>Install the <code>FubuMVC.StructureMap</code> nuget to your new project</li>
+<li>Add the following code to your <code>Global.asax.cs</code> file:</li>
+</ol>
+
+<pre data-linenums="2" class="prettyprint lang-cs">
+using System;
+using FubuMVC.Core;
+using FubuMVC.StructureMap;
+
+namespace QuickStart
+{
+    public class Global : System.Web.HttpApplication
+    {
+        private FubuRuntime _runtime;
+
+        protected void Application_Start(object sender, EventArgs e)
+        {
+            _runtime = FubuApplication
+                .DefaultPolicies()  // Use the default FubuMVC conventions
+                .StructureMap()     // Use a new StructureMap container
+                .Bootstrap();    
+        }
+
+        protected void Application_End(object sender, EventArgs e)
+        {
+            _runtime.Dispose();
+        }
+    }
+}
+</pre>
+
+<p>Now, add this class to your project to say hello:</p>
+
+<pre data-linenums="17" class="prettyprint lang-cs">
+    public class HomeEndpoint
+    {
+        public string Index()
+        {
+            return &quot;Hello World!&quot;;
+        }
+    }
+</pre>
+
+<p>At this point, you're ready to run your application and see the words "Hello, World" as text in your browser.  </p>
+
+<div class="alert alert-info"><i class="icon-info-sign"></i>You <i>might</i> need to manually add the ASP.Net UrlRoutingModule in your web.config file.</div>
+
+<p></section></p>
+
+<p><section><h4 id="fubu-new" class="section-header">Hello World with OWIN and Katana</h4></p>
+
+<p>Fortunately with the advent of <a href="http://owin.org">OWIN</a> and related web servers like <a href="http://katanaproject.codeplex.com/documentation">Katana</a>, it's now perfectly possible to use FubuMVC without IIS.  Moreover, that's quickly become the FubuMVC community's favored tooling for testing and embedded services.</p>
+
+<p>The bootstrapping is just a little bit simpler this time.  The steps are:</p>
+
+<ol>
+<li>Create a new class library project in Visual Studio.Net</li>
+<li>Install the <code>FubuMVC.StructureMap</code> nuget again</li>
+<li>Add the same <code>HomeEndpoint</code> class from the section above</li>
+<li>Add the following class to your project:</li>
+</ol>
+
+<pre data-linenums="7" class="prettyprint lang-cs">
+    public class HelloWorldApplication : IApplicationSource
+    {
+        public FubuApplication BuildApplication()
+        {
+            return FubuApplication.DefaultPolicies().StructureMap();
+        }
+    }
+</pre>
+
+<p>If you install the <a href="/fubu" title="Command line goodness for creating, running, and editing FubuMVC or FubuTransportation applications">fubu</a> tool on your local box, open a command prompt, navigate to the project folder and type:</p>
+
+<pre>
+fubu run --open
+</pre>
+
+<p>You <strong>should</strong> see your default browser pop up with the text "Hello, World."</p>
+
+<div class="alert alert-info"><i class="icon-info-sign"></i>For the fastest possible bootstrapping of a brand new FubuMVC application from scratch, see the <a href="http://fubuworld.com/fubu">Fubu command line</a> tooling for project scaffolding.  Do note though that this approach builds out an entire code tree with the idiomatic FubuMVC defaults and organization.</div>
+
+<p></section></p>
+
+<p><section><h4 id="philosophy" class="section-header">Architectural Philosophy and Goals</h4></p>
+
+<ul>
+<li><p>Allow developers to write very clean code with little or no coupling to framework infrastructure -- i.e.,
+keep the repetitive ceremony code like attributes, marker interfaces, elaborate fluent interfaces, or mandatory base classes that seem to plague
+other .Net frameworks to a bare minimum.    </p></li>
+<li><p>Exploit the idea of <a href="http://msdn.microsoft.com/en-us/magazine/dd419655.aspx">convention over
+configuration</a> for
+better productivity, but allow users to teach FubuMVC about their own
+conventions if the built in conventions don't fit.</p></li>
+<li><p>Remove friction from automated testing of your application code.</p></li>
+<li><p>Maximize the ability to use composition throughout your application by
+focusing on SOLID principles, separation of concerns,
+<a href="http://en.wikipedia.org/wiki/Don't_repeat_yourself">DRY</a>. </p></li>
+<li><p>Modular architectures. FubuMVC includes the most sophisticated and
+capable infrastructure for modularizing and extending web applications in
+the .NET ecosystem.</p></li>
+<li><p>Provide a less painful development experience with informative
+diagnostics about your application</p></li>
+<li><p>Use static typing in an advantageous way. Many other alternative web
+frameworks in the .NET space are faithful copies of Ruby or Python
+frameworks that have neither the strengths of Ruby/Python or C#. FubuMVC
+uses the rich metadata from static typing to drive conventions and reduce
+errors. If you prefer Ruby on Rails or Sinatra style development, we
+think you should use Ruby on Rails or Sinatra instead of attempting to
+work that way inside of C#.</p></li>
+<li><p>Eliminate the dreaded "tag soup" problem in views by using advanced HTML
+helpers and conventions to DRY up your views
+</section>  </p></li>
+</ul>
+
+<p><section><h4 id="architecture" class="section-header">Core Architecture</h4></p>
+
+<p>FubuMVC takes a slightly different approach to the classic <a href="http://en.wikipedia.org/wiki/Model_2">Model 2 Model View
+Controller pattern</a> that puts more focus
+on composing a pipeline of what we call "behaviors" that are completely unaware
+of each other rather than the traditional Model-View-Controller triad.</p>
+
+<p>A typical web request for a view will look something like:</p>
+
+<ol>
+<li><p>An HTTP request is received by the web server. The ASP.NET routing
+ module acts as a front controller to choose a "chain" of behaviors to
+ execute.</p></li>
+<li><p>The first behavior calls an "action" (think Controller) that interacts
+ with the rest of your application and returns a view model representing
+ the data to be rendered by the view.</p></li>
+<li><p>A second behavior invokes a WebForms or Spark view to render the view
+ model that was returned from the action in the previous step.</p></li>
+</ol>
+
+<p>As far as a developer is concerned, all the familiar elements of classic MVC
+are present, but there's nothing to stop you from composing a different
+pipeline of behaviors for more sophisticated request handling.
+</section></p>
+
+
+
+
 
 
 
@@ -93,13 +252,28 @@
       </div>
     </div>
 
+    <br></br>
+    <hr></hr>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <ul class="nav"><li><a href="/fubumvc/index" data-key="index">FubuMVC &#187;</a></li><li class="active"><a href="/fubumvc/introduction" data-key="introduction">Introduction and Hello World &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubumvc/index" title="FubuMVC">Previous</a></li><li><a href="/fubumvc/faq" title="Frequently Asked Questions">Next</a></li></ul>
+        </div>
+      </div>
+    </div>
+    
+    
     
 
 <script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/bootstrap-prettify.js"></script>
 <script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
 <script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
 <script type="text/javascript" src="/_content/scripts/toastr.js"></script>
 <script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/diagnostics/bootstrap-scrollspy.js"></script>
 <script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
 <script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
 <script type="text/javascript" src="/_content/scripts/topics.js"></script>

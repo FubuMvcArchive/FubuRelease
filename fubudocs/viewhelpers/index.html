@@ -21,8 +21,10 @@
 <link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
 
 <link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+
+    
   </head>
-  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+  <body data-spy="scroll" data-target=".bs-docs-sidebar" position="relative">
       
     <div class="container">
       
@@ -63,10 +65,10 @@
         
 
         <div class="row">
-          <div class="span3 sidebar">
+          <div class="span3 sidebar" data-spy="affix" data-offset-top="150" data-offset-bottom="200">
             
             <h3 class="half-margin">Topics</h3>
-            <ul id="page-toc" class="nav nav-tabs nav-stacked affix">
+            <ul id="page-toc" class="nav nav-tabs nav-stacked bs-docs-sidebar">
             </ul>
             <br/>
             <h3>
@@ -101,21 +103,28 @@ To link to a topic within the same project, just use:</p>
 <section><h4 id="external-link" class="section-header">Link to a Topic in a different Project</h4>
 
 To link to a topic in a different project, use:
+
+<pre data-linenums="25" class="prettyprint lang-html">
+&lt;ExternalTopicLink title=&quot;More about Code Snippets&quot; name=&quot;fubudocs/codesnippets&quot; /&gt;
+</pre>
+
+which renders:
+
 <!-- SAMPLE: using-external-link -->
 <a href="/fubudocs/codesnippets" data-key="codesnippets">More about Code Snippets</a>
 <!-- ENDSAMPLE -->
 
-<p>Note that in the second usage you'll need to specify the project name as part of the name.<br />
+<p>Note that in the usage of <code>&lt;ExternalTopicLink&gt;</code> you'll need to specify the project name as part of the name attribute.<br />
 </section></p>
 
 <p><section><h4 id="projects" class="section-header">Link to another Project</h4></p>
 
-<pre data-linenums="33" class="prettyprint lang-html">
+<pre data-linenums="39" class="prettyprint lang-html">
 &lt;ProjectLink name=&quot;FubuMVC.CodeSnippets&quot; /&gt;
 </pre>
 
 <p><!-- SAMPLE: ProjectLink -->
-<span>LINK TO PROJECT &#39;FubuMVC.CodeSnippets&#39;</span>
+<a href="/fubumvc.codesnippets" title="Embed code samples into a FubuMVC application using Google&#39;s prettify.js library">FubuMVC.CodeSnippets</a>
 <!-- ENDSAMPLE -->
 </section></p>
 
@@ -132,6 +141,39 @@ As a convenience method, use the <code>&lt;Info&gt;[text]&lt;/Info&gt;</code> bi
 
 <p><div class="alert alert-info"><i class="icon-info-sign"></i>I'm an informational bullet!</div></section></p>
 
+<p><section><h4 id="nugets" class="section-header">Nugets</h4>
+Use this helper:</p>
+
+<pre data-linenums="69" class="prettyprint lang-html">
+    &lt;Nuget name=&quot;FubuMVC.Core&quot; /&gt;
+</pre>
+
+<p>which renders:   </p>
+
+<p><!-- SAMPLE: nuget-helper-->
+    <div class="alert alert-info"><i class="icon-info-sign"></i><i>FubuMVC.Core</i><span> is distributed as a Nuget at </span><a href="http://www.nuget.org/packages/FubuMVC.Core">http://www.nuget.org/packages/FubuMVC.Core</a><span> and can be installed from the command line with either:</span><p><code>ripple install FubuMVC.Core -p {your project name}</code></p><p> - or -</p><p><code>PM&gt; Install-Package FubuMVC.Core</code></p></div>
+<!-- ENDSAMPLE -->    </section></p>
+
+<p><section><h4 id="gems" class="section-header">Gems</h4>
+    Use this helper:</p>
+
+<pre><code>&lt;pre data-linenums="81" class="prettyprint lang-html"&gt;
+&amp;lt;Gem name=&amp;quot;ripple-cli&amp;quot; /&amp;gt;
+</code></pre>
+
+<p></pre></p>
+
+<pre><code>which renders:
+
+&lt;!-- SAMPLE: gem-helper--&gt;
+&lt;div class="alert alert-info"&gt;&lt;i class="icon-info-sign"&gt;&lt;/i&gt;&lt;i&gt;ripple-cli&lt;/i&gt;&lt;span&gt; is distributed as a Ruby Gem at &lt;/span&gt;&lt;a href="http://rubygems.org/gems/ripple-cli"&gt;http://rubygems.org/gems/ripple-cli&lt;/a&gt;&lt;span&gt; and can be installed from the command line with: &lt;/span&gt;&lt;code&gt;gem install ripple-cli&lt;/code&gt;&lt;/div&gt;
+&lt;!-- ENDSAMPLE --&gt;&lt;/section&gt;
+</code></pre>
+
+
+
+
+
 
 
 
@@ -140,6 +182,18 @@ As a convenience method, use the <code>&lt;Info&gt;[text]&lt;/Info&gt;</code> bi
       </div>
     </div>
 
+    <br></br>
+    <hr></hr>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <ul class="nav"><li><a href="/fubudocs/index" data-key="index">Index &#187;</a></li><li class="active"><a href="/fubudocs/viewhelpers" data-key="viewhelpers">Topic View Helpers &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubudocs/codesnippets" title="Code Snippets">Previous</a></li><li><a href="/fubudocs/cli" title="Command Line Documentation">Next</a></li></ul>
+        </div>
+      </div>
+    </div>
+    
+    
     
 
 <script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
@@ -149,6 +203,7 @@ As a convenience method, use the <code>&lt;Info&gt;[text]&lt;/Info&gt;</code> bi
 <script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
 <script type="text/javascript" src="/_content/scripts/toastr.js"></script>
 <script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/diagnostics/bootstrap-scrollspy.js"></script>
 <script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
 <script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
 <script type="text/javascript" src="/_content/scripts/topics.js"></script>

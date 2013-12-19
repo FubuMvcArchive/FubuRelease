@@ -20,8 +20,10 @@
 <link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
 
 <link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+
+    
   </head>
-  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+  <body data-spy="scroll" data-target=".bs-docs-sidebar" position="relative">
       
     <div class="container">
       
@@ -62,10 +64,10 @@
         
 
         <div class="row">
-          <div class="span3 sidebar">
+          <div class="span3 sidebar" data-spy="affix" data-offset-top="150" data-offset-bottom="200">
             
             <h3 class="half-margin">Topics</h3>
-            <ul id="page-toc" class="nav nav-tabs nav-stacked affix">
+            <ul id="page-toc" class="nav nav-tabs nav-stacked bs-docs-sidebar">
             </ul>
             <br/>
             <h3>
@@ -130,18 +132,30 @@
 	</div>
 </div>
 
-<p>FubuDocs is distributed as a Ruby Gem at <a href="http://rubygems.org/gems/fubudocs">http://rubygems.org/gems/fubudocs</a>
-</p>
+<div class="alert alert-info"><i class="icon-info-sign"></i><i>FubuDocs</i><span> is distributed as a Ruby Gem at </span><a href="http://rubygems.org/gems/fubudocs">http://rubygems.org/gems/fubudocs</a><span> and can be installed from the command line with: </span><code>gem install fubudocs</code></div>
 
-<pre>
-  gem install fubudocs
-</pre>
-<div><h2 class="half-margin">Table of Contents</h2><ul class="table-of-contents"><li><a href="/fubudocs/starting">Starting</a></li><li><a href="/fubudocs/splashpages">Splash Pages</a></li><li><a href="/fubudocs/working-with-topics">Topics</a></li><li><a href="/fubudocs/tools">The Topic Manager Tool</a></li><li><a href="/fubudocs/samples">Samples</a></li><li><a href="/fubudocs/codesnippets">Code Snippets</a></li><li><a href="/fubudocs/viewhelpers">Topic View Helpers</a></li><li><a href="/fubudocs/cli">Command Line Documentation</a></li><li><a href="/fubudocs/host">Using a Host Project</a></li><li><a href="/fubudocs/skinning">Skinning FubuDocs</a></li><li><a href="/fubudocs/versioning">Versioning</a></li><li><a href="/fubudocs/commands">FubuDocs at the command line</a><ul><li><a href="/fubudocs/commands/snippets">Gathering Code Snippets</a></li><li><a href="/fubudocs/commands/bottling">Bottling the FubuDocs Projects</a></li><li><a href="/fubudocs/commands/running">Running your FubuDocs Project</a></li><li><a href="/fubudocs/commands/smoke">Smoke Testing a Documentation Project</a></li><li><a href="/fubudocs/commands/exporting">Exporting to Static Html</a></li></ul></li></ul></div>
+<div><h2 class="half-margin">Table of Contents</h2><ul class="table-of-contents"><li><a href="/fubudocs/starting">Starting</a></li><li><a href="/fubudocs/splashpages">Splash Pages</a></li><li><a href="/fubudocs/working-with-topics">Topics</a></li><li><a href="/fubudocs/tools">The Topic Manager Tool</a></li><li><a href="/fubudocs/samples">Samples</a></li><li><a href="/fubudocs/codesnippets">Code Snippets</a></li><li><a href="/fubudocs/viewhelpers">Topic View Helpers</a></li><li><a href="/fubudocs/cli">Command Line Documentation</a></li><li><a href="/fubudocs/host">Using a Host Project</a></li><li><a href="/fubudocs/skinning">Skinning FubuDocs</a></li><li><a href="/fubudocs/versioning">Versioning</a></li><li><a href="/fubudocs/nesting-documentation-projects">Nesting Documentation Projects</a></li><li><a href="/fubudocs/commands">FubuDocs at the command line</a><ul><li><a href="/fubudocs/commands/snippets">Gathering Code Snippets</a></li><li><a href="/fubudocs/commands/bottling">Bottling the FubuDocs Projects</a></li><li><a href="/fubudocs/commands/running">Running your FubuDocs Project</a></li><li><a href="/fubudocs/commands/smoke">Smoke Testing a Documentation Project</a></li><li><a href="/fubudocs/commands/exporting">Exporting to Static Html</a></li></ul></li></ul></div>
+
+
+
+
           </div>
         </div>
       </div>
     </div>
 
+    <br></br>
+    <hr></hr>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <ul class="nav"><li class="active"><a href="/fubudocs/index" data-key="index">Index &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubudocs/starting" title="Starting">Next</a></li></ul>
+        </div>
+      </div>
+    </div>
+    
+    
     
 
 <script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
@@ -150,6 +164,7 @@
 <script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
 <script type="text/javascript" src="/_content/scripts/toastr.js"></script>
 <script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/diagnostics/bootstrap-scrollspy.js"></script>
 <script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
 <script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
 <script type="text/javascript" src="/_content/scripts/topics.js"></script>

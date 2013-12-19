@@ -1,0 +1,151 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>
+      fubu - Project Item Generation</title>
+    
+<meta charset="utf-8"/>
+<meta name="description" content="FubuDocs"/>
+<meta name="author" content="FubuDocs"/>
+
+
+
+
+<link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr-responsive.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.core.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
+
+<link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+
+    
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar" position="relative">
+      
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
+      <a href="/fubu" title="Command line tools for FubuMVC or FubuTransportation development" class="project-logo"><span>fubu</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a href="http://github.com/DarthFubuMVC/fubu" class="ico-github"><img alt="Github" src="/_content/images/github-icon.png" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+      <div id="nav-follow" class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a href="/fubu" data-key="index">fubu &#187;</a></li><li class="active"><a href="/fubu/project-item-generation" data-key="project-item-generation">Project Item Generation &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubu/restarting-web-applications" title="Restarting Web Applications">Previous</a></li><li><a href="/fubu/establishing-a-text-editor" title="Establishing a Text Editor">Next</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        
+        
+
+        <div class="row">
+          <div class="span3 sidebar" data-spy="affix" data-offset-top="150" data-offset-bottom="200">
+            
+            <h3 class="half-margin">Topics</h3>
+            <ul id="page-toc" class="nav nav-tabs nav-stacked bs-docs-sidebar">
+            </ul>
+            <br/>
+            <h3>
+              fubu v1.0.0.0
+            </h3>
+
+            <br/>
+            <h3 class="no-margin">Next</h3>
+<p><a href="/fubu/establishing-a-text-editor" data-key="establishing-a-text-editor">Establishing a Text Editor</a></p>
+<h3 class="no-margin">Previous</h3>
+<p><a href="/fubu/restarting-web-applications" data-key="restarting-web-applications">Restarting Web Applications</a></p>
+          </div>
+          <div class="span9">
+
+              <h1 class="no-margin">Project Item Generation</h1>
+              <hr class="header-line topic-line"></hr>
+
+            <!--Title: Project Item Generation-->
+<!--Url: project-item-generation-->
+
+<div class="alert alert-info"><i class="icon-info-sign"></i>This funtionality is very new and the signature is likely to change in later versions</div>
+
+The thought is that this functionality migrates to a forthcoming <code>fubu generate</code> command with options for:
+
+<pre>
+fubu generate spark [name]
+
+fubu generate razor [name]
+</pre>
+
+<section class="command-section"><h4><span id="view" class="section-header">fubu view</span><i class="command-description">Creates and attaches a view model/view pair to the project in the current folder</i></h4>
+At the moment, <code>fubu view</code> only generates Spark views.  You need to call this command from the exact folder where you want the view file and matching input models and endpoint classes to be written.  This command will attach the new *.cs files to the *.csproj file in the root of the current project with the namespace derived from the folder names.
+<div class="single-command-usage"><em>fubu view</em><name> [-u, --url <ur>] [-o, --open]</div>
+<table class="table"><thead><tr><th colspan="2">Arguments</th></tr></thead><tbody><tr><td class="command-arg-name">name</td><td class="command-arg-description">Name of the view and matching model without file extension</td></tr></tbody></table>
+<table class="table"><thead><tr><th colspan="2">Flags</th></tr></thead><tbody><tr><td class="command-flag-usage">[-u, --url &lt;ur&gt;]</td><td class="command-flag-description">If specified, will make this actionless view applied to the given url pattern</td></tr><tr><td class="command-flag-usage">[-o, --open]</td><td class="command-flag-description">open the view model and view after generation</td></tr></tbody></table></section>
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br></br>
+    <hr></hr>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <ul class="nav"><li><a href="/fubu" data-key="index">fubu &#187;</a></li><li class="active"><a href="/fubu/project-item-generation" data-key="project-item-generation">Project Item Generation &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubu/restarting-web-applications" title="Restarting Web Applications">Previous</a></li><li><a href="/fubu/establishing-a-text-editor" title="Establishing a Text Editor">Next</a></li></ul>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+
+<script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
+<script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
+<script type="text/javascript" src="/_content/scripts/toastr.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/diagnostics/bootstrap-scrollspy.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
+<script type="text/javascript" src="/_content/scripts/topics.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuDocs">FubuDocs</a>.
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

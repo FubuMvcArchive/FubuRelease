@@ -1,0 +1,174 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>
+      FubuMVC - Modularity with Bottles</title>
+    
+<meta charset="utf-8"/>
+<meta name="description" content="FubuDocs"/>
+<meta name="author" content="FubuDocs"/>
+
+
+
+
+<link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr-responsive.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.core.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
+
+<link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+
+    
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar" position="relative">
+      
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
+      <a href="/fubumvc" title="The .Net web development framework that gets out of your way" class="project-logo"><span>FubuMVC</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a href="http://github.com/DarthFubuMVC/FubuMVC" class="ico-github"><img alt="Github" src="/_content/images/github-icon.png" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+      <div id="nav-follow" class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a href="/fubumvc/index" data-key="index">FubuMVC &#187;</a></li><li class="active"><a href="/fubumvc/modularity-with-bottles" data-key="index">Modularity with Bottles &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubumvc/security" title="Security">Previous</a></li><li><a href="/fubumvc/modularity-with-bottles/feature-bottles" title="Feature Bottles">Next</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        
+        
+
+        <div class="row">
+          <div class="span3 sidebar" data-spy="affix" data-offset-top="150" data-offset-bottom="200">
+            
+            <h3 class="half-margin">Topics</h3>
+            <ul id="page-toc" class="nav nav-tabs nav-stacked bs-docs-sidebar">
+            </ul>
+            <br/>
+            <h3>
+              FubuMVC v1.0.0.0
+            </h3>
+
+            <br/>
+            <h3 class="no-margin">Next</h3>
+<p><a href="/fubumvc/modularity-with-bottles/feature-bottles" data-key="feature-bottles">Feature Bottles</a></p>
+<h3 class="no-margin">Previous</h3>
+<p><a href="/fubumvc/security" data-key="index">Security</a></p>
+          </div>
+          <div class="span9">
+
+              <h1 class="no-margin">Modularity with Bottles</h1>
+              <hr class="header-line topic-line"></hr>
+
+            <!--Title: Modularity with Bottles-->
+<!--Url: modularity-with-bottles-->
+
+TODO(flesh this out)
+
+<p><section><h4 id="how-it-works" class="section-header">How FubuMVC uses Bottles</h4>
+1. Package loaders
+1. Activator's
+1. FubuMvcPackageFacility.CurrentPath or whatever it is.</p>
+
+<ol>
+<li>dll's in fubu-content</li>
+<li>dll's in bin/fubu-content</li>
+</ol>
+
+<p></section></p>
+
+<p><section><h4 id="extending" class="section-header">Extending the Application from a Bottle</h4>
+1. IFubuRegistryExtension</section></p>
+
+<p><section><h4 id="defaults" class="section-header">Default Package Loaders</h4>
+</section></p>
+
+<p><section><h4 id="creating-new" class="section-header">Creating a new FubuMVC Bottle</h4>
+1. [FubuModule]</section></p>
+
+<p><section><h4 id="what" class="section-header">What can be in a FubuMVC Bottle?</h4>
+Any possible thing you can register, configure, or do in a FubuMVC application can be done in a Bottle.</p>
+
+<p>Unlike <em>ahem</em> ASP.Net MVC Portable Areas, FubuMVC does not treat endpoints, views, services, url resolution, or anything else related to a Bottle differently than the core application at runtime.  </section></p>
+
+<p><section><h4 id="pre-compilation" class="section-header">Pre-Compilation Steps</h4>
+</section></p>
+
+<p><section><h4 id="custom-package-loaders" class="section-header">Registering Custom Package Loaders</h4>
+</section></p>
+
+<p><section><h4 id="scanning" class="section-header">Assembly Scanning against Bottle Assemblies</h4></p>
+
+<p><div class="alert alert-info"><i class="icon-info-sign"></i>This is a <i>sharp tool</i>, meaning that while you can use it to do powerful things, there's a lot of potential for unexpected results.  Use with caution.</div></section></p>
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br></br>
+    <hr></hr>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <ul class="nav"><li><a href="/fubumvc/index" data-key="index">FubuMVC &#187;</a></li><li class="active"><a href="/fubumvc/modularity-with-bottles" data-key="index">Modularity with Bottles &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubumvc/security" title="Security">Previous</a></li><li><a href="/fubumvc/modularity-with-bottles/feature-bottles" title="Feature Bottles">Next</a></li></ul>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+
+<script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
+<script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
+<script type="text/javascript" src="/_content/scripts/toastr.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/diagnostics/bootstrap-scrollspy.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
+<script type="text/javascript" src="/_content/scripts/topics.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuDocs">FubuDocs</a>.
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

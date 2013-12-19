@@ -1,0 +1,180 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>
+      FubuObjectBlocks - Syntax</title>
+    
+<meta charset="utf-8"/>
+<meta name="description" content="FubuDocs"/>
+<meta name="author" content="FubuDocs"/>
+
+
+
+
+<link href="/_content/styles/sons-of-obsidian.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr-responsive.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.core.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
+
+<link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+
+    
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar" position="relative">
+      
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
+      <a href="/fubuobjectblocks" title="Conventional object notation" class="project-logo"><span>FubuObjectBlocks</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a href="https://github.com/DarthFubuMVC/FubuObjectBlocks" class="ico-github"><img alt="Github" src="/_content/images/github-icon.png" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+      <div id="nav-follow" class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a href="/fubuobjectblocks" data-key="index">FubuObjectBlocks &#187;</a></li><li class="active"><a href="/fubuobjectblocks/syntax" data-key="syntax">Syntax &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubuobjectblocks/intro" title="Introduction">Previous</a></li><li><a href="/fubuobjectblocks/serialization" title="Serialization">Next</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        
+        
+
+        <div class="row">
+          <div class="span3 sidebar" data-spy="affix" data-offset-top="150" data-offset-bottom="200">
+            
+            <h3 class="half-margin">Topics</h3>
+            <ul id="page-toc" class="nav nav-tabs nav-stacked bs-docs-sidebar">
+            </ul>
+            <br/>
+            <h3>
+              FubuObjectBlocks v1.0.0.0
+            </h3>
+
+            <br/>
+            <h3 class="no-margin">Next</h3>
+<p><a href="/fubuobjectblocks/serialization" data-key="serialization">Serialization</a></p>
+<h3 class="no-margin">Previous</h3>
+<p><a href="/fubuobjectblocks/intro" data-key="intro">Introduction</a></p>
+          </div>
+          <div class="span9">
+
+              <h1 class="no-margin">Syntax</h1>
+              <hr class="header-line topic-line"></hr>
+
+            <!--Title: Syntax-->
+
+<section><h4 id="sample" class="section-header">Sample</h4>
+    <p>Let's begin with a sample block:</p></section>
+
+<pre data-linenums="1" class="prettyprint lang-txt">
+solution:
+  name: &#39;ripple&#39;
+  nuspecs: &#39;packaging/nuget&#39;
+  srcFolder: &#39;src&#39;
+  buildCmd: &#39;rake&#39;
+  fastBuildCommand: &#39;rake compile&#39;
+  constraints:
+    float: &#39;current&#39;
+    fixed: &#39;current,nextMajor&#39;
+ 
+feed &#39;http://build.fubu-project.org/guestAuth/app/nuget/v1/FeedService.svc&#39;, mode: &#39;float&#39;, stability: &#39;released&#39;
+feed &#39;http://nuget.org/api/v2&#39;, mode: &#39;fixed&#39;, stability: &#39;released&#39;
+ 
+nuget &#39;FubuCore&#39;, version: &#39;~&gt;1.1.0&#39;
+nuget &#39;NuGet.Core&#39;, version: &#39;2.5.0&#39;, mode: &#39;fixed&#39;
+nuget &#39;NUnit&#39;, version: &#39;2.5.10.11092&#39;, mode: &#39;fixed&#39;
+nuget &#39;RhinoMocks&#39;, version: &#39;3.6.1&#39;, mode: &#39;fixed&#39;
+nuget &#39;structuremap&#39;, version: &#39;2.6.3&#39;, mode: &#39;fixed&#39;
+nuget &#39;structuremap.automocking&#39;, version: &#39;~&gt;1.1.0&#39;, mode: &#39;fixed&#39;
+</pre>
+
+<section><h4 id="blocks" class="section-header">Blocks</h4>
+    <p>The entire file represents a single "Object Block" - your target type. Blocks can hold collections, simple properties, and nested types.</p></section>
+
+<section><h4 id="nesting" class="section-header">Nesting</h4>
+    <p>In our sample block, we have a "solution" property defined. Nested properties *must* be suffixed with ":" to denote the start of a new block on the following lines.</p>
+    <p>There is not limit to the number of nested types you define.</p></section>
+
+<section><h4 id="properties" class="section-header">Properties</h4>
+    <p>Properties can be defined for any block. Property definitions are expressed as:</p>
+    <blockquote>propertyName 'value'</blockquote>
+    <blockquote>Note: The single quotes are used regardless of the data type</blockquote></section>
+
+<section><h4 id="collections" class="section-header">Collections</h4>
+    <p>Collections are expressed using the "inline" block syntax:</p>
+    <blockquote>propertyName 'implicit value'[, additionalProperty: 'value' ...]</blockquote>
+    <p>Unless configured otherwise, propertyName refers to the name of your collection. The "implicit value" can be defined for your objects
+    and represents the default property of your object. In this example, the Url property is the implicit value of the Feed object.</p>
+    <p>Additional properties can be defined using this syntax but must be suffixed with ":".</p>
+    <p>We'll look at how to configure this for your code in the next section.</p></section>
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br></br>
+    <hr></hr>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <ul class="nav"><li><a href="/fubuobjectblocks" data-key="index">FubuObjectBlocks &#187;</a></li><li class="active"><a href="/fubuobjectblocks/syntax" data-key="syntax">Syntax &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubuobjectblocks/intro" title="Introduction">Previous</a></li><li><a href="/fubuobjectblocks/serialization" title="Serialization">Next</a></li></ul>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+
+<script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/bootstrap-prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
+<script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
+<script type="text/javascript" src="/_content/scripts/toastr.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/diagnostics/bootstrap-scrollspy.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
+<script type="text/javascript" src="/_content/scripts/topics.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuDocs">FubuDocs</a>.
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

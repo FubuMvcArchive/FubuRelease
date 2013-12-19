@@ -20,8 +20,10 @@
 <link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
 
 <link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+
+    
   </head>
-  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+  <body data-spy="scroll" data-target=".bs-docs-sidebar" position="relative">
       
     <div class="container">
       
@@ -61,10 +63,10 @@
         
 
         <div class="row">
-          <div class="span3 sidebar">
+          <div class="span3 sidebar" data-spy="affix" data-offset-top="150" data-offset-bottom="200">
             
             <h3 class="half-margin">Topics</h3>
-            <ul id="page-toc" class="nav nav-tabs nav-stacked affix">
+            <ul id="page-toc" class="nav nav-tabs nav-stacked bs-docs-sidebar">
             </ul>
             <br/>
             <h3>
@@ -86,11 +88,27 @@
 <p><section class="command-section"><h4><span id="list" class="section-header">ripple list</span><i class="command-description">lists information about the current ripple environment</i></h4><table class="table usages-table"><thead><tr><th colspan="2">Usages</th></tr></thead><tbody><tr><td>lists all projects</td><td class="command-usage">ripple list [-m, --mode all|published|dependencies|projects|solutions|assemblies] [-n, --nuget &lt;nuget&gt;] [-l, --solution &lt;solution&gt;] [-c, --cache &lt;cache&gt;] [-a, --all] [-v, --verbose]</td></tr><tr><td>filters the information shown</td><td class="command-usage">ripple list [-m, --mode all|published|dependencies|projects|solutions|assemblies] [-n, --nuget &lt;nuget&gt;] [-l, --solution &lt;solution&gt;] [-c, --cache &lt;cache&gt;] [-a, --all] [-v, --verbose]</td></tr></tbody></table>
 <table class="table"><thead><tr><th colspan="2">Flags</th></tr></thead><tbody><tr><td class="command-flag-usage">[-m, --mode all|published|dependencies|projects|solutions|assemblies]</td><td class="command-flag-description">Filters the information shown</td></tr><tr><td class="command-flag-usage">[-n, --nuget &lt;nuget&gt;]</td><td class="command-flag-description">If set, only shows information for a named nuget</td></tr><tr><td class="command-flag-usage">[-l, --solution &lt;solution&gt;]</td><td class="command-flag-description">override the solution to be cleaned</td></tr><tr><td class="command-flag-usage">[-c, --cache &lt;cache&gt;]</td><td class="command-flag-description">Override the NuGet cache</td></tr><tr><td class="command-flag-usage">[-a, --all]</td><td class="command-flag-description">Apply restore to all solutions</td></tr><tr><td class="command-flag-usage">[-v, --verbose]</td><td class="command-flag-description">Writes all output to the screen</td></tr></tbody></table></section></p>
 
+
+
+
+
           </div>
         </div>
       </div>
     </div>
 
+    <br></br>
+    <hr></hr>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <ul class="nav"><li><a href="/ripple/index" data-key="index">ripple &#187;</a></li><li><a href="/ripple/commands" data-key="index">Commands &#187;</a></li><li class="active"><a href="/ripple/commands/list" data-key="List">List &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/ripple/commands/install" title="Install">Previous</a></li><li><a href="/ripple/commands/lock" title="Lock">Next</a></li></ul>
+        </div>
+      </div>
+    </div>
+    
+    
     
 
 <script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
@@ -98,6 +116,7 @@
 <script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
 <script type="text/javascript" src="/_content/scripts/toastr.js"></script>
 <script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/diagnostics/bootstrap-scrollspy.js"></script>
 <script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
 <script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
 <script type="text/javascript" src="/_content/scripts/topics.js"></script>

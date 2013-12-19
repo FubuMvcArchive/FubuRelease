@@ -1,0 +1,203 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>
+      FubuMVC.CodeSnippets - Whole Files</title>
+    
+<meta charset="utf-8"/>
+<meta name="description" content="FubuDocs"/>
+<meta name="author" content="FubuDocs"/>
+
+
+
+
+<link href="/_content/styles/sons-of-obsidian.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr-responsive.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.core.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
+
+<link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+
+    
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar" position="relative">
+      
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
+      <a href="/fubumvc.codesnippets" title="Beautiful live snippets" class="project-logo"><span>FubuMVC.CodeSnippets</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a href="http://twitter.com/fubumvc" class="ico-twitter"><img alt="Twitter" src="/_content/images/twitter-icon.png" /></a>
+<a href="http://github.com/DarthFubuMVC/FubuMVC.CodeSnippets" class="ico-github"><img alt="Github" src="/_content/images/github-icon.png" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+      <div id="nav-follow" class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a href="/fubumvc.codesnippets" data-key="index">FubuMVC.CodeSnippets &#187;</a></li><li class="active"><a href="/fubumvc.codesnippets/files" data-key="files">Whole Files &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubumvc.codesnippets/embedding" title="Embedding Code Snippets">Previous</a></li><li><a href="/fubumvc.codesnippets/languages" title="Supported Languages">Next</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        
+        
+
+        <div class="row">
+          <div class="span3 sidebar" data-spy="affix" data-offset-top="150" data-offset-bottom="200">
+            
+            <h3 class="half-margin">Topics</h3>
+            <ul id="page-toc" class="nav nav-tabs nav-stacked bs-docs-sidebar">
+            </ul>
+            <br/>
+            <h3>
+              FubuMVC.CodeSnippets v1.0.0.0
+            </h3>
+
+            <br/>
+            <h3 class="no-margin">Next</h3>
+<p><a href="/fubumvc.codesnippets/languages" data-key="index">Supported Languages</a></p>
+<h3 class="no-margin">Previous</h3>
+<p><a href="/fubumvc.codesnippets/embedding" data-key="embedding">Embedding Code Snippets</a></p>
+          </div>
+          <div class="span9">
+
+              <h1 class="no-margin">Whole Files</h1>
+              <hr class="header-line topic-line"></hr>
+
+            <!--Title: Whole Files-->
+
+
+<section><h4 id="embed" class="section-header">Embedding a Whole File</h4>
+
+To embed an entire file into a FubuMVC page, just use the following extension methods on <code>IFubuPage</code>:
+
+<pre data-linenums="44" class="prettyprint lang-cs">
+        /// &lt;summary&gt;
+        /// Embed the contents of an entire code file into a FubuMVC view
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;page&quot;&gt;&lt;/param&gt;
+        /// &lt;param name=&quot;fileName&quot;&gt;The name of the file relative to the root of the web application or Bottle&lt;/param&gt;
+        /// &lt;param name=&quot;languageClass&quot;&gt;Optional.  Overrides the lang-* class on the element for prettify.css formatting&lt;/param&gt;
+        /// &lt;param name=&quot;levelIndentation&quot;&gt;Not yet used.  Will force the display to remove extra indentation for deeply nested code&lt;/param&gt;
+        /// &lt;returns&gt;&lt;/returns&gt;
+        public static HtmlTag CodeFile(this IFubuPage page, string fileName, string languageClass = null, bool levelIndentation = false)
+        {
+            var formatter = new CodeFormatter(levelIndentation);
+            var file = page.Get&lt;IFubuApplicationFiles&gt;().Find(fileName);
+
+            if (file == null)
+            {
+                return new HtmlTag(&quot;p&quot;).Text(&quot;Could not find file &quot; + fileName);
+            }
+
+            var snippet = formatter.Format(file);
+
+            return page.CodeSnippet(snippet);
+        }
+</pre>
+
+Snippet SAMPLE/ENDSAMPLE comments are stripped out of the rendered content and replaced with a blank line to keep the line numbers consistent with the file.
+</section>
+
+<section><h4 id="link" class="section-header">Linking to a File</h4>
+You can also provide a link to a code file that will be rendered with prettyprint in a new window by using one of these two extension methods:
+
+<pre data-linenums="69" class="prettyprint lang-cs">
+        /// &lt;summary&gt;
+        /// Writes a link to a page that will display the entire contents of the file 
+        /// containing the named snippet
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;page&quot;&gt;&lt;/param&gt;
+        /// &lt;param name=&quot;snippetName&quot;&gt;&lt;/param&gt;
+        /// &lt;returns&gt;&lt;/returns&gt;
+        public static HtmlTag LinkToSnippet(this IFubuPage page, string snippetName)
+        {
+            var snippet = page.Get&lt;ISnippetCache&gt;().Find(snippetName);
+            var fileName = snippet.File;
+
+            return page.LinkToCodeFile(fileName);
+        }
+
+        /// &lt;summary&gt;
+        /// Writes a link to a page that will display the entire contents of a code file
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;page&quot;&gt;&lt;/param&gt;
+        /// &lt;param name=&quot;fileName&quot;&gt;The name of the file relative to the root of the web application or Bottle&lt;/param&gt;
+        /// &lt;returns&gt;&lt;/returns&gt;
+        public static HtmlTag LinkToCodeFile(this IFubuPage page, string fileName)
+        {
+            var url = page.Urls.UrlFor(new CodeFileRequest(fileName));
+            return new LinkTag(Path.GetFileName(fileName), url, &quot;code-link&quot;).Title(fileName).Attr(&quot;target&quot;, &quot;_blank&quot;);
+        }
+</pre>
+  
+  </section>
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br></br>
+    <hr></hr>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <ul class="nav"><li><a href="/fubumvc.codesnippets" data-key="index">FubuMVC.CodeSnippets &#187;</a></li><li class="active"><a href="/fubumvc.codesnippets/files" data-key="files">Whole Files &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubumvc.codesnippets/embedding" title="Embedding Code Snippets">Previous</a></li><li><a href="/fubumvc.codesnippets/languages" title="Supported Languages">Next</a></li></ul>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+
+<script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/bootstrap-prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
+<script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
+<script type="text/javascript" src="/_content/scripts/toastr.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/diagnostics/bootstrap-scrollspy.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
+<script type="text/javascript" src="/_content/scripts/topics.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuDocs">FubuDocs</a>.
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

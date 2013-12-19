@@ -20,8 +20,10 @@
 <link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
 
 <link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+
+    
   </head>
-  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+  <body data-spy="scroll" data-target=".bs-docs-sidebar" position="relative">
       
     <div class="container">
       
@@ -62,10 +64,10 @@
         
 
         <div class="row">
-          <div class="span3 sidebar">
+          <div class="span3 sidebar" data-spy="affix" data-offset-top="150" data-offset-bottom="200">
             
             <h3 class="half-margin">Topics</h3>
-            <ul id="page-toc" class="nav nav-tabs nav-stacked affix">
+            <ul id="page-toc" class="nav nav-tabs nav-stacked bs-docs-sidebar">
             </ul>
             <br/>
             <h3>
@@ -87,7 +89,7 @@
 
 <p>Unlike normal FubuMVC.CodeSnippets usage, the fubudocs command line tool can find code snippets from any file within the code repository.  This means that you can use code snippets pulled from the main code library or any of the unit testing libraries in the code solution.</p>
 
-<p>See the docs for <span>LINK TO PROJECT &#39;FubuMVC.CodeSnippets&#39;</span> for more information.</p>
+<p>See the docs for <a href="/fubumvc.codesnippets" title="Embed code samples into a FubuMVC application using Google&#39;s prettify.js library">FubuMVC.CodeSnippets</a> for more information.</p>
 
 <div class="alert alert-info"><i class="icon-info-sign"></i>LinkToCodeFile and EmbedFile will only work for files included in the documentation project.</div>
 
@@ -121,11 +123,27 @@
 
 <p></section></p>
 
+
+
+
+
           </div>
         </div>
       </div>
     </div>
 
+    <br></br>
+    <hr></hr>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <ul class="nav"><li><a href="/fubudocs/index" data-key="index">Index &#187;</a></li><li class="active"><a href="/fubudocs/codesnippets" data-key="codesnippets">Code Snippets &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubudocs/samples" title="Samples">Previous</a></li><li><a href="/fubudocs/viewhelpers" title="Topic View Helpers">Next</a></li></ul>
+        </div>
+      </div>
+    </div>
+    
+    
     
 
 <script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
@@ -133,6 +151,7 @@
 <script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
 <script type="text/javascript" src="/_content/scripts/toastr.js"></script>
 <script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/diagnostics/bootstrap-scrollspy.js"></script>
 <script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
 <script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
 <script type="text/javascript" src="/_content/scripts/topics.js"></script>

@@ -1,0 +1,186 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>
+      FubuPersistence - FubuPersistence</title>
+    
+<meta charset="utf-8"/>
+<meta name="description" content="FubuDocs"/>
+<meta name="author" content="FubuDocs"/>
+
+
+
+
+<link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr-responsive.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.core.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
+
+<link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+
+    
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar" position="relative">
+      
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
+      <a href="/fubupersistence" title="A foundational library for common persistence scenarios with RavenDb" class="project-logo"><span>FubuPersistence</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a href="http://twitter.com/@fubumvc" class="ico-twitter"><img alt="Twitter" src="/_content/images/twitter-icon.png" /></a>
+<a href="http://github.com/DarthFubuMVC/FubuPersistence" class="ico-github"><img alt="Github" src="/_content/images/github-icon.png" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+      <div id="nav-follow" class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li class="active"><a href="/fubupersistence" data-key="index">FubuPersistence &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubupersistence/how-it-works" title="How it Works">Next</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        
+        
+
+        <div class="row">
+          <div class="span3 sidebar" data-spy="affix" data-offset-top="150" data-offset-bottom="200">
+            
+            <h3 class="half-margin">Topics</h3>
+            <ul id="page-toc" class="nav nav-tabs nav-stacked bs-docs-sidebar">
+            </ul>
+            <br/>
+            <h3>
+              FubuPersistence v0.9.5.0
+            </h3>
+
+            <br/>
+            <h3 class="no-margin">Next</h3>
+<p><a href="/fubupersistence/how-it-works" data-key="how-it-works">How it Works</a></p>
+          </div>
+          <div class="span9">
+
+
+            <!--Title: FubuPersistence-->
+
+
+<div class="well">
+	<div class="container">
+		<div class="row">
+			<div class="span6">
+				<h2>FubuPersistence</h2>
+				<p class="lead tag-line half-margin">A foundational library for common persistence scenarios with RavenDb</p>
+				<p class="margin">Use RavenDb the Fubu way</p>
+				
+        <!--
+        <div class="accordion-group">
+					<div class="accordion-heading">
+						<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#nugets">
+							Associated NuGets
+						</a>
+					</div>
+          
+          
+						<div id="nugets" class="accordion-body collapse">
+							<div class="accordion-inner">
+								<dl>
+										<dt>
+											<a href="http://nuget.org/Packages/FubuMVC.RavenDb45">FubuMVC.RavenDb45</a>
+										</dt>
+										<dd>Drop in persistence with RavenDb for FubuMVC / StructureMap applications</dd>
+										<dt>
+											<a href="http://nuget.org/Packages/FubuPersistence45">FubuPersistence45</a>
+										</dt>
+										<dd>Foundation framework for basic persistence scenarios</dd>
+								</dl>
+							</div>
+
+						</div>
+				</div>
+        
+			</div>
+			<div class="span4" id="status-widget">
+        <!--
+				<h3 class="half-margin">Build Status</h3>
+				<ul class="build-list" id="build-widget" data-build-type="!{Model.TeamCityBuildType}">
+				</ul>
+        -->
+      </div>
+        <div class="span6">
+          <h3 class="half-margin" id="community">Community</h3>
+          <a class="btn btn-info" href="http://github.com/DarthFubuMVC/FubuPersistence">Github</a>
+          <a class="btn btn-inverse" href="https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel">Mailing List</a>
+        </div>
+
+			
+		</div>
+	</div>
+</div>
+<div><h2 class="half-margin">Table of Contents</h2><ul class="table-of-contents"><li><a href="/fubupersistence/how-it-works">How it Works</a></li><li><a href="/fubupersistence/services">Services</a></li><li><a href="/fubupersistence/ravendb-integration">RavenDb Integration</a><ul><li><a href="/fubupersistence/ravendb-integration/configuration">Configuration</a></li><li><a href="/fubupersistence/ravendb-integration/multiple-datastore-support">Multiple Datastore Support</a></li><li><a href="/fubupersistence/ravendb-integration/ravendb-and-automated-testing">RavenDb and Automated Testing</a></li></ul></li><li><a href="/fubupersistence/multi-tenancy">Multi-Tenancy</a></li><li><a href="/fubupersistence/soft-deletes">Soft Deletes</a></li><li><a href="/fubupersistence/ientityrepository">IEntityRepository</a></li><li><a href="/fubupersistence/inmemoryrepository">InMemoryRepository</a></li></ul></div>
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br></br>
+    <hr></hr>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <ul class="nav"><li class="active"><a href="/fubupersistence" data-key="index">FubuPersistence &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubupersistence/how-it-works" title="How it Works">Next</a></li></ul>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+
+<script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/build-status.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
+<script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
+<script type="text/javascript" src="/_content/scripts/toastr.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/diagnostics/bootstrap-scrollspy.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
+<script type="text/javascript" src="/_content/scripts/topics.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuDocs">FubuDocs</a>.
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

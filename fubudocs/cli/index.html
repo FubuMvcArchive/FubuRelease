@@ -21,8 +21,10 @@
 <link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
 
 <link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+
+    
   </head>
-  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+  <body data-spy="scroll" data-target=".bs-docs-sidebar" position="relative">
       
     <div class="container">
       
@@ -63,10 +65,10 @@
         
 
         <div class="row">
-          <div class="span3 sidebar">
+          <div class="span3 sidebar" data-spy="affix" data-offset-top="150" data-offset-bottom="200">
             
             <h3 class="half-margin">Topics</h3>
-            <ul id="page-toc" class="nav nav-tabs nav-stacked affix">
+            <ul id="page-toc" class="nav nav-tabs nav-stacked bs-docs-sidebar">
             </ul>
             <br/>
             <h3>
@@ -119,11 +121,27 @@ FubuDocsRunner.exe dump-usages fubudocs src/FubuWorld.Docs/fubudocs.cli.xml
 <table class="table"><thead><tr><th colspan="2">Flags</th></tr></thead><tbody><tr><td class="command-flag-usage">[-n, --no-bottling]</td><td class="command-flag-description">Disables the bottle and code snippet scanning while this command runs</td></tr><tr><td class="command-flag-usage">[-w, --watched]</td><td class="command-flag-description">Open a &#39;watched&#39; browser with WebDriver to refresh the page on content or application recycles</td></tr><tr><td class="command-flag-usage">[-b, --browser Chrome|Firefox]</td><td class="command-flag-description">Browser to use in watched.  Default is Firefox because it&#39;s more stable. </td></tr><tr><td class="command-flag-usage">[-b, --build &lt;build&gt;]</td><td class="command-flag-description">If you are running a class library, sets the preference for the profile to load.  As in bin/[BuildFlag].  Default is debug</td></tr><tr><td class="command-flag-usage">[-o, --open]</td><td class="command-flag-description">Start the default browser to the home page of this application</td></tr><tr><td class="command-flag-usage">[-h, --host &lt;host&gt;]</td><td class="command-flag-description">Specify the directory for a hosting application for your documentation.  Will be loaded as a FubuMVC Bottle</td></tr></tbody></table></section>
 <!-- ENDSAMPLE -->
 
+
+
+
+
           </div>
         </div>
       </div>
     </div>
 
+    <br></br>
+    <hr></hr>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <ul class="nav"><li><a href="/fubudocs/index" data-key="index">Index &#187;</a></li><li class="active"><a href="/fubudocs/cli" data-key="cli">Command Line Documentation &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubudocs/viewhelpers" title="Topic View Helpers">Previous</a></li><li><a href="/fubudocs/host" title="Using a Host Project">Next</a></li></ul>
+        </div>
+      </div>
+    </div>
+    
+    
     
 
 <script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
@@ -133,6 +151,7 @@ FubuDocsRunner.exe dump-usages fubudocs src/FubuWorld.Docs/fubudocs.cli.xml
 <script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
 <script type="text/javascript" src="/_content/scripts/toastr.js"></script>
 <script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/diagnostics/bootstrap-scrollspy.js"></script>
 <script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
 <script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
 <script type="text/javascript" src="/_content/scripts/topics.js"></script>
