@@ -1,0 +1,332 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>
+      FubuMVC - IFubuRequest</title>
+    
+<meta charset="utf-8"/>
+<meta name="description" content="FubuDocs"/>
+<meta name="author" content="FubuDocs"/>
+
+
+
+
+<link href="/_content/styles/sons-of-obsidian.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr-responsive.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.core.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
+
+<link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+
+    
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar" position="relative">
+      
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
+      <a href="/fubumvc" title="The .Net web development framework that gets out of your way" class="project-logo"><span>FubuMVC</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a href="http://github.com/DarthFubuMVC/FubuMVC" class="ico-github"><img alt="Github" src="/_content/images/github-icon.png" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+      <div id="nav-follow" class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a href="/fubumvc/index" data-key="index">FubuMVC &#187;</a></li><li><a href="/fubumvc/runtime-services" data-key="index">Runtime Services &#187;</a></li><li class="active"><a href="/fubumvc/runtime-services/fuburequest" data-key="fuburequest">IFubuRequest &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubumvc/runtime-services" title="Runtime Services">Previous</a></li><li><a href="/fubumvc/runtime-services/outputwriter" title="IOutputWriter">Next</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        
+        
+
+        <div class="row">
+          <div class="span3 sidebar" data-spy="affix" data-offset-top="150" data-offset-bottom="200">
+            
+            <h3 class="half-margin">Topics</h3>
+            <ul id="page-toc" class="nav nav-tabs nav-stacked bs-docs-sidebar">
+            </ul>
+            <br/>
+            <h3>
+              FubuMVC v1.0.0.0
+            </h3>
+
+            <br/>
+            <h3 class="no-margin">Next</h3>
+<p><a href="/fubumvc/runtime-services/outputwriter" data-key="outputwriter">IOutputWriter</a></p>
+<h3 class="no-margin">Previous</h3>
+<p><a href="/fubumvc/runtime-services" data-key="index">Runtime Services</a></p>
+          </div>
+          <div class="span9">
+
+              <h1 class="no-margin">IFubuRequest</h1>
+              <hr class="header-line topic-line"></hr>
+
+            <!--Title: IFubuRequest-->
+<p><code>IFubuRequest</code> will probably be the one FubuMVC service that you interact with the most.
+Think of <code>IFubuRequest</code> as a <em>model bag</em> you can use to transfer state within a single
+request between <em>Behavior's</em> without creating any direct coupling between the different <em>Behavior</em> classes.</p>
+
+
+<section><h4 id="signature" class="section-header">Signature</h4>
+The signature of <code>IFubuRequest</code> is:
+
+<pre data-linenums="8" class="prettyprint lang-cs">
+    /// &lt;summary&gt;
+    /// Primary model bag scoped per request.  IFubuRequest is the primary way to share state between behaviors
+    /// in a running behavior chain
+    /// &lt;/summary&gt;
+    public interface IFubuRequest
+    {
+        /// &lt;summary&gt;
+        /// Find a model of the exact type T.  If there is not already a known instance of T, IFubuRequest will attempt to
+        /// use model binding against the current request data to resolve a T
+        /// &lt;/summary&gt;
+        /// &lt;typeparam name=&quot;T&quot;&gt;&lt;/typeparam&gt;
+        /// &lt;returns&gt;&lt;/returns&gt;
+        T Get&lt;T&gt;() where T : class;
+
+        /// &lt;summary&gt;
+        /// Find a model of the exact type.  If there is not already a known instance of T, IFubuRequest will attempt to
+        /// use model binding against the current request data to resolve a T
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;type&quot;&gt;&lt;/param&gt;
+        /// &lt;returns&gt;&lt;/returns&gt;
+    	    object Get(Type type);
+
+        /// &lt;summary&gt;
+        /// Stores a value of type T in the FubuRequest
+        /// &lt;/summary&gt;
+        /// &lt;typeparam name=&quot;T&quot;&gt;&lt;/typeparam&gt;
+        /// &lt;param name=&quot;target&quot;&gt;&lt;/param&gt;
+        void Set&lt;T&gt;(T target) where T : class;
+
+        /// &lt;summary&gt;
+        /// Stores a value of type T in the FubuRequest
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;type&quot;&gt;&lt;/param&gt;
+        /// &lt;param name=&quot;target&quot;&gt;&lt;/param&gt;
+        void Set(Type type, object target);
+        
+        /// &lt;summary&gt;
+        /// Find any and all binding conversion problems
+        /// found while model binding the current
+        /// value of the type T
+        /// &lt;/summary&gt;
+        /// &lt;typeparam name=&quot;T&quot;&gt;&lt;/typeparam&gt;
+        /// &lt;returns&gt;&lt;/returns&gt;
+        IEnumerable&lt;ConvertProblem&gt; ProblemsFor&lt;T&gt;();
+
+        /// &lt;summary&gt;
+        /// Attempts to find all the existing objects in this FubuRequest that can be cast to
+        /// type T.  Can return an empty enumerable.
+        /// &lt;/summary&gt;
+        /// &lt;typeparam name=&quot;T&quot;&gt;&lt;/typeparam&gt;
+        /// &lt;returns&gt;&lt;/returns&gt;
+        IEnumerable&lt;T&gt; Find&lt;T&gt;() where T : class;
+
+        /// &lt;summary&gt;
+        /// Has an object of type T already been resolved?
+        /// &lt;/summary&gt;
+        /// &lt;typeparam name=&quot;T&quot;&gt;&lt;/typeparam&gt;
+        /// &lt;returns&gt;&lt;/returns&gt;
+        bool Has&lt;T&gt;();
+
+        /// &lt;summary&gt;
+        /// Has an object of this type already been resolved?
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;type&quot;&gt;&lt;/param&gt;
+        /// &lt;returns&gt;&lt;/returns&gt;
+        bool Has(Type type);
+
+        /// &lt;summary&gt;
+        /// Stores the object as object.GetType()
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;input&quot;&gt;&lt;/param&gt;
+        void SetObject(object input);
+
+        /// &lt;summary&gt;
+        /// Removes any object stored as Type type
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;type&quot;&gt;&lt;/param&gt;
+        void Clear(Type type);
+    }
+</pre></section>
+<p><section><h4 id="auto-resolving" class="section-header">Auto Resolving</h4>
+If you request a model from <code>IFubuRequest.Get()</code> that has not been previously set,
+<code>IFubuRequest</code> will attempt to resolve it for you by model binding to the current
+request and storing that new object in its internal cache.</p>
+
+<p>Inside of <code><a href="FubuRequest.cs">FubuRequest</a></code> itself:
+</section></p>
+
+<pre data-linenums="16" class="prettyprint lang-cs">
+        public FubuRequest(IRequestData data, IObjectResolver resolver, ILogger logger)
+        {
+            _logger = logger;
+            _values.OnMissing = (type =&gt; resolver.BindModel(type, data));
+        }
+</pre>
+
+<p><section><h4 id="scoping" class="section-header">IFubuRequest and Scoping</h4></p>
+
+<p>Just to make this perfectly clear, <strong><code>IFubuRequest</code> is scoped to each request</strong>, meaning that
+you will get one instance of a <code>IFubuRequest</code> object inside all classes built within one
+request, including any objects built lazily through <code>IServiceLocator</code>.</p>
+
+<p>See <a href="/fubumvc/using-ioc-containers" data-key="index">Using IoC Containers</a> for more information about how IoC containers and object
+scoping works within a FubuMVC application.</section></p>
+
+<p><section><h4 id="in-memory" class="section-header">InMemoryFubuRequest</h4>
+For testing purposes, there is a built in <code>InMemoryFubuRequest</code> version of <code>IFubuRequest</code>.</p>
+
+<p><pre data-linenums="73" class="prettyprint lang-cs">
+            var request = new InMemoryFubuRequest();
+            request.Set(new PrivateMessage{Name = &quot;Darth Vader&quot;});
+</pre></section></p>
+
+<p><section><h4 id="sample-usage" class="section-header">Sample Usage</h4>
+As an example of how you might use it, let's say that you have a behavior chain with two custom behaviors:</p>
+
+<ol>
+<li>MyFirstBehavior</li>
+<li>MySecondBehavior</li>
+</ol>
+
+<p>In this example, <code>MyFirstBehavior</code> runs first and creates a new instance of <code>PrivateMessage</code>
+and stores it in <code>IFubuRequest</code>.  When <code>MySecondBehavior</code> runs next, it is able to find
+that same instance of <code>PrivateMessage</code> from the shared <code>IFubuRequest</code> object.</p>
+
+<p></section></p>
+
+
+
+<pre data-linenums="9" class="prettyprint lang-cs">
+    public class PrivateMessage
+    {
+        public string Name { get; set; }
+    }
+
+    public class MyFirstBehavior : BasicBehavior
+    {
+        private readonly IFubuRequest _request;
+
+        // As usual with FubuMVC, IFubuRequest is generally
+        // going to be resolved from the IoC container
+        // through constructor injection
+        public MyFirstBehavior(IFubuRequest request) : base(PartialBehavior.Executes)
+        {
+            _request = request;
+        }
+
+        protected override DoNext performInvoke()
+        {
+            // create the PrivateMessage object
+            var message = createPrivateMessage();
+
+            // store the PrivateMessage in 
+            // IFubuRequest where other Behavior&#39;s
+            // could find it later
+            _request.Set(message);
+
+            return DoNext.Continue;
+        }
+
+        private static PrivateMessage createPrivateMessage()
+        {
+            return new PrivateMessage{Name = &quot;Han Solo&quot;};
+        }
+    }
+
+    public class MySecondBehavior : BasicBehavior
+    {
+        private readonly IFubuRequest _request;
+        private readonly IOutputWriter _writer;
+
+        public MySecondBehavior(IFubuRequest request, IOutputWriter writer)
+            : base(PartialBehavior.Executes)
+        {
+            _request = request;
+            _writer = writer;
+        }
+
+        protected override DoNext performInvoke()
+        {
+            // Extract the PrivateMessage to render.
+            var message = _request.Get&lt;PrivateMessage&gt;();
+            _writer.Write(MimeType.Text, message.Name);
+
+            return DoNext.Continue;
+        }
+    }
+</pre>
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br></br>
+    <hr></hr>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <ul class="nav"><li><a href="/fubumvc/index" data-key="index">FubuMVC &#187;</a></li><li><a href="/fubumvc/runtime-services" data-key="index">Runtime Services &#187;</a></li><li class="active"><a href="/fubumvc/runtime-services/fuburequest" data-key="fuburequest">IFubuRequest &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubumvc/runtime-services" title="Runtime Services">Previous</a></li><li><a href="/fubumvc/runtime-services/outputwriter" title="IOutputWriter">Next</a></li></ul>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+
+<script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/bootstrap-prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
+<script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
+<script type="text/javascript" src="/_content/scripts/toastr.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/diagnostics/bootstrap-scrollspy.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
+<script type="text/javascript" src="/_content/scripts/topics.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuDocs">FubuDocs</a>.
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

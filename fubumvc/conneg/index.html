@@ -12,6 +12,7 @@
 
 
 
+<link href="/_content/styles/sons-of-obsidian.css" rel="stylesheet" type="text/css" />
 <link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
 <link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
@@ -86,20 +87,618 @@
 
             <!--Title: Content Negotiation-->
 <!--Url: conneg-->
-<p><section><h4 id="how-it-works" class="section-header">How it Works</h4>
-TODO(Write some content!)</section></p>
+<p>FubuMVC supports the HTTP concept of <a href="http://en.wikipedia.org/wiki/Content_negotiation">Content Negotiation</a> (colloquially known as <em>Conneg</em>).
+If you are building websites with views and Ajax endpoints you should very rarely need to deviate from the built in defaults for <em>Conneg</em>.  The view
+engine implementations in FubuMVC are integrated into the <em>Conneg</em> infrastructure as just another type of <em>Media Writer</em>.</p>
+
+<div class="alert alert-info"><i class="icon-info-sign"></i>Improving the ease of Conneg customization is one of the major goals of a forthcoming FubuMVC 2.0 release</div>
+
+
+
+<section><h4 id="terminology" class="section-header">Terminology and Concepts</h4><ul>
+<li><strong><a href="http://en.wikipedia.org/wiki/Internet_media_type">Mimetype</a></strong> -- A <em>media type</em> representation of a resource identified by a <em>mimetype</em></li>
+<li><strong>Input Model</strong> - The model passed into the input of a FubuMVC <em>Action</em></li>
+<li><strong>Resource Type</strong> - In FubuMVC terms, this is the output model returned from an <em>Action</em> and/or the view model type consumed by a view or another media writer</li>
+<li><strong>InputBehavior</strong> / <strong>InputNode</strong> -- The behavior and matching <code>BehaviorNode</code> that reads HTTP requests to resolve <em>Input Model</em> objects</li>
+<li><strong>OutputBehavior</strong> / <strong>OutputNode</strong> -- The behavior and matching <code>BehaviorNode></code> that writes resources out to the HTTP response</li>
+<li><strong>Media Writer</strong> - A object that can write a resource to one or more media types</li>
+<li><strong>Media Reader</strong> - An object that can read an input model object from the current HTTP request for one or more mimetype representations</li>
+<li><strong>Condition</strong> - A <em>runtime</em> boolean test modeled by FubuMVC's <code>ICondition</code> interface that evaluates runtime conditions</li>
+</ul>
+
+<p><em>Media Reader's</em> and <em>Media Writer's</em> can be thought of as small <a href="http://en.wikipedia.org/wiki/Strategy_pattern">Strategy pattern</a> classes that read and write
+strong typed models based on mimetype and runtime conditions.  <em>InputBehavior</em> and <em>OutputBehavior</em> are <a href="http://en.wikipedia.org/wiki/Mediator_pattern">mediator</a> classes that select and delegate to the
+<em>Media Reader's</em> or <em>Media Writer's</em> and FubuMVC's HTTP services.</p>
+
+
+
+
+</section>
+
+
+<section><h4 id="how-it-works" class="section-header">How it Works</h4><p>Consider this simple FubuMVC endpoint:</p>
+
+<pre data-linenums="18" class="prettyprint lang-cs">
+    public class ConnegEndpoint
+    {
+        public ResourceModel get_resource(InputMessage message)
+        {
+            return new ResourceModel();
+        }
+    }
+</pre>
+
+<p>This endpoint accepts an <em>Input Model</em> called <code>InputMessage</code> and returns a <em>resource</em> called <code>ResourceModel</code>.
+Notice that the <code>ConnegEndpoint.get_resource()</code> method does nothing but process an input message and return the resulting resource
+out the back.  The responsiblity for turning an HTTP request into the <code>InputMessage</code> object and the responsibility for writing
+the resulting <code>ResourceModel</code> out to the HTTP response is handled by separate behaviors, one for the request (<code>InputBehavior</code>) and one
+for the response (<code>OutputBehavior</code>).  </p>
+
+<p>To make this concrete, say the browser makes an HTTP POST to our <code>/resource</code> endpoint with jquery code like:</p>
+
+<pre>
+$.post('/resource', query_data, callback, 'text/json');
+</pre> 
+
+<p>In the FubuMVC endpoint, the sequence of events is:</p>
+
+<ol>
+<li>The <code>InputBehavior</code> runs first, sees that the request says that it is Json and invokes the registered reader for Json, resolves the <code>InputModel</code> object from the Json body and finally stores the input in the <a href="/fubumvc/runtime-services/fuburequest" data-key="fuburequest">IFubuRequest</a> model bag for the request.</li>
+<li>The <code>ConnegEndpoint.get_resource()</code> action runs using the <code>InputModel</code> built by <code>InputBehavior</code> and returning a new <code>ResourceModel</code> object that is stored in the <a href="/fubumvc/runtime-services/fuburequest" data-key="fuburequest">IFubuRequest</a> model bag for the request.</li>
+<li>The <code>OutputBehavior</code> runs last, finds the <code>ResourceModel</code> object stored in <a href="/fubumvc/runtime-services/fuburequest" data-key="fuburequest">IFubuRequest</a>, sees that the response should be formatted as Json, selects the <em>Media Writer</em> that can write Json and delegates to that writer.</li>
+</ol>
+</section>
+
+
+<section><h4 id="input" class="section-header">How Conneg works with HTTP Requests</h4>
+<p>Rather than rehash how <em>Conneg</em> handles HTTP inputs, here's the exact code from <code>InputBehavior</code> that implements the <em>Conneg</em> input logic (<em>T</em> is a generic parameter for the <em>Input Model</em> type of the current chain) with explanatory annotations:</p>
+
+<pre data-linenums="30" class="prettyprint lang-cs">
+        protected override DoNext performInvoke()
+        {
+            // Might already be there from a different way
+            if (_request.Has&lt;T&gt;()) return DoNext.Continue;
+
+            // Resolve our CurrentMimeType object from the 
+            // HTTP request that we use to represent
+            // the mimetypes of the current request
+            var mimeTypes = _request.Get&lt;CurrentMimeType&gt;();
+
+            // Choose the first reader that says it
+            // can read the mimetype from the 
+            // &#39;content-type&#39; header in the request
+            var reader = ChooseReader(mimeTypes);
+
+            _logger.DebugMessage(() =&gt; new ReaderChoice(mimeTypes, reader));
+
+            if (reader == null)
+            {
+                // If we don&#39;t find a matching Reader for the
+                // content-type of the request, this request fails
+                // with an HTTP 415 return code
+                failWithInvalidMimeType();
+                return DoNext.Stop;
+            }
+
+            // Use the selected reader
+            var target = reader.Read(mimeTypes.ContentType);
+            _request.Set(target);
+
+            return DoNext.Continue;
+        }
+</pre>
+</section>
+
+<p><section><h4 id="responses" class="section-header">How Conneg works for Responses</h4></p>
+
+<p>The code that implements the <em>Conneg</em> output logic is shown below with annotations:</p>
+
+<pre data-linenums="39" class="prettyprint lang-cs">
+        public void Write()
+        {
+            // If the resource is NOT found, return 
+            // invoke the 404 handler
+            var resource = _request.Get&lt;T&gt;();
+            if (resource == null)
+            {
+                _writer.WriteResponseCode(HttpStatusCode.NotFound);
+                _notFoundHandler.HandleResourceNotFound&lt;T&gt;();
+
+                return;
+            }
+
+            // Resolve our CurrentMimeType object from the 
+            // HTTP request that we use to represent
+            // the mimetypes of the current request
+            var mimeTypes = _request.Get&lt;CurrentMimeType&gt;();
+
+            // Select the appropriate media writer
+            // based on the mimetype and other runtime
+            // conditions
+            var media = SelectMedia(mimeTypes);
+
+            if (media == null)
+            {
+                // If no matching media can be found, write HTTP 406
+                _writer.WriteResponseCode(HttpStatusCode.NotAcceptable);
+                _writer.Write(MimeType.Text, &quot;406:  Not acceptable&quot;);
+            }
+            else
+            {
+                // Write the media based on a matching media type
+                var outputMimetype = mimeTypes.SelectFirstMatching(media.Mimetypes);
+                media.Write(outputMimetype, resource);
+            }
+
+            // Write any output headers exposed by the IHaveHeaders
+            // interface on the resource type
+            WriteHeaders();
+        }
+</pre>
+
+<p><code>OutputBehavior</code> reads the mimetypes in the HTTP <em>accepts</em> header from left to right looking for the first matching writer by mimetype.  If no specific
+match is made, but the <em>accepts</em> header contains the <em>*/*</em> wildcard, <code>OutputBehavior</code> will select the first writer.</p>
+
+<p>To make that more concrete, let's say that we have an output behavior that has three writer's:</p>
+
+<ol>
+<li>A Spark/Razor view that renders <em>text/html</em></li>
+<li>A Json formatter that can write either <em>text/json</em> or <em>application/json</em></li>
+<li>An Xml formatter that can write either <em>text/xml</em> or <em>application/xml</em></li>
+</ol>
+
+<p>For this <em>Conneg</em> configuration, the table below describes how the output selection will work:</p>
+
+<table class="table">
+    <tr>
+        <th>HTTP Accept Header</th>
+        <th>Will write...</th>
+    </tr>
+    <tr>
+        <td>text/html</td>
+        <td>text/html</td>
+    </tr>
+    <tr>
+        <td>application/json</td>
+        <td>application/json</td>
+    </tr>
+    <tr>
+        <td>vnd/special;plain/text;text/json</td>
+        <td>text/json</td>
+    </tr>
+    <tr>
+        <td>*/*</td>
+        <td>text/html</td>
+    </tr>
+    <tr>
+        <td>text/xml;text/json;*.*</td>
+        <td>text/xml</td>
+    </tr>
+    <tr>
+        <td>vnd/special;plain/text;*/*</td>
+        <td>text/html</td>
+    </tr>
+    <tr>
+        <td>vnd/special;plain/text</td>
+        <td>HTTP Status 406</td>
+    </tr>
+</table>
+
+<p></section></p>
+
+<p><section><h4 id="ootb-readers" class="section-header">Out of the Box Readers</h4>
+By itself, <code>FubuMVC.Core</code> comes with these reader strategies:</p>
+
+<p><table class="table">
+<tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Mimetypes</th>
+</tr>
+<tr>
+    <td>ModelBindingReader</td>
+    <td>Uses <a href="/fubumvc/model-binding" data-key="model-binding">Model Binding</a> to resolve the input</td>
+    <td><em>application/x-www-form-urlencoded</em> or <em>multipart/form-data</em></td>
+</tr>
+<tr>
+    <td>Json Formatter</td>
+    <td>Uses the <code>IJsonReader</code> service to deserialize the input message from the request body content</td>
+    <td><em>application/json</em> or <em>text/json</em></td>
+</tr>
+<tr>
+    <td>Xml Formatter</td>
+    <td><em>application/xml</em> or <em>text/xml</em></td>
+    <td>Uses the .Net <a href="http://msdn.microsoft.com/en-us/library/system.xml.serialization.xmlserializer(v=vs.110).aspx">XmlSerializer</a> to deserialize the input message from the request body content</td>
+</tr>
+</table></section></p>
+
+<p><section><h4 id="ootb-writers" class="section-header">Out of the Box Writers</h4></p>
+
+<p><code>FubuMVC.Core</code> also comes with these writer strategies:</p>
+
+<p><table class="table">
+<tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Mimetypes</th>
+</tr>
+<tr>
+    <td>Json Formatter</td>
+    <td>Writes the resource object with the <code>IJsonWriter</code> service</td>
+    <td><em>application/json</em> or <em>text/json</em></td>
+</tr>
+<tr>
+    <td>Xml Formatter</td>
+    <td>Serializes the resource object with the .Net <code>XmlSerializer</code> and writes to the output stream</td>
+    <td><em>application/xml</em> or <em>text/xml</em></td>
+</tr>
+<tr>
+    <td>Html String Writer</td>
+    <td>Calls <code>ToString()</code> on the resource model and writes that string to the output</td>
+    <td><em>text/html</em></td>
+</tr>
+<tr>
+    <td>String Writer</td>
+    <td>For actions that return a .Net <code>String</code>, just write that string to the output</td>
+    <td><em>text/html</em></td>
+</tr>
+<tr>
+    <td>AjaxContinuationWriter</td>
+    <td>Writes an <code>AjaxContinuation</code> output object as Json</td>
+    <td><em>application/json</em> or <em>text/json</em></td>
+</tr>
+</table></section></p>
 
 <p><section><h4 id="spoofing" class="section-header">Spoofing the Mimetypes</h4>
-TODO(Write some content!)</section></p>
+Sometimes you just cannot count on the web client to play nicely with how they format HTTP requests to your FubuMVC endpoints (looking at you Internet Explorer).</p>
 
-<p><section><h4 id="readers" class="section-header">Reading Requests with Readers</h4>
-TODO(Write some content!)</section></p>
+<p>Let's say that your FubuMVC system receives malformed HTTP requests from a web browser using <a href="http://www.w3schools.com/xml/xml_http.asp">XmlHttpRequest</a> where the <em>accept</em> header is completely missing.
+<em>Conneg</em> uses the <code>CurrentMimeType</code> class to represent the HTTP <em>accept</em> and <em>content-type</em> headers.
+We can write a new behavior like the class below to alter the  <code>CurrentMimeType</code> object for the request before the <em>Conneg</em> output behavior runs to
+just fill in the missing <em>accept</em> header.</p>
 
-<p><section><h4 id="writers" class="section-header">Writing Resources with Writers</h4>
-TODO(Write some content!)</section></p>
+<pre data-linenums="314" class="prettyprint lang-cs">
+
+    // The actual custom behavior
+    public class CorrectMimetypeForAjaxBehavior : WrappingBehavior
+    {
+        private readonly ICurrentHttpRequest _httpRequest;
+        private readonly IFubuRequest _fubuRequest;
+
+        public CorrectMimetypeForAjaxBehavior(ICurrentHttpRequest httpRequest, IFubuRequest fubuRequest)
+        {
+            _httpRequest = httpRequest;
+            _fubuRequest = fubuRequest;
+        }
+
+        protected override void invoke(Action action)
+        {
+            // Just let the normal model binding do its thing here,
+            // but &quot;correct&quot; anything that is missing
+            var mimetype = _fubuRequest.Get&lt;CurrentMimeType&gt;();
+
+            if (!mimetype.AcceptTypes.Any() &amp;&amp; _httpRequest.IsAjaxRequest())
+            {
+                mimetype.AcceptTypes = new MimeTypeList(&quot;application/json&quot;);
+            }
+        }
+    }
+</pre>
+
+<p>The next step is to somehow get the spoofing behavior into our Ajax endpoint chains.
+As an example, let's say that our convention is that we look for any chain that has
+an <em>Action</em> from a class that has the text "Ajax" in its name (i.e. MyAjaxEndpoint):</p>
+
+<pre data-linenums="342" class="prettyprint lang-cs">
+    public class CorrectMimetypePolicy : Policy
+    {
+        public CorrectMimetypePolicy()
+        {
+            // Any chain that has an Action where the handler class name
+            // contains the text &quot;Ajax&quot;
+            Where.AnyActionMatches(call =&gt; call.HandlerType.Name.Contains(&quot;Ajax&quot;));
+
+            Wrap.WithBehavior&lt;CorrectMimetypeForAjaxBehavior&gt;();
+        }
+    }
+</pre>
+
+<div class="alert alert-info"><i class="icon-info-sign"></i>Spoofing the <i>accept</i> and <i>content-type</i> headers for <i>Conneg</i> has been identified as an opportunity for improvement in FubuMVC 2.0</div>
+
+<p></section></p>
+
+<p><section><h4 id="readers" class="section-header">Writing a Custom IMediaReader</h4></p>
+
+<p>You can create completely custom <code>IMediaReader</code> implementations like this sample:</p>
+
+<pre data-linenums="33" class="prettyprint lang-cs">
+    public class InputMessage
+    {
+
+    }
+
+    // This attribute will NOT be necessary in FubuMVC 2.0, but is
+    // for FubuMVC 1.* to feed the configuration model
+    [MimeType(&quot;special/format&quot;, &quot;text/json&quot;)]
+    public class SpecialContentMediaReader : IReader&lt;InputMessage&gt;
+    {
+        private readonly IStreamingData _streaming;
+        private readonly ICurrentHttpRequest _httpRequest;
+
+        public SpecialContentMediaReader(IStreamingData streaming, ICurrentHttpRequest httpRequest)
+        {
+            _streaming = streaming;
+            _httpRequest = httpRequest;
+        }
+
+        public IEnumerable&lt;string&gt; Mimetypes
+        {
+            get
+            {
+                yield return &quot;special/format&quot;;
+            }
+        }
+
+        public InputMessage Read(string mimeType)
+        {
+            // read the body of the http request from IStreamingData
+            // read header information and route information from
+            // ICurrentHttpRequest
+
+            return new InputMessage();
+        }
+    }
+</pre>
+
+<p>TODO(link to ICurrentHttpRequest)
+TODO(link to IStreamingData)</p>
+
+<p></section></p>
+
+<p><section><h4 id="writers" class="section-header">Writing a Custom IMediaWriter</h4></p>
+
+<p>You can create completely custom <code>IMediaWriter</code> implementations like this sample:</p>
+
+<pre data-linenums="72" class="prettyprint lang-cs">
+    public class SomeResource
+    {
+        public string Color { get; set; }
+    }
+
+    [MimeType(&quot;special/format&quot;, &quot;text/json&quot;)]
+    public class SpecialContentMediaWriter : IMediaWriter&lt;SomeResource&gt;
+    {
+        private readonly IOutputWriter _writer;
+
+        // As usual, all IMediaWriter&lt;&gt; objects
+        // are resolved from you IoC continer and
+        // you can have dependencies injected into
+        // your constructor
+        public SpecialContentMediaWriter(IOutputWriter writer)
+        {
+            _writer = writer;
+        }
+
+
+        // This signature is necessary because we are assuming
+        // that some Writer&#39;s will be able to produce representations
+        // for multiple mimetype&#39;s
+        public void Write(string mimeType, SomeResource resource)
+        {
+            if (mimeType == &quot;special/format&quot;)
+            {
+                writeSpecial(resource);
+            }
+            else
+            {
+                writeJson(resource);
+            }
+        }
+
+        private void writeJson(SomeResource resource)
+        {
+            // use the IOutputWriter to output the resource
+        }
+
+        private void writeSpecial(SomeResource resource)
+        {
+            _writer.Write(&quot;special/format&quot;, resource.ToString());
+        }
+
+        public IEnumerable&lt;string&gt; Mimetypes
+        {
+            get
+            {
+                // You can use custom mimetypes
+                // if you want to be one of the
+                // ReSTful cool kids
+                yield return &quot;special/format&quot;;
+
+                yield return &quot;text/json&quot;;
+            }
+        }
+    }
+</pre>
+
+<p>TODO(link to IOutputWriter)
+</section></p>
+
+<p><section><h4 id="explicit-config" class="section-header">Explicitly Configuring Conneg</h4></p>
+
+<p>The <code>BehaviorChain.Input</code> and <code>BehaviorChain.Output</code> properties can be used to add, remove, query, and reorder readers and writers.</p>
+
+<pre data-linenums="206" class="prettyprint lang-cs">
+        public static void MessWithConneg(BehaviorChain chain)
+        {
+            // Remove all readers
+            chain.Input.ClearAll();
+
+            // Accept &#39;application/x-www-form-urlencoded&#39; with model binding
+            chain.Input.AllowHttpFormPosts = true;
+
+            // Add basic Json reading
+            chain.Input.AddFormatter&lt;JsonFormatter&gt;();
+
+            // Query whether or not the chain uses the basic Json reading
+            bool readsJson = chain.Input.UsesFormatter&lt;JsonFormatter&gt;();
+
+            // Add a completely custom Reader
+            var specialReader = chain.Input
+                .AddReader&lt;SpecialContentMediaReader&gt;();
+
+            // Reorder the special reader to move it to the first
+            // as the default
+            specialReader.MoveToFront();
+
+            // Add a new Reader as the last reader
+            chain.Input.Readers.AddToEnd(new ModelBind(chain.InputType()));
+
+            // Are there any Readers?
+            chain.HasReaders();
+
+            // Is there any output?
+            chain.HasOutput();
+
+
+            // Add the default Conneg policies to this chain
+            // model binding, json, or xml in and json or xml out
+            chain.ApplyConneg();
+
+            // Manipulate an existing writer
+            var writer = chain.Output.Writers.First();
+            manipulateWriter(writer);
+
+            // Remove all writers
+            chain.Output.ClearAll();
+
+            // Add the HtmlStringWriter
+            chain.Output.AddHtml();
+
+            // Add basic Json output
+            chain.OutputJson();
+
+            // Add basic Xml output
+            chain.OutputXml();
+        }
+
+        private static void manipulateWriter(WriterNode writer)
+        {
+            writer.ReplaceWith(new WriteString());
+            writer.MoveToFront();
+        }
+
+</pre>
+
+<p>TODO(link to working with behavior graph and chains)
+</section></p>
+
+<p><section><h4 id="conventions" class="section-header">Conneg Policies and Conventions</h4></p>
+
+<p>Content negotiation readers and writers can be applied through conventions/policies like so:</p>
+
+<pre data-linenums="133" class="prettyprint lang-cs">
+    public class MyConnegPolicy : Policy
+    {
+        public MyConnegPolicy()
+        {
+            // Apply some sort of matching
+            // filter.  
+            Where.ChainMatches(chain =&gt; true);
+
+            Conneg.AcceptJson();
+
+            Conneg.AllowHttpFormPosts();
+
+            Conneg.ApplyConneg();
+
+            Conneg.AddHtml();
+
+            Conneg.AddWriter(typeof(SpecialContentMediaWriter));
+
+            Conneg.ClearAllWriters();
+
+            Conneg.MakeAsymmetricJson();
+
+            Conneg.MakeSymmetricJson();
+        }
+    }
+</pre>
+
+<p>TODO(link to creating custom policies)
+</section></p>
+
+<p><section><h4 id="conditional-writers" class="section-header">Conditional Writers</h4></p>
+
+<p>You may want to use multiple writer's for the same resource and mimetype on the same endpoint,
+but choose the writer based on some sort of runtime test for things like customer or user profiles,
+authorization rules, or customization. The original usage for this functionality was for allowing
+FubuMVC's view engines to attach different views for different devices (a smartphone view versus a view
+for a full screen desktop for example).</p>
+
+<p>The following code is a simplistic example of conditional writers:</p>
+
+<pre data-linenums="268" class="prettyprint lang-cs">
+        // This method is just an example of how you can add 
+        // runtime conditions to an existing WriterNode
+        // hanging off of BehaviorChain.Output.Writers
+        private static void addConditions(WriterNode node)
+        {
+            node.Condition&lt;MyRuntimeCondition&gt;();
+
+            node.ConditionByModel&lt;SomeResource&gt;(x =&gt; x.Color == &quot;Red&quot;);
+
+            node.ConditionByService&lt;Customer&gt;(x =&gt; x.IsSpecial());
+        }
+
+        // IConditional services are resolved from the IoC
+        // container, so you can declare dependencies
+        // in the constructor function
+        public class MyRuntimeCondition : IConditional
+        {
+            public bool ShouldExecute()
+            {
+                // apply your own runtime logic
+                return false;
+            }
+        }
+</pre>
+
+<p>In the case of having multiple writers for the same mimetype, <em>Conneg</em> will select the first writer where
+the condition is true, so do pay attention to ordering within the output node.
+</section></p>
 
 <p><section><h4 id="views" class="section-header">Views and Conneg</h4>
-TODO(Write some content!)</section></p>
+As of FubuMVC 1.0+, view engine rendering is just a <em>Conneg</em> <code>IMediaWriter</code> that responds to the mimetype 'text/html'.
+That being said, it's perfectly possible to make the same endpoint render a view when the client requests 'text/html' and still
+respond to other mimetypes without changing your <em>Action</em>.</p>
+
+<p>Below is a sample policy to add Json reading and writing to selected endpoints: </p>
+
+<pre data-linenums="356" class="prettyprint lang-cs">
+    public class AddJsonToViewsPolicy : Policy
+    {
+        public AddJsonToViewsPolicy()
+        {
+            // Assuming that you have *some* sort
+            // of restriction on when and where
+            // this policy applies
+            Where.IsNotPartial().And.RespondsToHttpMethod(&quot;GET&quot;)
+                .And.ChainMatches(chain =&gt; chain.GetRoutePattern().Contains(&quot;foo&quot;));
+
+            // Adds Json reading and writing to
+            // the each chain that matches the Where filter
+            // above
+            ModifyBy(chain =&gt; {
+                chain.Output.AddFormatter&lt;JsonFormatter&gt;();
+                chain.Input.AddFormatter&lt;JsonFormatter&gt;();
+            });
+        }
+    }
+</pre>
+
+<p>TODO(move this sample and the entire content over to the view engine docs)
+</section></p>
+
 
 
 
@@ -127,6 +726,8 @@ TODO(Write some content!)</section></p>
     
 
 <script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/bootstrap-prettify.js"></script>
 <script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
 <script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
 <script type="text/javascript" src="/_content/scripts/toastr.js"></script>

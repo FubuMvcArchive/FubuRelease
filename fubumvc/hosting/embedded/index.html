@@ -1,0 +1,313 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>
+      FubuMVC - Embed FubuMVC Applications</title>
+    
+<meta charset="utf-8"/>
+<meta name="description" content="FubuDocs"/>
+<meta name="author" content="FubuDocs"/>
+
+
+
+
+<link href="/_content/styles/sons-of-obsidian.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr-responsive.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.core.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
+
+<link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+
+    
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar" position="relative">
+      
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
+      <a href="/fubumvc" title="The .Net web development framework that gets out of your way" class="project-logo"><span>FubuMVC</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a href="http://github.com/DarthFubuMVC/FubuMVC" class="ico-github"><img alt="Github" src="/_content/images/github-icon.png" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+      <div id="nav-follow" class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a href="/fubumvc/index" data-key="index">FubuMVC &#187;</a></li><li><a href="/fubumvc/hosting" data-key="index">Hosting &#187;</a></li><li class="active"><a href="/fubumvc/hosting/embedded" data-key="embedded">Embed FubuMVC Applications &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubumvc/hosting/owin" title="OWIN Hosting">Previous</a></li><li><a href="/fubumvc/hosting/fubu-server" title="The Fubu Web Server">Next</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        
+        
+
+        <div class="row">
+          <div class="span3 sidebar" data-spy="affix" data-offset-top="150" data-offset-bottom="200">
+            
+            <h3 class="half-margin">Topics</h3>
+            <ul id="page-toc" class="nav nav-tabs nav-stacked bs-docs-sidebar">
+            </ul>
+            <br/>
+            <h3>
+              FubuMVC v1.0.0.0
+            </h3>
+
+            <br/>
+            <h3 class="no-margin">Next</h3>
+<p><a href="/fubumvc/hosting/fubu-server" data-key="fubu-server">The Fubu Web Server</a></p>
+<h3 class="no-margin">Previous</h3>
+<p><a href="/fubumvc/hosting/owin" data-key="owin">OWIN Hosting</a></p>
+          </div>
+          <div class="span9">
+
+              <h1 class="no-margin">Embed FubuMVC Applications</h1>
+              <hr class="header-line topic-line"></hr>
+
+            <!--Title: Embed FubuMVC Applications-->
+<p><section><h4 id="getting-started" class="section-header">Getting Started</h4></p>
+
+<p>You can use FubuMVC's support for the <a href="http://katanaproject.codeplex.com">Katana web server</a> to embed FubuMVC applications into any .Net service.
+My shop uses this functionality to expose diagnostic views into backend services and other teams have used this functionality
+to expose HTTP API's into running services.</p>
+
+<p>The first step is to install the <code>FubuMVC.Katana</code> library to your application or service.</p>
+
+<div class="alert alert-info"><i class="icon-info-sign"></i><i>FubuMVC.Katana</i><span> is distributed as a Nuget at </span><a href="http://www.nuget.org/packages/FubuMVC.Katana">http://www.nuget.org/packages/FubuMVC.Katana</a><span> and can be installed from the command line with either:</span><p><code>ripple install FubuMVC.Katana -p {your project name}</code></p><p> - or -</p><p><code>PM&gt; Install-Package FubuMVC.Katana</code></p></div>
+
+<p>Assuming that you already have an <code>IApplicationSource</code> class to bootstrap your application or you only need a very generic
+application setup, you will use the <code>EmbeddedFubuMvcServer</code> class to startup the Katana server for your application as
+shown in the sample code below.</p>
+
+<pre data-linenums="12" class="prettyprint lang-cs">
+    public class SimpleApplication : IApplicationSource
+    {
+        public FubuApplication BuildApplication()
+        {
+            return FubuApplication
+                .DefaultPolicies()
+                .StructureMap();
+        }
+    }
+
+    public static class KatanaBootstrapper
+    {
+        // The FubuMVC team recommends that you use an IApplicationSource
+        // to contain your bootstrapping code
+        public static void WithApplicationSource()
+        {
+            using (var server = EmbeddedFubuMvcServer.For&lt;SimpleApplication&gt;())
+            {
+                var greeting = server.Endpoints.Get&lt;HelloEndpoint&gt;(x =&gt; x.get_greeting());
+                Console.WriteLine(greeting);
+            }
+        }
+
+        public static void Inline()
+        {
+            // You don&#39;t have to use a custom IApplicationSource if you
+            // do not want to.
+            // RunEmbedded() is an extension method in FubuMVC.Katana
+            using (var server = FubuApplication.DefaultPolicies().StructureMap().RunEmbedded())
+            {
+                var greeting = server.Endpoints.Get&lt;HelloEndpoint&gt;(x =&gt; x.get_greeting());
+                Console.WriteLine(greeting);
+            }
+        }
+    }
+
+    public class HelloEndpoint
+    {
+        public string get_greeting()
+        {
+            return &quot;Hello from an Embedded FubuMVC Application&quot;;
+        }
+    }
+</pre>
+
+<div class="alert alert-info"><i class="icon-info-sign"></i>Remember to dispose the <code>EmbeddedFubuMvcServer</code> object when you're done with it to shut down Katana gracefully and release the port binding.</div>
+
+<p>See <a href="/fubumvc/bootstrapping" data-key="index">Bootstrapping</a> for more information about bootstrapping a FubuMVC application.
+</section></p>
+
+<p><section><h4 id="port" class="section-header">Port Bindings</h4></p>
+
+<p>The default port number for <code>EmbeddedFubuMvcServer</code> is 5500.  When you want your application to run with a different port, use
+the <code>port</code> argument like this:</p>
+
+<pre data-linenums="62" class="prettyprint lang-cs">
+            using (var server = EmbeddedFubuMvcServer.For&lt;SimpleApplication&gt;(port:6000))
+            {
+
+            }
+</pre>
+
+<p></section></p>
+
+<p><section><h4 id="path" class="section-header">The Application Physical Path for Content</h4></p>
+
+<p>When FubuMVC starts up an application it needs to know what the root directory where the content (views, scripts, stylesheets, etc.)
+is located.  This is done for you in <a href="/fubumvc/hosting/fubu-server" data-key="fubu-server">The Fubu Web Server</a> or the <a href="/fubumvc/hosting/fubu-server" data-key="fubu-server">The Fubu Web Server</a>, but you
+might need to provide the actual content path for the <code>EmbeddedFubuMvcServer</code> objects, especially when you're using the embedded
+server for automated testing.  </p>
+
+<p>If no physical path is provided or can be determined as described in the next section, the <code>EmbeddedFubuMvcServer</code> class uses the <code>AppDomain.CurrentDomain.BaseDirectory</code> path as the physical path.  While this is perfectly usable for
+headless services, it's generally pretty useless for an application that needs to use content files.  In that case, you need to
+give <code>EmbeddedFubuMvcServer</code> the correct physical path as in this code:</p>
+
+<pre data-linenums="72" class="prettyprint lang-cs">
+            using (var server = EmbeddedFubuMvcServer.For&lt;SimpleApplication&gt;(physicalPath:&quot;../../../SimpleApplication&quot;))
+            {
+
+            }
+</pre>
+
+<p></section></p>
+
+<p><section><h4 id="testing" class="section-header">Using EmbeddedFubuMvcServer for Testing</h4>
+If no physical content path is specified, <code>EmbeddedFubuMvcServer</code> will first look for a folder with the same name as the Assembly containing
+the <code>IApplicationSource</code> in a sibling directory to the current projects directory. This was done specifically for
+integration testing scenarios where you might have a structure like this:</p>
+
+<ol>
+<li>/src/MyApplication/MyApplication.csproj</li>
+<li>/src/MyApplication/MyApplication.cs (IApplicationSource)</li>
+<li>/src/MyApplication.Testing/MyApplication.Testing.csproj</li>
+<li>/src/MyApplication.Testing/MyApplicationTester.cs</li>
+</ol>
+
+<p>If I build out an <code>EmbeddedFubuMvcServer</code> object for the <code>MyApplication</code> class in the <code>MyApplication.Testing</code> project,
+<code>EmbeddedFubuMvcServer</code> will use <em>/src/MyApplication</em> as the physical path because it can derive the correct application path from
+the assembly name that contains <code>MyApplication</code>.</p>
+
+<p>In other words, if you follow the convention of putting the code for each assembly or executable in a folder with the same name, the pathing will just work.</p>
+
+<p>Now that you have a running application, the <code>EmbeddedFubuMvcServer</code> class exposes some properties that will help you
+access and drive the running application:</p>
+
+<pre data-linenums="82" class="prettyprint lang-cs">
+            using (var server = EmbeddedFubuMvcServer.For&lt;SimpleApplication&gt;())
+            {
+                // Access to the IServiceLocator for the running application
+                var resolver = server.Services.GetInstance&lt;IObjectResolver&gt;();
+
+                // Access to the EndpointDriver for the running application
+                server.Endpoints.Get&lt;HelloEndpoint&gt;(x =&gt; x.get_greeting())
+                    .StatusCode.ShouldEqual(HttpStatusCode.OK);
+
+                // Access to the IUrlRegistry for the running application
+                // to resolve Url&#39;s
+                var url = server.Urls.UrlFor&lt;HelloEndpoint&gt;(x =&gt; x.get_greeting());
+
+                // Access the FubuRuntime for this application,
+                // including information about the route table that
+                // this application is using
+                var routes = server.Runtime.Routes;
+            }
+</pre>
+
+<p>See <a href="/fubumvc/automated-testing/using-endpointdriver" data-key="using-endpointdriver">Using EndpointDriver</a> and <a href="/fubumvc/urls-and-routes/url-resolution" data-key="url-resolution">Url Resolution</a> for more information
+</section></p>
+
+<p><section><h4 id="auto-hosting" class="section-header">Auto Start Katana Hosting</h4></p>
+
+<p>If you are hosting a <a href="/fubumvc">FubuMVC</a> or <a href="/fubutransportation">FubuTransportation</a> application in a service and want a Katana host
+to start for your application on startup, set the <code>KatanaSettings.AutoHostingEnabled</code> property to <code>true</code> as in
+this code from our integration tests:</p>
+
+<pre data-linenums="38" class="prettyprint lang-cs">
+    public class KatanaRegistry : FubuRegistry
+    {
+        public KatanaRegistry()
+        {
+            Actions.IncludeType&lt;KatanaEndpoint&gt;();
+
+            AlterSettings&lt;KatanaSettings&gt;(x =&gt; {
+                // This line is absolutely mandatory
+                x.AutoHostingEnabled = true;
+
+                x.Port = 5601;
+            });
+        }
+    }
+</pre>
+
+<p>You can specify the port number you want to use in your <code>FubuRegistry</code>, or set the port number
+value in the .Net <em>appSettings</em> configuration with the key  <code>KatanaSettings.AutoHostingEnabled</code>.</p>
+
+<p>Katana hosting is set up by an <code>IActivator</code> if auto hosting is enabled.  The host is stopped and disposed by a <code>IDeactivator</code>
+when the containing application is disposed.</p>
+
+<div class="alert alert-info"><i class="icon-info-sign"></i>It is possible to use the <code>fubu run</code> hosting against an application that has auto hosting enabled.  In that case, <code>fubu run</code>
+will use the port configuration from the <code>KatanaSettings</code></div>
+
+<p></section></p>
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br></br>
+    <hr></hr>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <ul class="nav"><li><a href="/fubumvc/index" data-key="index">FubuMVC &#187;</a></li><li><a href="/fubumvc/hosting" data-key="index">Hosting &#187;</a></li><li class="active"><a href="/fubumvc/hosting/embedded" data-key="embedded">Embed FubuMVC Applications &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/fubumvc/hosting/owin" title="OWIN Hosting">Previous</a></li><li><a href="/fubumvc/hosting/fubu-server" title="The Fubu Web Server">Next</a></li></ul>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+
+<script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/bootstrap-prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
+<script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
+<script type="text/javascript" src="/_content/scripts/toastr.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/diagnostics/bootstrap-scrollspy.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
+<script type="text/javascript" src="/_content/scripts/topics.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuDocs">FubuDocs</a>.
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

@@ -188,9 +188,21 @@ such as ASP.Net hosting, embedded Katana servers, test harnesses, and the <a hre
 
 <p>Bootstrapping FubuMVC for Katana uses the same <code>FubuApplication</code> / <code>FubuRuntime</code> mechanisms as we used above for ASP.Net:</p>
 
-<pre data-linenums="9" class="prettyprint lang-cs">
+<pre data-linenums="12" class="prettyprint lang-cs">
+    public class SimpleApplication : IApplicationSource
+    {
+        public FubuApplication BuildApplication()
+        {
+            return FubuApplication
+                .DefaultPolicies()
+                .StructureMap();
+        }
+    }
+
     public static class KatanaBootstrapper
     {
+        // The FubuMVC team recommends that you use an IApplicationSource
+        // to contain your bootstrapping code
         public static void WithApplicationSource()
         {
             using (var server = EmbeddedFubuMvcServer.For&lt;SimpleApplication&gt;())
@@ -202,6 +214,9 @@ such as ASP.Net hosting, embedded Katana servers, test harnesses, and the <a hre
 
         public static void Inline()
         {
+            // You don&#39;t have to use a custom IApplicationSource if you
+            // do not want to.
+            // RunEmbedded() is an extension method in FubuMVC.Katana
             using (var server = FubuApplication.DefaultPolicies().StructureMap().RunEmbedded())
             {
                 var greeting = server.Endpoints.Get&lt;HelloEndpoint&gt;(x =&gt; x.get_greeting());
@@ -210,21 +225,11 @@ such as ASP.Net hosting, embedded Katana servers, test harnesses, and the <a hre
         }
     }
 
-    public class SimpleApplication : IApplicationSource
-    {
-        public FubuApplication BuildApplication()
-        {
-            return FubuApplication
-                .DefaultPolicies()
-                .StructureMap();
-        }
-    }
-
     public class HelloEndpoint
     {
         public string get_greeting()
         {
-            return &quot;Hello&quot;;
+            return &quot;Hello from an Embedded FubuMVC Application&quot;;
         }
     }
 </pre>
