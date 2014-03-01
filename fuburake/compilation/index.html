@@ -71,7 +71,7 @@
             </ul>
             <br/>
             <h3>
-              FubuRake v1.0.1.0
+              FubuRake v1.1.0.0
             </h3>
 
             <br/>
@@ -165,10 +165,19 @@ task :bottle_assembly_package =&gt; [:compile_bottle_project] do
 end
 </pre></section>
 
-<Section title="MSBuildRunner">
+<section><h4 id="targets" class="section-header">Tasks for Compilation Targets</h4>
+If you need to compile a project under multiple targets within your build script, you can direct FubuRake to create additional tasks with the name "compile:[target]".
 
+Use the <code>compile_targets</code> property to add the additional profiles:
 
-</Section>
+<pre data-linenums="232" class="prettyprint lang-rb">
+solution = FubuRake::Solution.new do |sln|
+	sln.compile_targets = [&#39;Debug&#39;, &#39;Release&#39;, &#39;NET45WP8&#39;]
+end
+</pre>
+
+By default, FubuRake will create tasks for <code>compile:debug</code> and <code>compile:release</code>.
+</section>
   
   
   

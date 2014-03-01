@@ -1,0 +1,202 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>
+      Serenity - By.jQuery</title>
+    
+<meta charset="utf-8"/>
+<meta name="description" content="FubuDocs"/>
+<meta name="author" content="FubuDocs"/>
+
+
+
+
+<link href="/_content/styles/sons-of-obsidian.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/twitter/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/toastr-responsive.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.core.css" rel="stylesheet" type="text/css" />
+<link href="/_content/styles/fubudocs.theme.css" rel="stylesheet" type="text/css" />
+
+<link media="screen" type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300">
+
+    
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar" position="relative">
+      
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a href="/topics" title="Fubu" class="root-link"><span>Fubu</span></a>
+      <a href="/serenity" title="Get some piece of mind about your FubuMVC and test that thing!" class="project-logo"><span>Serenity</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a href="http://github.com/DarthFubuMVC/Serenity" class="ico-github"><img alt="Github" src="/_content/images/github-icon.png" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+      <div id="nav-follow" class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a href="/serenity" data-key="index">Serenity &#187;</a></li><li><a href="/serenity/storyteller/webdriver" data-key="index">Web Driver Integration &#187;</a></li><li class="active"><a href="/serenity/storyteller/webdriver/by-jquery" data-key="by-jquery">By.jQuery &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/serenity/storyteller/webdriver/gestures" title="Gestures">Previous</a></li><li><a href="/serenity/storyteller/navigation" title="Navigation in Tests">Next</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        
+        
+
+        <div class="row">
+          <div class="span3 sidebar" data-spy="affix" data-offset-top="150" data-offset-bottom="200">
+            
+            <h3 class="half-margin">Topics</h3>
+            <ul id="page-toc" class="nav nav-tabs nav-stacked bs-docs-sidebar">
+            </ul>
+            <br/>
+            <h3>
+              Serenity v1.0.0.0
+            </h3>
+
+            <br/>
+            <h3 class="no-margin">Next</h3>
+<p><a href="/serenity/storyteller/navigation" data-key="navigation">Navigation in Tests</a></p>
+<h3 class="no-margin">Previous</h3>
+<p><a href="/serenity/storyteller/webdriver/gestures" data-key="gestures">Gestures</a></p>
+          </div>
+          <div class="span9">
+
+              <h1 class="no-margin">By.jQuery</h1>
+              <hr class="header-line topic-line"></hr>
+
+            <!--Title: By.jQuery-->
+<p>An additional <code>OpenQA.Selenium.By</code> selector that utilizes the jQuery library already loaded on the page to locate elements.</p>
+
+<h2>Usage</h2>
+
+<p>The call to <code>By.jQuery(".some-string")</code> is converted to the jQuery call <code>$(".some-string")</code> when passed to <code>ISearchContext.FindElement()</code>. It is also a C# dynamic object which allows to call any jQuery method available, see the <a href="http://api.jquery.com">jQuery documenation</a> for valid methods. It will use the jQuery that is on your page so be mindful of what version of jQuery you are using. It will lower case the first letter of any method you use so it appears more like C#, for example <code>By.jQuery(".marker").Parents(".parent")</code> would become <code>$(".marker").parents(".parent")</code> in JavaScript.</p>
+
+<p>It is a C# dynamic so you will need to explicitly cast the selector to <code>OpenQA.Selenium.By</code> otherwise you will see a <code>Microsoft.CSharp.RuntimeBinder.RuntimeBinderException</code>. This is a limitation when using dynamic objects.</p>
+
+<pre data-linenums="8" class="prettyprint lang-cs">
+    public class ByJQueryExample : ScreenFixture
+    {
+        [FormatAs(&quot;Some grammar that clicks an element&quot;)]
+        public void ClickButtonSimple()
+        {
+            // Generates JavaScript: return $(&quot;.button-class&quot;);
+            Driver.FindElement((By) By.jQuery(&quot;.button-class&quot;)).Click();
+        }
+
+        [FormatAs(&quot;Some grammar that walks DOM to find element and then clicks it&quot;)]
+        public void ClickButtonAdvanced()
+        {
+            // Generates JavaScript: return $(&quot;.some-label&quot;).filter(function() { return $(this).text().trim() === &quot;Label Text&quot;; }).parents(&quot;.parent-class&quot;).find(&quot;.button-class&quot;);
+            Driver.FindElement((By) By.jQuery(&quot;.some-label&quot;)
+                    .Filter(JQuery.HasTextFilterFunction(&quot;Label Text&quot;))
+                    .Parents(&quot;.parent-class&quot;)
+                    .Find(&quot;.button-class&quot;))
+                .Click();
+        }
+
+        [FormatAs(&quot;Use jQuery to to start your search from an IWebElement you have already retrieved&quot;)]
+        public void WebElementToSelector()
+        {
+            var element = Driver.FindElement(By.ClassName(&quot;some-class&quot;));
+
+            // Generates JavaScript: return (function(__element__argument__1) { return $(__element__argument__1).sibling(&quot;.sibling-element&quot;) })(arguments[0]);
+            Driver.FindElement((By) element.ToJQueryBy().Sibling(&quot;.sibling-element&quot;));
+        }
+    }
+</pre>
+
+<h2>Why the new selector?</h2>
+
+<p>The default <code>OpenQA.Seleniumn.By</code> selectors are great for simple element location. Things get complicated and brittle though when you are looking for an element based on another element in a different branch of the DOM tree. As an example using those default selectors you would need to:</p>
+
+<ol>
+<li>Select a broad grouping of elements</li>
+<li>Marshal them back to your .net process <strong>(Slow!)</strong></li>
+<li>Filter the elements</li>
+<li>Find that element's parent</li>
+<li>Marshal it back to your .net process <strong>(Slow!)</strong></li>
+<li>Find the child element(s) of interest</li>
+<li>Marshal them back to your .net process <strong>(Slow!)</strong></li>
+<li>Do something with the element(s)</li>
+</ol>
+
+<p>With <code>By.jQuery</code> the same workflow would be: <em>(notice how many times elements are marshaled back and forth)</em></p>
+
+<ol>
+<li>Select a broad grouping of elements with jQuery</li>
+<li>Filter those elements by some condition</li>
+<li>Find the element's parent</li>
+<li>Find the child element(s) of interest</li>
+<li>Marshal them back to your .net process <strong>(Slow!)</strong></li>
+<li>Do something with the element(s)</li>
+</ol>
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br></br>
+    <hr></hr>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <ul class="nav"><li><a href="/serenity" data-key="index">Serenity &#187;</a></li><li><a href="/serenity/storyteller/webdriver" data-key="index">Web Driver Integration &#187;</a></li><li class="active"><a href="/serenity/storyteller/webdriver/by-jquery" data-key="by-jquery">By.jQuery &#187;</a></li></ul>
+<ul class="nav" style="float:right"><li><a href="/serenity/storyteller/webdriver/gestures" title="Gestures">Previous</a></li><li><a href="/serenity/storyteller/navigation" title="Navigation in Tests">Next</a></li></ul>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+
+<script type="text/javascript" src="/_content/scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/bootstrap-prettify.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs.js"></script>
+<script type="text/javascript" src="/_content/scripts/jquery.nestable.js"></script>
+<script type="text/javascript" src="/_content/scripts/toastr.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap.min.js"></script>
+<script type="text/javascript" src="/_content/scripts/diagnostics/bootstrap-scrollspy.js"></script>
+<script type="text/javascript" src="/_content/scripts/fubudocs-tools.js"></script>
+<script type="text/javascript" src="/_content/scripts/twitter/bootstrap-affix.js"></script>
+<script type="text/javascript" src="/_content/scripts/topics.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuDocs">FubuDocs</a>.
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

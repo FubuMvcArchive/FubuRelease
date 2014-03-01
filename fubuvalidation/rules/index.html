@@ -116,7 +116,7 @@ and can execute the subset of rules.</p></section>
 
 <p>There are various built in implementations that are available for use. The first one is the <code>ClassValidationRules</code> DSL as seen in use here:</p>
 
-<pre data-linenums="32" class="prettyprint lang-cs">
+<pre data-linenums="8" class="prettyprint lang-cs">
     public class ClassValidationModelRules : ClassValidationRules&lt;ClassValidationModel&gt;
     {
         public ClassValidationModelRules()
@@ -130,19 +130,19 @@ and can execute the subset of rules.</p></section>
             Property(x =&gt; x.LessThanFifteen).MaxValue(15);
             Property(x =&gt; x.Email).Email();
             Property(x =&gt; x.Required).Required();
-	        Property(x =&gt; x.Regex).RegEx(&quot;[a-zA-Z0-9]+$&quot;);
+            Property(x =&gt; x.Regex).RegEx(&quot;[a-zA-Z0-9]+$&quot;);
 
             Property(x =&gt; x.Custom).Rule&lt;UniqueUsernameRule&gt;();
 
-	        Property(x =&gt; x.Password)
-				.Matches(x =&gt; x.ConfirmPassword)
-		        .ReportErrorsOn(x =&gt; x.Password)
-		        .ReportErrorsOn(x =&gt; x.ConfirmPassword);
+            Property(x =&gt; x.Password)
+                .Matches(x =&gt; x.ConfirmPassword)
+                .ReportErrorsOn(x =&gt; x.Password)
+                .ReportErrorsOn(x =&gt; x.ConfirmPassword);
 
-	        Property(x =&gt; x.Email)
-		        .Matches(x =&gt; x.ConfirmEmail)
-		        .ReportErrorsOn(x =&gt; x.ConfirmEmail)
-		        .UseToken(StringToken.FromKeyString(&quot;Test:Keys&quot;, &quot;Emails must match&quot;));
+            Property(x =&gt; x.Email)
+                .Matches(x =&gt; x.ConfirmEmail)
+                .ReportErrorsOn(x =&gt; x.ConfirmEmail)
+                .UseToken(StringToken.FromKeyString(&quot;Test:Keys&quot;, &quot;Emails must match&quot;));
         }
     }
 </pre>

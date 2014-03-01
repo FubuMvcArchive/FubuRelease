@@ -71,7 +71,7 @@
             </ul>
             <br/>
             <h3>
-              FubuRake v1.0.1.0
+              FubuRake v1.1.0.0
             </h3>
 
             <br/>
@@ -168,7 +168,7 @@ FubuRake::Storyteller.new({
     </tr>
     <tr>
       <td>:suites</td>
-      <td>An array of suite names that you'd like to have a separate task for running one suite at a time.</td>
+      <td>An array of suite names that you'd like to have a separate task for running one suite at a time. If you do not specify the suite names explicitly, FubuRake will infer the suite names from the child directories under /Tests in the Storyteller project directory.</td>
     </tr>
     <tr>
       <td>:profile</td>
@@ -177,6 +177,10 @@ FubuRake::Storyteller.new({
     <tr>
         <td>:workspace</td>
         <td>Optionally limits the test selection to a single root suite of the Storyteller project.  The default is empty.</td>
+    </tr>
+    <tr>
+        <td>:timeout</td>
+        <td>Optionally limits the timeout in seconds for the current test run</td>
     </tr>
   </tbody>
 </table>
